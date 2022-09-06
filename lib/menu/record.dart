@@ -1,6 +1,9 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
+import '../data.dart';
 
 class Recordpage extends StatefulWidget {
   const Recordpage({Key? key}) : super(key: key);
@@ -10,6 +13,15 @@ class Recordpage extends StatefulWidget {
 }
 
 class _RecordpageState extends State<Recordpage> {
+  var selectedtype, selectedproduct;
+
+  @override
+  void initState() {
+    selectedtype = comboboxtype[0];
+    selectedproduct = comboboxproduct[0];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -50,22 +62,28 @@ class _RecordpageState extends State<Recordpage> {
           ),
         ),
         Padding(
-            padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Container(
+          padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+          child: Container(
               width: 0.85 * width,
               height: 0.07 * height,
-              child: TextFormField(
-                  // controller: pass,
-                  // obscureText: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(157, 157, 157, 0.5),
-                        fontSize: 16,
-                      ),
-                      hintText: "Reksadana Saham")),
-            )),
+              decoration: BoxDecoration(
+                // color: Colors.grey[600],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: DropdownSearch<String>(
+                popupProps: PopupProps.menu(
+                  itemBuilder: (context, item, isSelected) =>
+                      ListTile(title: Text(item)),
+                  showSearchBox: true,
+                ),
+                items: comboboxtype,
+                dropdownBuilder: (context, item) => Text(item!),
+                onChanged: (value) => setState(() {
+                  selectedtype = value!;
+                }),
+                selectedItem: selectedtype,
+              )),
+        ),
         Padding(
           padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
           child: Text(
@@ -82,17 +100,23 @@ class _RecordpageState extends State<Recordpage> {
             child: Container(
               width: 0.85 * width,
               height: 0.07 * height,
-              child: TextFormField(
-                  // controller: pass,
-                  // obscureText: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(157, 157, 157, 0.5),
-                        fontSize: 16,
-                      ),
-                      hintText: "Sucorinvest equity fund")),
+              decoration: BoxDecoration(
+                // color: Colors.grey[600],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: DropdownSearch<String>(
+                popupProps: PopupProps.menu(
+                  itemBuilder: (context, item, isSelected) =>
+                      ListTile(title: Text(item)),
+                  showSearchBox: true,
+                ),
+                items: comboboxproduct,
+                dropdownBuilder: (context, item) => Text(item!),
+                onChanged: (value) => setState(() {
+                  selectedproduct = value!;
+                }),
+                selectedItem: selectedproduct,
+              ),
             )),
         Padding(
           padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:recordinvest/data.dart';
 import 'package:recordinvest/menu/addtype.dart';
 import 'package:recordinvest/menu/record.dart';
 
@@ -132,6 +133,8 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.only(left: 0.1 * width),
                       child: InkWell(
                         onTap: () {
+                          comboboxtype.add("pilih investment type");
+                          comboboxproduct.add("pilih produk");
                           Navigator.push(
                               context,
                               MaterialPageRoute(
