@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:recordinvest/data.dart';
 import 'package:http/http.dart' as http;
 import 'package:recordinvest/menu/addtype.dart';
+import 'package:recordinvest/menu/performance.dart';
 import 'package:recordinvest/menu/record.dart';
 
 class Homepage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _HomepageState extends State<Homepage> {
   final oCcy = NumberFormat.currency(
       locale: 'eu',
       customPattern: '#,### \u00a4',
-      symbol: 'IDR',
+      symbol: "",
       decimalDigits: 2);
 
   Future getType() async {
@@ -186,7 +187,7 @@ class _HomepageState extends State<Homepage> {
                     Padding(
                       padding: EdgeInsets.only(left: 0.1 * width),
                       child: Text(
-                        saldo,
+                        "Rp " + saldo,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           // color: Color.fromRGBO(157, 157, 157, 1),
@@ -291,7 +292,12 @@ class _HomepageState extends State<Homepage> {
                   child: Padding(
                       padding: EdgeInsets.only(left: 0.1 * width),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Performance()));
+                        },
                         child: Container(
                           width: 0.35 * width,
                           height: 0.35 * width,
