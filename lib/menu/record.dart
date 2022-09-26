@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 import '../data.dart';
 
 class Recordpage extends StatefulWidget {
@@ -14,6 +17,32 @@ class Recordpage extends StatefulWidget {
 
 class _RecordpageState extends State<Recordpage> {
   var selectedtype, selectedproduct;
+  TextEditingController values = TextEditingController();
+
+  Future insertrecord() async {
+    try {
+      var body = {
+        "type": selectedtype,
+        "product": selectedproduct,
+        "value": values.text
+      };
+      http.Response postdata =
+          await http.post(Uri.parse(baseurl + "insertrecord"), body: body);
+      var data = json.decode(postdata.body);
+      if (data["message"] == "data has been added") {
+        Fluttertoast.showToast(
+            msg: "data has been added",
+            backgroundColor: Colors.black,
+            textColor: Colors.white);
+      }
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
+    }
+  }
 
   @override
   void initState() {
@@ -135,7 +164,7 @@ class _RecordpageState extends State<Recordpage> {
               width: 0.85 * width,
               height: 0.07 * height,
               child: TextFormField(
-                  // controller: pass,
+                  controller: values,
                   // obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -149,7 +178,9 @@ class _RecordpageState extends State<Recordpage> {
         Padding(
           padding: EdgeInsets.only(top: 0.04 * height, left: 0.1 * width),
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              insertrecord();
+            },
             child: Container(
               width: width * 0.85,
               height: height * 0.07,

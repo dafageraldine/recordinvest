@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:recordinvest/data.dart';
+import 'package:http/http.dart' as http;
 import 'package:recordinvest/menu/addtype.dart';
 import 'package:recordinvest/menu/record.dart';
 
@@ -13,6 +17,70 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  var date = "";
+  var saldo = "";
+  final oCcy = NumberFormat.currency(
+      locale: 'eu',
+      customPattern: '#,### \u00a4',
+      symbol: 'IDR',
+      decimalDigits: 2);
+
+  Future getType() async {
+    try {
+      http.Response getdata = await http.get(Uri.parse(baseurl + "gettype"));
+      var data = json.decode(getdata.body);
+      for (int i = 0; i < data["data"].length; i++) {
+        comboboxtype.add(data["data"][i]["type"]);
+      }
+      getProduct();
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
+    }
+  }
+
+  Future getProduct() async {
+    try {
+      http.Response getdata = await http.get(Uri.parse(baseurl + "getproduct"));
+      var data = json.decode(getdata.body);
+      for (int i = 0; i < data["data"].length; i++) {
+        comboboxproduct.add(data["data"][i]["name"]);
+      }
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Recordpage()));
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
+    }
+  }
+
+  Future getSaldo() async {
+    try {
+      http.Response getdata = await http.get(Uri.parse(baseurl + "getsaldo"));
+      var data = json.decode(getdata.body);
+      for (int i = 0; i < data["data"].length; i++) {
+        saldo = oCcy.format(data["data"][i]["saldo"]).toString();
+        date = data["data"][i]["date"];
+      }
+      setState(() {});
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "failed to fetch saldo " + e.toString(),
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
+    }
+  }
+
+  @override
+  void initState() {
+    getSaldo();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -59,50 +127,91 @@ class _HomepageState extends State<Homepage> {
                       spreadRadius: 5.0,
                       offset: Offset(0, 2))
                 ]),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-                  child: Text(
-                    "Saldo",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      // color: Color.fromRGBO(157, 157, 157, 1),
-                      // color: Color.fromRGBO(144, 200, 172, 1),
-                      color: Color.fromRGBO(249, 249, 249, 1),
-                      fontSize: 16,
+                  padding: const EdgeInsets.all(10.0),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: InkWell(
+                      onTap: () {
+                        getSaldo();
+                      },
+                      child: Container(
+                        width: width * 0.2,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            // color: Color.fromRGBO(250, 244, 183, 1),
+                            color: Color.fromRGBO(144, 200, 172, 1),
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 5.0,
+                                  color: Colors.black12,
+                                  spreadRadius: 5.0,
+                                  offset: Offset(0, 2))
+                            ]),
+                        child: Center(
+                            child: Text(
+                          "Refresh",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            // color: Color.fromRGBO(157, 157, 157, 1),
+                            // color: Color.fromRGBO(144, 200, 172, 1),
+                            color: Color.fromRGBO(249, 249, 249, 1),
+                            fontSize: 12,
+                          ),
+                        )),
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 0.1 * width),
-                  child: Text(
-                    "Rp 50.000.000",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      // color: Color.fromRGBO(157, 157, 157, 1),
-                      // color: Color.fromRGBO(144, 200, 172, 1),
-                      color: Color.fromRGBO(249, 249, 249, 1),
-                      fontSize: 20,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: 0.02 * height, left: 0.1 * width),
+                      child: Text(
+                        "Saldo",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          // color: Color.fromRGBO(157, 157, 157, 1),
+                          // color: Color.fromRGBO(144, 200, 172, 1),
+                          color: Color.fromRGBO(249, 249, 249, 1),
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 0.1 * width),
+                      child: Text(
+                        saldo,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          // color: Color.fromRGBO(157, 157, 157, 1),
+                          // color: Color.fromRGBO(144, 200, 172, 1),
+                          color: Color.fromRGBO(249, 249, 249, 1),
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: 0.01 * height, left: 0.1 * width),
+                      child: Text(
+                        date,
+                        style: TextStyle(
+                          // color: Color.fromRGBO(157, 157, 157, 1),
+                          // color: Color.fromRGBO(144, 200, 172, 1),
+                          color: Color.fromRGBO(249, 249, 249, 1),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 12,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                Padding(
-                  padding:
-                      EdgeInsets.only(top: 0.01 * height, left: 0.1 * width),
-                  child: Text(
-                    "31/08/2022",
-                    style: TextStyle(
-                      // color: Color.fromRGBO(157, 157, 157, 1),
-                      // color: Color.fromRGBO(144, 200, 172, 1),
-                      color: Color.fromRGBO(249, 249, 249, 1),
-                      fontWeight: FontWeight.w800,
-                      fontSize: 12,
-                    ),
-                  ),
-                )
               ],
             ),
           ),
@@ -133,12 +242,11 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.only(left: 0.1 * width),
                       child: InkWell(
                         onTap: () {
+                          comboboxtype.clear();
+                          comboboxproduct.clear();
                           comboboxtype.add("pilih investment type");
                           comboboxproduct.add("pilih produk");
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Recordpage()));
+                          getType();
                         },
                         child: Container(
                           width: 0.35 * width,

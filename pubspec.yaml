@@ -37,6 +37,7 @@ dependencies:
   fluttertoast: ^8.0.9
   loading_animation_widget: ^1.2.0+2
   dropdown_search: ^5.0.2
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
