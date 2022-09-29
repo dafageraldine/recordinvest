@@ -16,4 +16,7 @@ class RecordData {
   RecordData(this.date, this.value, this.type, this.product);
 }
 
-var baseurl = "http://apirecordinvest.herokuapp.com/";
+var devurl = "http://127.0.0.1:5000/";
+var profurl = "http://apirecordinvest.herokuapp.com/";
+
+var baseurl = profurl;

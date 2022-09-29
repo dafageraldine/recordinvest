@@ -20,6 +20,7 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   var date = "";
   var saldo = "";
+  var percent = "";
   final oCcy = NumberFormat.currency(
       locale: 'eu',
       customPattern: '#,### \u00a4',
@@ -63,10 +64,28 @@ class _HomepageState extends State<Homepage> {
     try {
       http.Response getdata = await http.get(Uri.parse(baseurl + "getsaldo"));
       var data = json.decode(getdata.body);
+      var databefore = 0.0;
+      var datanow = 0.0;
+      print("here");
       for (int i = 0; i < data["data"].length; i++) {
         saldo = oCcy.format(data["data"][i]["saldo"]).toString();
         date = data["data"][i]["date"];
+        datanow = data["data"][i]["saldo"];
+        databefore = data["data"][i]["saldobefore"];
       }
+      var persen = 0.0;
+      print(datanow.toString() + "  " + databefore.toString());
+      if (databefore > 0) {
+        persen = (datanow - databefore) / databefore * 100.0;
+      }
+      if (persen > 0) {
+        percent = "+ " + persen.toStringAsFixed(2) + " % than previous data";
+        print(percent);
+      } else if (persen < 0) {
+        percent = persen.toStringAsFixed(2) + " % than previous data";
+        print(percent);
+      }
+
       setState(() {});
     } catch (e) {
       Fluttertoast.showToast(
@@ -173,15 +192,33 @@ class _HomepageState extends State<Homepage> {
                     Padding(
                       padding: EdgeInsets.only(
                           top: 0.02 * height, left: 0.1 * width),
-                      child: Text(
-                        "Saldo",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          // color: Color.fromRGBO(157, 157, 157, 1),
-                          // color: Color.fromRGBO(144, 200, 172, 1),
-                          color: Color.fromRGBO(249, 249, 249, 1),
-                          fontSize: 16,
-                        ),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Saldo",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              // color: Color.fromRGBO(157, 157, 157, 1),
+                              // color: Color.fromRGBO(144, 200, 172, 1),
+                              color: Color.fromRGBO(249, 249, 249, 1),
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            " " + percent,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              // color: Color.fromRGBO(157, 157, 157, 1),
+                              // color: Color.fromRGBO(144, 200, 172, 1),
+                              color: percent.contains("+")
+                                  ? Colors.green[100]
+                                  : percent.contains("-")
+                                      ? Colors.red[100]
+                                      : Colors.blueGrey,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Padding(
@@ -192,7 +229,11 @@ class _HomepageState extends State<Homepage> {
                           fontWeight: FontWeight.w600,
                           // color: Color.fromRGBO(157, 157, 157, 1),
                           // color: Color.fromRGBO(144, 200, 172, 1),
-                          color: Color.fromRGBO(249, 249, 249, 1),
+                          color: percent.contains("+")
+                              ? Colors.green[100]
+                              : percent.contains("-")
+                                  ? Colors.red[100]
+                                  : Colors.blueGrey,
                           fontSize: 20,
                         ),
                       ),
