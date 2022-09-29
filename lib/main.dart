@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recordinvest/home/home.dart';
+import 'package:recordinvest/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: Homepage(),
+      home: Login(),
     );
   }
 }
