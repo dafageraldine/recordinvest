@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:recordinvest/data.dart';
 import 'package:http/http.dart' as http;
+import 'package:recordinvest/login.dart';
 import 'package:recordinvest/menu/addtype.dart';
 import 'package:recordinvest/menu/performance.dart';
 import 'package:recordinvest/menu/record.dart';
@@ -183,15 +184,50 @@ class _HomepageState extends State<Homepage> {
                     EdgeInsets.only(left: 0.05 * width, top: 0.04 * height),
                 child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      "My InvestMent Portofolio",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        // color: Color.fromRGBO(104, 103, 172, 1),
-                        color: Color.fromRGBO(249, 249, 249, 1),
-                        // color: Color.fromRGBO(246, 198, 234, 1),
-                      ),
+                    child: Row(
+                      children: [
+                        Text(
+                          "My InvestMent Portofolio",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            // color: Color.fromRGBO(104, 103, 172, 1),
+                            color: Color.fromRGBO(249, 249, 249, 1),
+                            // color: Color.fromRGBO(246, 198, 234, 1),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 0.2 * width,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.remove('uname');
+                            await prefs.remove('pass');
+                            await prefs.remove('id');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Login()));
+                          },
+                          child: Container(
+                            width: 0.15 * width,
+                            height: 0.04 * height,
+                            color: Colors.white,
+                            child: Center(
+                                child: Text(
+                              "Log Out",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                // color: Color.fromRGBO(104, 103, 172, 1),
+                                color: Color.fromRGBO(157, 157, 157, 1),
+                                // color: Color.fromRGBO(246, 198, 234, 1),
+                              ),
+                            )),
+                          ),
+                        )
+                      ],
                     )),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recordinvest/home/home.dart';
 import 'package:recordinvest/login.dart';
+import 'package:recordinvest/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: Splash(),
     );
   }
 }
