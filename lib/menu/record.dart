@@ -6,6 +6,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data.dart';
 
 class Recordpage extends StatefulWidget {
@@ -21,10 +22,13 @@ class _RecordpageState extends State<Recordpage> {
 
   Future insertrecord() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final String? id = prefs.getString('id');
       var body = {
         "type": selectedtype,
         "product": selectedproduct,
-        "value": values.text
+        "value": values.text,
+        "id": id
       };
       http.Response postdata =
           await http.post(Uri.parse(baseurl + "insertrecord"), body: body);
@@ -173,7 +177,7 @@ class _RecordpageState extends State<Recordpage> {
                         color: Color.fromRGBO(157, 157, 157, 0.5),
                         fontSize: 16,
                       ),
-                      hintText: "15,000,000.00")),
+                      hintText: "15000000.00")),
             )),
         Padding(
           padding: EdgeInsets.only(top: 0.04 * height, left: 0.1 * width),

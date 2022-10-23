@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:recordinvest/data.dart';
+import 'package:recordinvest/home/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -15,6 +19,36 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController uname = TextEditingController();
   TextEditingController pass = TextEditingController();
+
+  Future login() async {
+    try {
+      var body = {"user": uname.text, "pwd": pass.text};
+      http.Response postdata =
+          await http.post(Uri.parse(baseurl + "login"), body: body);
+      var data = json.decode(postdata.body);
+      if (data["data"].length > 0) {
+        for (int i = 0; i < data["data"].length; i++) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('uname', data["data"][i]["user"]);
+          await prefs.setString('pass', pass.text);
+          await prefs.setString('id', data["data"][i]["id"]);
+          break;
+        }
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Homepage()));
+      } else {
+        Fluttertoast.showToast(
+            msg: "Username atau password salah !",
+            backgroundColor: Colors.black,
+            textColor: Colors.white);
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
+    }
+  }
 
   showAlertDialog(BuildContext context) {
     // set up the buttons
@@ -161,6 +195,7 @@ class _LoginState extends State<Login> {
                       //   });
                       //   await cekVersi();
                       // }
+                      login();
                     },
                     child: Container(
                       width: 0.85 * width,

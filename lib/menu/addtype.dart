@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:recordinvest/data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddType extends StatefulWidget {
   const AddType({Key? key}) : super(key: key);
@@ -19,7 +20,9 @@ class _AddTypeState extends State<AddType> {
 
   Future inserttypenproduct() async {
     try {
-      var body = {"type": type.text, "name": product.text};
+      final prefs = await SharedPreferences.getInstance();
+      final String? id = prefs.getString('id');
+      var body = {"type": type.text, "name": product.text, "id": id};
       http.Response postdata = await http
           .post(Uri.parse(baseurl + "inserttypenproduct"), body: body);
       var data = json.decode(postdata.body);

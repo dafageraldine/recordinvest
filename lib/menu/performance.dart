@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -175,11 +176,13 @@ class _PerformanceState extends State<Performance> {
   Future getrecord() async {
     try {
       listrecord.clear();
-      var body = {"date": awal};
+      final prefs = await SharedPreferences.getInstance();
+      final String? id = prefs.getString('id');
+      var body = {"date": awal, "id": id};
       http.Response postdata =
           await http.post(Uri.parse(baseurl + "getrecord"), body: body);
       var data = json.decode(postdata.body);
-      print(baseurl + "getrecord");
+      print(data);
       for (int i = 0; i < data["data"].length; i++) {
         listrecord.add(RecordData(
             data["data"][i]["date"],
