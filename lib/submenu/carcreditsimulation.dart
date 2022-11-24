@@ -28,7 +28,7 @@ class _CarCreditSimulationState extends State<CarCreditSimulation> {
       var dpmobil = double.tryParse(dp.text)!;
       var tenorcicilan = int.tryParse(tenor.text);
       var bungacicilan = int.tryParse(bunga.text);
-      var plafonpinjaman = hargaotr! - dpmobil!;
+      var plafonpinjaman = hargaotr! - dpmobil;
       var angsuranpokok = plafonpinjaman / (tenorcicilan! * 12);
       var angsuranbunga = (plafonpinjaman * (bungacicilan! / 100)) / 12;
       var angsuranakhir = angsuranpokok + angsuranbunga;
