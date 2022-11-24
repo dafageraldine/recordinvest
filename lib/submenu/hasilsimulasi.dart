@@ -90,6 +90,18 @@ class _HasilSimulasiState extends State<HasilSimulasi> {
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
+                  text: "Angsuran pokok perbulan adalah Rp " +
+                      oCcy.format(widget.angsuranpokok).toString() +
+                      "\n\n",
+                  style: TextStyle(color: Colors.black),
+                ),
+                TextSpan(
+                  text: "Angsuran bunga perbulan adalah Rp " +
+                      oCcy.format(widget.angsuranbunga).toString() +
+                      "\n\n",
+                  style: TextStyle(color: Colors.black),
+                ),
+                TextSpan(
                   text: "Maka angsuran perbulan untuk tenor " +
                       widget.tenorcicilan.toString() +
                       " tahun adalah :\n ",
