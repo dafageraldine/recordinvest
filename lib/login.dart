@@ -22,9 +22,11 @@ class _LoginState extends State<Login> {
 
   Future login() async {
     try {
+      print("login");
       var body = {"user": uname.text, "pwd": pass.text};
       http.Response postdata =
           await http.post(Uri.parse(baseurl + "login"), body: body);
+      print(" url " + baseurl + "login");
       var data = json.decode(postdata.body);
       if (data["data"].length > 0) {
         for (int i = 0; i < data["data"].length; i++) {
@@ -52,7 +54,7 @@ class _LoginState extends State<Login> {
 
   showAlertDialog(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "No",
         style: TextStyle(color: Colors.grey),
@@ -61,7 +63,7 @@ class _LoginState extends State<Login> {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "yes",
         style: TextStyle(

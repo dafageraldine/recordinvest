@@ -9,6 +9,7 @@ import 'package:recordinvest/data.dart';
 import 'package:http/http.dart' as http;
 import 'package:recordinvest/login.dart';
 import 'package:recordinvest/menu/addtype.dart';
+import 'package:recordinvest/menu/creditsimulation.dart';
 import 'package:recordinvest/menu/performance.dart';
 import 'package:recordinvest/menu/record.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -85,6 +86,7 @@ class _HomepageState extends State<Homepage> {
       print("here");
       for (int i = 0; i < data["data"].length; i++) {
         saldo = oCcy.format(data["data"][i]["saldo"]).toString();
+        saldoglobal = data["data"][i]["saldo"];
         date = data["data"][i]["date"];
         datanow = data["data"][i]["saldo"];
         databefore = data["data"][i]["saldobefore"];
@@ -113,7 +115,7 @@ class _HomepageState extends State<Homepage> {
 
   showAlertDialog(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "No",
         style: TextStyle(color: Colors.grey),
@@ -122,7 +124,7 @@ class _HomepageState extends State<Homepage> {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "yes",
         style: TextStyle(
@@ -535,6 +537,56 @@ class _HomepageState extends State<Homepage> {
                             ),
                           ),
                         ))),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 0.1 * width),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreditSimulation()));
+                          },
+                          child: Container(
+                            width: 0.35 * width,
+                            height: 0.35 * width,
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(144, 200, 172, 1),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 5.0,
+                                      color: Colors.black12,
+                                      spreadRadius: 5.0,
+                                      offset: Offset(0, 2))
+                                ]),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Image.asset(
+                                  "assets/garage.png",
+                                  width: 0.2 * width,
+                                  height: 0.2 * width,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "credit\nsimulation",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14,
+                                    color: Color.fromRGBO(249, 249, 249, 1),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        )))
               ],
             ),
           ],
