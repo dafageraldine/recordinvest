@@ -45,6 +45,7 @@ class _LoginState extends State<Login> {
             textColor: Colors.white);
       }
     } catch (e) {
+      print(e.toString());
       Fluttertoast.showToast(
           msg: e.toString(),
           backgroundColor: Colors.black,
