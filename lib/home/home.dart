@@ -10,7 +10,8 @@ import 'package:http/http.dart' as http;
 import 'package:recordinvest/login.dart';
 import 'package:recordinvest/menu/addtype.dart';
 import 'package:recordinvest/menu/creditsimulation.dart';
-import 'package:recordinvest/menu/performance.dart';
+import 'package:recordinvest/submenu/performance.dart';
+import 'package:recordinvest/menu/portofoliomanagement.dart';
 import 'package:recordinvest/menu/record.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -440,7 +441,8 @@ class _HomepageState extends State<Homepage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Performance()));
+                                    builder: (context) =>
+                                        PortofolioManagement()));
                           },
                           child: Container(
                             width: 0.35 * width,
@@ -461,7 +463,7 @@ class _HomepageState extends State<Homepage> {
                                   height: 10,
                                 ),
                                 Image.asset(
-                                  "assets/financial-profit.png",
+                                  "assets/pie-chart (1).png",
                                   width: 0.2 * width,
                                   height: 0.2 * width,
                                 ),
@@ -469,7 +471,7 @@ class _HomepageState extends State<Homepage> {
                                   height: 10,
                                 ),
                                 Text(
-                                  "Performance",
+                                  "Portofolio Management",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
