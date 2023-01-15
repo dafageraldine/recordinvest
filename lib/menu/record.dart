@@ -34,6 +34,8 @@ class _RecordpageState extends State<Recordpage> {
           await http.post(Uri.parse(baseurl + "insertrecord"), body: body);
       var data = json.decode(postdata.body);
       if (data["message"] == "data has been added") {
+        list_cb_data.clear();
+        combobox.clear();
         Fluttertoast.showToast(
             msg: "data has been added",
             backgroundColor: Colors.black,

@@ -1,5 +1,13 @@
+import 'dart:convert';
+
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:recordinvest/submenu/hasilsimulasiporto.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
+import '../data.dart';
 
 class ManageUnperformPortofolio extends StatefulWidget {
   const ManageUnperformPortofolio({super.key});
@@ -18,7 +26,37 @@ class _ManageUnperformPortofolioState extends State<ManageUnperformPortofolio> {
   TextEditingController aih = TextEditingController();
   TextEditingController tais = TextEditingController();
   TextEditingController rsia = TextEditingController();
-  var message = "";
+  var selectedpilihan;
+
+  Future get_cb_data() async {
+    try {
+      list_cb_data.clear();
+      combobox.clear();
+      final prefs = await SharedPreferences.getInstance();
+      final String? id = prefs.getString('id');
+      var body = {"id": id};
+      http.Response postdata =
+          await http.post(Uri.parse(baseurl + "get_latest_asset"), body: body);
+      print(postdata.body);
+      var data = json.decode(postdata.body);
+      for (int i = 0; i < data["data"].length; i++) {
+        list_cb_data.add(ComboBoxData(data["data"][i]["date"],
+            data["data"][i]["value"].toString(), data["data"][i]["product"]));
+      }
+      list_cb_data.sort(((a, b) => a.product.compareTo(b.product)));
+      print("length : " + list_cb_data.length.toString());
+      for (int i = 0; i < list_cb_data.length; i++) {
+        combobox.add(list_cb_data[i].product);
+      }
+      selectedpilihan = list_cb_data[0].product;
+      showcb();
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
+    }
+  }
 
   void calculate() {
     var kurs_ = double.parse(kurs.text.toString());
@@ -30,11 +68,9 @@ class _ManageUnperformPortofolioState extends State<ManageUnperformPortofolio> {
     var asset_switch_now = double.parse(tais.text.toString());
     var return_switch_percent = double.parse(rsia.text.toString());
     var floating_loss_in_percent =
-        (((uang_invest_awal * kurs_) - (floating_loss * kurs_)) /
-                (uang_invest_awal * kurs_)) *
-            100;
+        (floating_loss * kurs_ / (uang_invest_awal * kurs_)) * 100;
     var asset_akhir = (100 / desired_loss) * (kurs_ * floating_loss);
-    var uang_harus_diinvest = asset_akhir - uang_invest_awal;
+    var uang_harus_diinvest = asset_akhir - (uang_invest_awal * kurs_);
     var hargabep =
         asset_akhir / (unit_dimiliki + (uang_harus_diinvest / harga_saat_ini));
     var up_percent = ((hargabep - harga_saat_ini) / harga_saat_ini) * 100;
@@ -43,23 +79,12 @@ class _ManageUnperformPortofolioState extends State<ManageUnperformPortofolio> {
             (return_switch_percent / 100);
     var estimated_day = (floating_loss * kurs_) / return_perhari_switch_money;
     var estimated_month = estimated_day / 30;
-    message = "invet lagi sebesar " +
-        uang_harus_diinvest.toStringAsFixed(3) +
-        " dan berharap harga naik ke " +
-        hargabep.toStringAsFixed(3) +
-        "/unit (" +
-        up_percent.toStringAsFixed(3) +
-        " %) atau jual dan taruh di produk switch dengan estimasi menunggu hingga BEP selama " +
-        estimated_month.toStringAsFixed(3) +
-        " bulan( " +
-        estimated_day.toStringAsFixed(3) +
-        " hari)";
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => HasilSimulasiPorto(
-                uang_invest_awal,
-                floating_loss,
+                uang_invest_awal * kurs_,
+                floating_loss * kurs_,
                 floating_loss_in_percent,
                 desired_loss,
                 asset_switch_now,
@@ -67,6 +92,96 @@ class _ManageUnperformPortofolioState extends State<ManageUnperformPortofolio> {
                 uang_harus_diinvest,
                 estimated_day,
                 estimated_month)));
+  }
+
+  void showcb() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        double width = MediaQuery.of(context).size.width;
+        double height = MediaQuery.of(context).size.height;
+        // return object of type Dialog
+        return Dialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: Container(
+            width: 0.85 * width,
+            height: 0.3 * height,
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 0.1 * width, top: 0.05 * height),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Choose Asset",
+                        style: TextStyle(
+                            color: Color.fromRGBO(82, 82, 82, 1),
+                            fontSize: 14,
+                            // fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600),
+                      )),
+                ),
+                SizedBox(height: 10),
+                Container(
+                    width: 0.7 * width,
+                    height: 0.07 * height,
+                    decoration: BoxDecoration(
+                      // color: Colors.grey[600],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: DropdownSearch<String>(
+                      popupProps: PopupProps.menu(
+                        itemBuilder: (context, item, isSelected) =>
+                            ListTile(title: Text(item)),
+                        showSearchBox: true,
+                      ),
+                      items: combobox,
+                      dropdownBuilder: (context, item) => Text(item!),
+                      onChanged: (value) => setState(() {
+                        selectedpilihan = value!;
+                      }),
+                      selectedItem: selectedpilihan,
+                    )),
+                InkWell(
+                  onTap: () {
+                    for (var i = 0; i < list_cb_data.length; i++) {
+                      if (selectedpilihan == list_cb_data[i].product) {
+                        tais.text = list_cb_data[i].value;
+                        break;
+                      }
+                    }
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  },
+                  child: Container(
+                    width: 0.7 * width,
+                    height: 0.07 * height,
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(144, 200, 172, 1),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                        child: Text(
+                      "Select",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    )),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -296,20 +411,65 @@ class _ManageUnperformPortofolioState extends State<ManageUnperformPortofolio> {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
-                width: 0.85 * width,
-                height: 0.07 * height,
-                child: TextFormField(
-                    controller: tais,
-                    // obscureText: true,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintStyle: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromRGBO(157, 157, 157, 0.5),
-                          fontSize: 16,
+              child: Row(
+                children: [
+                  Container(
+                    width: 0.5 * width,
+                    height: 0.07 * height,
+                    child: TextFormField(
+                        controller: tais,
+                        // obscureText: true,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Color.fromRGBO(157, 157, 157, 0.5),
+                              fontSize: 16,
+                            ),
+                            hintText: "20000000")),
+                  ),
+                  SizedBox(
+                    width: 0.05 * width,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      print("here");
+                      if (list_cb_data.isEmpty) {
+                        get_cb_data();
+                      } else {
+                        showcb();
+                      }
+                    },
+                    child: Container(
+                      width: width * 0.3,
+                      height: height * 0.07,
+                      // color: Color.fromRGBO(217, 215, 241, 1),
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(249, 249, 249, 1),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 5.0,
+                                color: Colors.black12,
+                                spreadRadius: 2.0,
+                                offset: Offset(0, 2))
+                          ]),
+                      child: Center(
+                        child: Text(
+                          "Choose Asset",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            // color: Color.fromRGBO(104, 103, 172, 1),
+                            color: Color.fromRGBO(144, 200, 172, 1),
+                            // color: Color.fromRGBO(246, 198, 234, 1),
+                          ),
                         ),
-                        hintText: "20000000")),
+                      ),
+                    ),
+                  ),
+                ],
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),

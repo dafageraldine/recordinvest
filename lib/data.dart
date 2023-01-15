@@ -2,6 +2,8 @@ List<String> comboboxtype = [];
 List<String> comboboxproduct = [];
 List<Pilihan> listNmtype = <Pilihan>[];
 List<RecordData> listrecord = <RecordData>[];
+List<ComboBoxData> list_cb_data = <ComboBoxData>[];
+List<String> combobox = [];
 
 class Pilihan {
   String Nmtype;
@@ -14,6 +16,13 @@ class RecordData {
   String type;
   String product;
   RecordData(this.date, this.value, this.type, this.product);
+}
+
+class ComboBoxData {
+  String date;
+  String product;
+  String value;
+  ComboBoxData(this.date, this.value, this.product);
 }
 
 var Build = "1";
