@@ -16,6 +16,9 @@ class HasilSimulasiPorto extends StatefulWidget {
   final double money_reinvest;
   final double estimated_day;
   final double estimated_month;
+  final double hargabep;
+  final double up_percent;
+  final double prn;
   const HasilSimulasiPorto(
       this.invest_total,
       this.floss,
@@ -26,6 +29,9 @@ class HasilSimulasiPorto extends StatefulWidget {
       this.money_reinvest,
       this.estimated_day,
       this.estimated_month,
+      this.hargabep,
+      this.up_percent,
+      this.prn,
       {super.key});
 
   @override
@@ -115,13 +121,30 @@ class _HasilSimulasiPortoState extends State<HasilSimulasiPorto> {
                 ),
                 TextSpan(
                   text:
-                      "Maka jika anda memilih invest ulang ke produk yang sedang turun uang yang dibutuhkan adalah sebesar \nRp " +
+                      "Maka jika anda memilih invest ulang ke produk yang sedang turun, uang yang dibutuhkan adalah sebesar \nRp " +
                           oCcy.format(widget.money_reinvest).toString() +
-                          "\n\n"
+                          "(beli " +
+                          (widget.money_reinvest / widget.prn)
+                              .toStringAsFixed(3) +
+                          " unit (" +
+                          ((widget.money_reinvest / widget.prn) / 100)
+                              .ceil()
+                              .toString() +
+                          " lot)) agar floating loss menjadi " +
+                          widget.desired_loss.toString() +
+                          " %\n\ndan berharap harga naik ke " +
+                          oCcy.format(widget.hargabep).toString() +
+                          "(" +
+                          widget.up_percent.toStringAsFixed(2) +
+                          " %) agar BEP"
+                              "\n\n"
                   // +
                   // " tahun adalah :\n "
                   ,
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15),
                 ),
                 TextSpan(
                   text:

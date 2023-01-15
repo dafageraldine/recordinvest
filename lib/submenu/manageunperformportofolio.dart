@@ -71,8 +71,10 @@ class _ManageUnperformPortofolioState extends State<ManageUnperformPortofolio> {
         (floating_loss * kurs_ / (uang_invest_awal * kurs_)) * 100;
     var asset_akhir = (100 / desired_loss) * (kurs_ * floating_loss);
     var uang_harus_diinvest = asset_akhir - (uang_invest_awal * kurs_);
-    var hargabep =
-        asset_akhir / (unit_dimiliki + (uang_harus_diinvest / harga_saat_ini));
+    var hargabep = (asset_akhir /
+            (unit_dimiliki +
+                (uang_harus_diinvest / (harga_saat_ini * kurs_)))) /
+        kurs_;
     var up_percent = ((hargabep - harga_saat_ini) / harga_saat_ini) * 100;
     var return_perhari_switch_money =
         (asset_switch_now + (kurs_ * (uang_invest_awal - floating_loss))) *
@@ -91,7 +93,10 @@ class _ManageUnperformPortofolioState extends State<ManageUnperformPortofolio> {
                 return_switch_percent,
                 uang_harus_diinvest,
                 estimated_day,
-                estimated_month)));
+                estimated_month,
+                hargabep,
+                up_percent,
+                harga_saat_ini)));
   }
 
   void showcb() {
