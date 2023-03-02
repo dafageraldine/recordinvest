@@ -6,6 +6,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data.dart';
 
@@ -64,26 +65,11 @@ class _RecordpageState extends State<Recordpage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          width: width,
-          height: height * 0.1,
-          // color: Color.fromRGBO(217, 215, 241, 1),
-          color: Color.fromRGBO(144, 200, 172, 1),
-          child: Padding(
-            padding: EdgeInsets.only(left: 0.05 * width, top: 0.04 * height),
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Create Record",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    // color: Color.fromRGBO(104, 103, 172, 1),
-                    color: Color.fromRGBO(249, 249, 249, 1),
-                    // color: Color.fromRGBO(246, 198, 234, 1),
-                  ),
-                )),
-          ),
+        AppBarWithBackButton(
+          titleBar: "Create Record",
+          onTap: () {
+            Navigator.pop(context);
+          },
         ),
         Padding(
           padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),

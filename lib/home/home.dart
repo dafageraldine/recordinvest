@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:recordinvest/components/app_bar_with_button.dart';
+import 'package:recordinvest/components/card_menu.dart';
+import 'package:recordinvest/components/saldo_card.dart';
 import 'package:recordinvest/data.dart';
 import 'package:http/http.dart' as http;
 import 'package:recordinvest/login.dart';
@@ -177,190 +180,28 @@ class _HomepageState extends State<Homepage> {
         backgroundColor: Colors.white,
         body: Column(
           children: [
-            Container(
-              width: width,
-              height: height * 0.1,
-              // color: Color.fromRGBO(217, 215, 241, 1),
-              color: Color.fromRGBO(144, 200, 172, 1),
-              child: Padding(
-                padding:
-                    EdgeInsets.only(left: 0.05 * width, top: 0.04 * height),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        Text(
-                          "My InvestMent Portofolio",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            // color: Color.fromRGBO(104, 103, 172, 1),
-                            color: Color.fromRGBO(249, 249, 249, 1),
-                            // color: Color.fromRGBO(246, 198, 234, 1),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 0.2 * width,
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.remove('uname');
-                            await prefs.remove('pass');
-                            await prefs.remove('id');
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Login()));
-                          },
-                          child: Container(
-                            width: 0.15 * width,
-                            height: 0.04 * height,
-                            color: Colors.white,
-                            child: Center(
-                                child: Text(
-                              "Log Out",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                // color: Color.fromRGBO(104, 103, 172, 1),
-                                color: Color.fromRGBO(157, 157, 157, 1),
-                                // color: Color.fromRGBO(246, 198, 234, 1),
-                              ),
-                            )),
-                          ),
-                        )
-                      ],
-                    )),
-              ),
+            AppBarWithButton(
+              titleButton: "Log Out",
+              titleBar: "My InvestMent Portofolio",
+              onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.remove('uname');
+                await prefs.remove('pass');
+                await prefs.remove('id');
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Login()));
+              },
             ),
             SizedBox(
               height: 0.025 * height,
             ),
-            Container(
-              width: 0.85 * width,
-              height: 0.125 * height,
-              decoration: BoxDecoration(
-                  // color: Color.fromRGBO(250, 244, 183, 1),
-                  color: Color.fromRGBO(157, 157, 157, 1),
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 5.0,
-                        color: Colors.black12,
-                        spreadRadius: 5.0,
-                        offset: Offset(0, 2))
-                  ]),
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: InkWell(
-                        onTap: () {
-                          getSaldo();
-                        },
-                        child: Container(
-                          width: width * 0.2,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              // color: Color.fromRGBO(250, 244, 183, 1),
-                              color: Color.fromRGBO(144, 200, 172, 1),
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    blurRadius: 5.0,
-                                    color: Colors.black12,
-                                    spreadRadius: 5.0,
-                                    offset: Offset(0, 2))
-                              ]),
-                          child: Center(
-                              child: Text(
-                            "Refresh",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              // color: Color.fromRGBO(157, 157, 157, 1),
-                              // color: Color.fromRGBO(144, 200, 172, 1),
-                              color: Color.fromRGBO(249, 249, 249, 1),
-                              fontSize: 12,
-                            ),
-                          )),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 0.02 * height, left: 0.1 * width),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Saldo",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                // color: Color.fromRGBO(157, 157, 157, 1),
-                                // color: Color.fromRGBO(144, 200, 172, 1),
-                                color: Color.fromRGBO(249, 249, 249, 1),
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              " " + percent,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                // color: Color.fromRGBO(157, 157, 157, 1),
-                                // color: Color.fromRGBO(144, 200, 172, 1),
-                                color: percent.contains("+")
-                                    ? Colors.green[100]
-                                    : percent.contains("-")
-                                        ? Colors.red[100]
-                                        : Colors.blueGrey,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 0.1 * width),
-                        child: Text(
-                          "Rp " + saldo,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            // color: Color.fromRGBO(157, 157, 157, 1),
-                            // color: Color.fromRGBO(144, 200, 172, 1),
-                            color: percent.contains("+")
-                                ? Colors.green[100]
-                                : percent.contains("-")
-                                    ? Colors.red[100]
-                                    : Colors.blueGrey,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 0.01 * height, left: 0.1 * width),
-                        child: Text(
-                          date,
-                          style: TextStyle(
-                            // color: Color.fromRGBO(157, 157, 157, 1),
-                            // color: Color.fromRGBO(144, 200, 172, 1),
-                            color: Color.fromRGBO(249, 249, 249, 1),
-                            fontWeight: FontWeight.w800,
-                            fontSize: 12,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            SaldoCard(
+                saldo: saldo,
+                date: date,
+                percent: percent,
+                onTap: () {
+                  getSaldo();
+                }),
             SizedBox(
               height: 0.025 * height,
             ),
@@ -382,107 +223,27 @@ class _HomepageState extends State<Homepage> {
             ),
             Row(
               children: [
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 0.1 * width),
-                        child: InkWell(
-                          onTap: () {
-                            comboboxtype.clear();
-                            comboboxproduct.clear();
-                            comboboxtype.add("pilih investment type");
-                            comboboxproduct.add("pilih produk");
-                            getType();
-                          },
-                          child: Container(
-                            width: 0.35 * width,
-                            height: 0.35 * width,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(144, 200, 172, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      blurRadius: 5.0,
-                                      color: Colors.black12,
-                                      spreadRadius: 5.0,
-                                      offset: Offset(0, 2))
-                                ]),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Image.asset(
-                                  "assets/edit.png",
-                                  width: 0.2 * width,
-                                  height: 0.2 * width,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Create Record",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    color: Color.fromRGBO(249, 249, 249, 1),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ))),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 0.1 * width),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PortofolioManagement()));
-                          },
-                          child: Container(
-                            width: 0.35 * width,
-                            height: 0.35 * width,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(144, 200, 172, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      blurRadius: 5.0,
-                                      color: Colors.black12,
-                                      spreadRadius: 5.0,
-                                      offset: Offset(0, 2))
-                                ]),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Image.asset(
-                                  "assets/pie-chart (1).png",
-                                  width: 0.2 * width,
-                                  height: 0.2 * width,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Portofolio Management",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 14,
-                                    color: Color.fromRGBO(249, 249, 249, 1),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )))
+                CardMenu(
+                  onTap: () {
+                    comboboxtype.clear();
+                    comboboxproduct.clear();
+                    comboboxtype.add("pilih investment type");
+                    comboboxproduct.add("pilih produk");
+                    getType();
+                  },
+                  image: "assets/edit.png",
+                  title_card: "Create Record",
+                ),
+                CardMenu(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PortofolioManagement()));
+                  },
+                  image: "assets/pie-chart (1).png",
+                  title_card: "Portofolio Management",
+                ),
               ],
             ),
             SizedBox(
@@ -490,105 +251,24 @@ class _HomepageState extends State<Homepage> {
             ),
             Row(
               children: [
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 0.1 * width),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AddType()));
-                          },
-                          child: Container(
-                            width: 0.35 * width,
-                            height: 0.35 * width,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(144, 200, 172, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      blurRadius: 5.0,
-                                      color: Colors.black12,
-                                      spreadRadius: 5.0,
-                                      offset: Offset(0, 2))
-                                ]),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Image.asset(
-                                  "assets/buy.png",
-                                  width: 0.2 * width,
-                                  height: 0.2 * width,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Add Investment\nType",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    color: Color.fromRGBO(249, 249, 249, 1),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ))),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 0.1 * width),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CreditSimulation()));
-                          },
-                          child: Container(
-                            width: 0.35 * width,
-                            height: 0.35 * width,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(144, 200, 172, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      blurRadius: 5.0,
-                                      color: Colors.black12,
-                                      spreadRadius: 5.0,
-                                      offset: Offset(0, 2))
-                                ]),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Image.asset(
-                                  "assets/garage.png",
-                                  width: 0.2 * width,
-                                  height: 0.2 * width,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "credit\nsimulation",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 14,
-                                    color: Color.fromRGBO(249, 249, 249, 1),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )))
+                CardMenu(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AddType()));
+                  },
+                  image: "assets/buy.png",
+                  title_card: "Add Investment\nType",
+                ),
+                CardMenu(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CreditSimulation()));
+                  },
+                  image: "assets/garage.png",
+                  title_card: "credit\nsimulation",
+                ),
               ],
             ),
           ],

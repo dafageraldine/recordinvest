@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:recordinvest/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../components/app_bar_with_back_button.dart';
+
 class AddType extends StatefulWidget {
   const AddType({Key? key}) : super(key: key);
 
@@ -47,27 +49,11 @@ class _AddTypeState extends State<AddType> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          width: width,
-          height: height * 0.1,
-          // color: Color.fromRGBO(217, 215, 241, 1),
-          color: Color.fromRGBO(144, 200, 172, 1),
-          child: Padding(
-            padding: EdgeInsets.only(left: 0.05 * width, top: 0.04 * height),
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Add Investment Type",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    // color: Color.fromRGBO(104, 103, 172, 1),
-                    color: Color.fromRGBO(249, 249, 249, 1),
-                    // color: Color.fromRGBO(246, 198, 234, 1),
-                  ),
-                )),
-          ),
-        ),
+        AppBarWithBackButton(
+            titleBar: "Add Investment Type",
+            onTap: () {
+              Navigator.pop(context);
+            }),
         Padding(
           padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
           child: Text(

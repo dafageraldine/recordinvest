@@ -7,6 +7,7 @@ import 'package:recordinvest/submenu/hasilsimulasiporto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../components/app_bar_with_back_button.dart';
 import '../data.dart';
 
 class ManageUnperformPortofolio extends StatefulWidget {
@@ -198,36 +199,11 @@ class _ManageUnperformPortofolioState extends State<ManageUnperformPortofolio> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            width: width,
-            height: height * 0.12,
-            // color: Color.fromRGBO(217, 215, 241, 1),
-            color: Color.fromRGBO(144, 200, 172, 1),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 0.05 * width, top: 0.04 * height),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Manage Unperform Portofolio",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          // color: Color.fromRGBO(104, 103, 172, 1),
-                          color: Color.fromRGBO(249, 249, 249, 1),
-                          // color: Color.fromRGBO(246, 198, 234, 1),
-                        ),
-                      )),
-                ),
-                SizedBox(
-                  width: width * 0.325,
-                ),
-              ],
-            ),
-          ),
+          AppBarWithBackButton(
+              titleBar: "Manage Unperform Portofolio",
+              onTap: () {
+                Navigator.pop(context);
+              }),
           SizedBox(
             height: 0.025 * height,
           ),

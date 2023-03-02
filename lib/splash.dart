@@ -72,12 +72,7 @@ class _SplashState extends State<Splash> {
             child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
-                  "Masuya Report Analytics v" +
-                      Build +
-                      "." +
-                      Major +
-                      "." +
-                      Minor,
+                  "Record Invest v" + Build + "." + Major + "." + Minor,
                   style: TextStyle(fontWeight: FontWeight.w700),
                 )),
           ),
