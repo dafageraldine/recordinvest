@@ -1,27 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
+import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/components/card_menu.dart';
-import 'package:recordinvest/submenu/manageunperformportofolio.dart';
-import 'package:recordinvest/submenu/performance.dart';
+import 'package:recordinvest/screens/submenu/carcreditsimulation.dart';
+import 'package:recordinvest/viewmodels/home/homeviewmodel.dart';
 
-import '../components/app_bar_with_back_button.dart';
-
-class PortofolioManagement extends StatelessWidget {
-  const PortofolioManagement({super.key});
+class CreditSimulation extends StatelessWidget {
+  const CreditSimulation({super.key});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(children: [
         AppBarWithBackButton(
-          titleBar: 'Portofolio Management',
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
+            titleBar: "Credit Simulation",
+            onTap: () {
+              Navigator.pop(context);
+            }),
         SizedBox(
           height: 0.025 * height,
         ),
@@ -45,24 +44,23 @@ class PortofolioManagement extends StatelessWidget {
           children: [
             CardMenu(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Performance()));
-                },
-                image: "assets/financial-profit.png",
-                title_card: "Performance"),
-            CardMenu(
-                onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ManageUnperformPortofolio()));
+                          builder: (context) =>
+                              ChangeNotifierProvider<HomeViewModel>(
+                                  create: (context) => HomeViewModel(),
+                                  child: CarCreditSimulation())));
                 },
-                image: "assets/accounting.png",
-                title_card: "Manage Unperform Portofolio"),
+                image: "assets/car.png",
+                title_card: "Car Credit\nSimulation"),
+            CardMenu(
+                onTap: () {},
+                image: "assets/house1.png",
+                title_card: "House Credit Simulation"),
           ],
-        )
+        ),
       ]),
-      backgroundColor: Colors.white,
     );
   }
 }

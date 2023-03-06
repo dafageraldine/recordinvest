@@ -8,12 +8,13 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:recordinvest/models/recorddata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-import '../components/app_bar_with_back_button_and_icon.dart';
-import '../data.dart';
+import '../../../components/app_bar_with_back_button_and_icon.dart';
+import '../../../models/data.dart';
 
 class Performance extends StatefulWidget {
   const Performance({Key? key}) : super(key: key);

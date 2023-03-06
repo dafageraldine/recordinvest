@@ -1,101 +1,14 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:recordinvest/data.dart';
-import 'package:recordinvest/home/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:recordinvest/models/data.dart';
+import 'package:recordinvest/viewmodels/login/loginviewmodel.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  final LoginViewModel viewModel;
 
-  @override
-  State<Login> createState() => _LoginState();
-}
+  Login({super.key, required this.viewModel});
 
-class _LoginState extends State<Login> {
   TextEditingController uname = TextEditingController();
   TextEditingController pass = TextEditingController();
-
-  Future login() async {
-    try {
-      print("login");
-      var body = {"user": uname.text, "pwd": pass.text};
-      http.Response postdata =
-          await http.post(Uri.parse(baseurl + "login"), body: body);
-      print(" url " + baseurl + "login");
-      var data = json.decode(postdata.body);
-      if (data["data"].length > 0) {
-        for (int i = 0; i < data["data"].length; i++) {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('uname', data["data"][i]["user"]);
-          await prefs.setString('pass', pass.text);
-          await prefs.setString('id', data["data"][i]["id"]);
-          break;
-        }
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Homepage()));
-      } else {
-        Fluttertoast.showToast(
-            msg: "Username atau password salah !",
-            backgroundColor: Colors.black,
-            textColor: Colors.white);
-      }
-    } catch (e) {
-      print(e.toString());
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
-    }
-  }
-
-  showAlertDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = TextButton(
-      child: Text(
-        "No",
-        style: TextStyle(color: Colors.grey),
-      ),
-      onPressed: () {
-        Navigator.of(context, rootNavigator: true).pop();
-      },
-    );
-    Widget continueButton = TextButton(
-      child: Text(
-        "yes",
-        style: TextStyle(
-          color: Color.fromRGBO(144, 200, 172, 1),
-        ),
-      ),
-      onPressed: () async {
-        exit(0);
-        // await delete();
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Warning"),
-      content: Text("Do you want exit ?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +16,7 @@ class _LoginState extends State<Login> {
     double height = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        showAlertDialog(context);
+        viewModel.showAlertDialog(context);
         return true;
       },
       child: Scaffold(
@@ -120,8 +33,6 @@ class _LoginState extends State<Login> {
                       "Record Invest v" + Build + "." + Major + "." + Minor,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        // color: Color.fromRGBO(157, 157, 157, 1),
-                        // color: Color.fromRGBO(144, 200, 172, 1),
                         color: Colors.grey[800],
                         fontSize: 16,
                       ),
@@ -132,7 +43,6 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     height: 0.225 * height,
                   ),
-                  // 100.verticalSpace,
                   Image.asset(
                     "assets/icon.png",
                     width: 0.4 * width,
@@ -162,7 +72,6 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     height: 0.02 * height,
                   ),
-                  // 20.verticalSpace,
                   Padding(
                     padding: EdgeInsets.only(
                       left: 25,
@@ -184,21 +93,9 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     height: 0.02 * height,
                   ),
-                  // 20.verticalSpace,
                   InkWell(
                     onTap: () async {
-                      // if (isloading == 1) {
-                      //   Fluttertoast.showToast(
-                      //       msg: "Login on process, please wait !",
-                      //       backgroundColor: Colors.black,
-                      //       textColor: Colors.white);
-                      // } else {
-                      //   setState(() {
-                      //     isloading = 1;
-                      //   });
-                      //   await cekVersi();
-                      // }
-                      login();
+                      viewModel.login(context, uname, pass);
                     },
                     child: Container(
                       width: 0.85 * width,
@@ -206,16 +103,8 @@ class _LoginState extends State<Login> {
                       decoration: BoxDecoration(
                           color: Color.fromRGBO(144, 200, 172, 1),
                           borderRadius: BorderRadius.circular(5)),
-                      child:
-                          // isloading == 1
-                          //     ? Center(
-                          //         child: CircularProgressIndicator(
-                          //           color: Colors.white,
-                          //         ),
-                          //       )
-                          //     :
-                          Center(
-                              child: Text(
+                      child: Center(
+                          child: Text(
                         "Login",
                         style: TextStyle(
                             color: Colors.white,

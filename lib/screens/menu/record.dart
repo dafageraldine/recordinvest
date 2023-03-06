@@ -1,45 +1,65 @@
 import 'dart:convert';
+
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:recordinvest/data.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:recordinvest/components/app_bar_with_back_button.dart';
+import 'package:recordinvest/models/comboboxdata.dart';
+import 'package:recordinvest/viewmodels/home/homeviewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../models/data.dart';
 
-import '../components/app_bar_with_back_button.dart';
-
-class AddType extends StatefulWidget {
-  const AddType({Key? key}) : super(key: key);
+class Recordpage extends StatefulWidget {
+  const Recordpage({Key? key}) : super(key: key);
 
   @override
-  State<AddType> createState() => _AddTypeState();
+  State<Recordpage> createState() => _RecordpageState();
 }
 
-class _AddTypeState extends State<AddType> {
-  TextEditingController type = TextEditingController();
-  TextEditingController product = TextEditingController();
+class _RecordpageState extends State<Recordpage> {
+  var selectedtype, selectedproduct;
+  TextEditingController values = TextEditingController();
 
-  Future inserttypenproduct() async {
+  Future insertrecord() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final String? id = prefs.getString('id');
-      var body = {"type": type.text, "name": product.text, "id": id};
-      http.Response postdata = await http
-          .post(Uri.parse(baseurl + "inserttypenproduct"), body: body);
+      var body = {
+        "type": selectedtype,
+        "product": selectedproduct,
+        "value": values.text,
+        "id": id
+      };
+      http.Response postdata =
+          await http.post(Uri.parse(baseurl + "insertrecord"), body: body);
       var data = json.decode(postdata.body);
       if (data["message"] == "data has been added") {
+        list_cb_data.clear();
+        combobox.clear();
         Fluttertoast.showToast(
             msg: "data has been added",
             backgroundColor: Colors.black,
             textColor: Colors.white);
+        Provider.of<HomeViewModel>(context, listen: false).getSaldo();
       }
     } catch (e) {
+      print(e.toString());
       Fluttertoast.showToast(
           msg: e.toString(),
           backgroundColor: Colors.black,
           textColor: Colors.white);
     }
+  }
+
+  @override
+  void initState() {
+    selectedtype = comboboxtype[0];
+    selectedproduct = comboboxproduct[0];
+    super.initState();
   }
 
   @override
@@ -50,10 +70,11 @@ class _AddTypeState extends State<AddType> {
       backgroundColor: Colors.white,
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         AppBarWithBackButton(
-            titleBar: "Add Investment Type",
-            onTap: () {
-              Navigator.pop(context);
-            }),
+          titleBar: "Create Record",
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
         Padding(
           padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
           child: Text(
@@ -66,22 +87,28 @@ class _AddTypeState extends State<AddType> {
           ),
         ),
         Padding(
-            padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Container(
+          padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+          child: Container(
               width: 0.85 * width,
               height: 0.07 * height,
-              child: TextFormField(
-                  controller: type,
-                  // obscureText: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(157, 157, 157, 0.5),
-                        fontSize: 16,
-                      ),
-                      hintText: "Reksadana Saham")),
-            )),
+              decoration: BoxDecoration(
+                // color: Colors.grey[600],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: DropdownSearch<String>(
+                popupProps: PopupProps.menu(
+                  itemBuilder: (context, item, isSelected) =>
+                      ListTile(title: Text(item)),
+                  showSearchBox: true,
+                ),
+                items: comboboxtype,
+                dropdownBuilder: (context, item) => Text(item!),
+                onChanged: (value) => setState(() {
+                  selectedtype = value!;
+                }),
+                selectedItem: selectedtype,
+              )),
+        ),
         Padding(
           padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
           child: Text(
@@ -98,8 +125,42 @@ class _AddTypeState extends State<AddType> {
             child: Container(
               width: 0.85 * width,
               height: 0.07 * height,
+              decoration: BoxDecoration(
+                // color: Colors.grey[600],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: DropdownSearch<String>(
+                popupProps: PopupProps.menu(
+                  itemBuilder: (context, item, isSelected) =>
+                      ListTile(title: Text(item)),
+                  showSearchBox: true,
+                ),
+                items: comboboxproduct,
+                dropdownBuilder: (context, item) => Text(item!),
+                onChanged: (value) => setState(() {
+                  selectedproduct = value!;
+                }),
+                selectedItem: selectedproduct,
+              ),
+            )),
+        Padding(
+          padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+          child: Text(
+            "Value",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Color.fromRGBO(157, 157, 157, 1),
+              fontSize: 16,
+            ),
+          ),
+        ),
+        Padding(
+            padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+            child: Container(
+              width: 0.85 * width,
+              height: 0.07 * height,
               child: TextFormField(
-                  controller: product,
+                  controller: values,
                   // obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -108,13 +169,13 @@ class _AddTypeState extends State<AddType> {
                         color: Color.fromRGBO(157, 157, 157, 0.5),
                         fontSize: 16,
                       ),
-                      hintText: "Sucorinvest equity fund")),
+                      hintText: "15000000.00")),
             )),
         Padding(
           padding: EdgeInsets.only(top: 0.04 * height, left: 0.1 * width),
           child: InkWell(
             onTap: () {
-              inserttypenproduct();
+              insertrecord();
             },
             child: Container(
               width: width * 0.85,
@@ -132,7 +193,7 @@ class _AddTypeState extends State<AddType> {
                   ]),
               child: Center(
                 child: Text(
-                  "Create Investment Type",
+                  "Create Record",
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 16,

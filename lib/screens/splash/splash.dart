@@ -4,12 +4,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:recordinvest/data.dart';
+import 'package:provider/provider.dart';
+import 'package:recordinvest/screens/home/home.dart';
+import 'package:recordinvest/models/data.dart';
 import 'package:http/http.dart' as http;
-import 'package:recordinvest/login.dart';
+import 'package:recordinvest/screens/login/login.dart';
+import 'package:recordinvest/viewmodels/home/homeviewmodel.dart';
+import 'package:recordinvest/viewmodels/login/loginviewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home/home.dart';
+import '../home/home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -30,17 +34,28 @@ class _SplashState extends State<Splash> {
       var data = json.decode(postdata.body);
       if (data["data"].length > 0) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Homepage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChangeNotifierProvider<HomeViewModel>(
+                    create: (context) => HomeViewModel(), child: Homepage())));
       } else {
         Timer(const Duration(seconds: 3), () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Login()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Login(
+                        viewModel: LoginViewModel(),
+                      )));
         });
       }
     } catch (e) {
       Timer(const Duration(seconds: 3), () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Login()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => Login(
+                      viewModel: LoginViewModel(),
+                    )));
       });
     }
   }

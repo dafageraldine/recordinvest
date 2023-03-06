@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:recordinvest/submenu/hasilsimulasiporto.dart';
+import 'package:recordinvest/models/comboboxdata.dart';
+import 'package:recordinvest/screens/submenu/hasilsimulasiporto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import '../components/app_bar_with_back_button.dart';
-import '../data.dart';
+import '../../../components/app_bar_with_back_button.dart';
+import '../../../models/data.dart';
 
 class ManageUnperformPortofolio extends StatefulWidget {
   const ManageUnperformPortofolio({super.key});

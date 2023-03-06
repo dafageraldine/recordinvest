@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:recordinvest/home/home.dart';
-import 'package:recordinvest/login.dart';
-import 'package:recordinvest/splash.dart';
+import 'package:recordinvest/screens/home/home.dart';
+import 'package:recordinvest/screens/login/login.dart';
+import 'package:recordinvest/screens/splash/splash.dart';
 
 void main() {
   runApp(const MyApp());

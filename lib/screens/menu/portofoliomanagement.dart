@@ -1,24 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:recordinvest/components/app_bar_with_back_button.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:recordinvest/components/card_menu.dart';
-import 'package:recordinvest/submenu/carcreditsimulation.dart';
+import 'package:recordinvest/screens/submenu/manageunperformportofolio.dart';
+import 'package:recordinvest/screens/submenu/performance.dart';
+import '../../../components/app_bar_with_back_button.dart';
 
-class CreditSimulation extends StatelessWidget {
-  const CreditSimulation({super.key});
+class PortofolioManagement extends StatelessWidget {
+  const PortofolioManagement({super.key});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Column(children: [
         AppBarWithBackButton(
-            titleBar: "Credit Simulation",
-            onTap: () {
-              Navigator.pop(context);
-            }),
+          titleBar: 'Portofolio Management',
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
         SizedBox(
           height: 0.025 * height,
         ),
@@ -42,20 +44,24 @@ class CreditSimulation extends StatelessWidget {
           children: [
             CardMenu(
                 onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Performance()));
+                },
+                image: "assets/financial-profit.png",
+                title_card: "Performance"),
+            CardMenu(
+                onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CarCreditSimulation()));
+                          builder: (context) => ManageUnperformPortofolio()));
                 },
-                image: "assets/car.png",
-                title_card: "Car Credit\nSimulation"),
-            CardMenu(
-                onTap: () {},
-                image: "assets/house1.png",
-                title_card: "House Credit Simulation"),
+                image: "assets/accounting.png",
+                title_card: "Manage Unperform Portofolio"),
           ],
-        ),
+        )
       ]),
+      backgroundColor: Colors.white,
     );
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:recordinvest/data.dart';
-import 'package:recordinvest/submenu/hasilsimulasi.dart';
+import 'package:provider/provider.dart';
+import 'package:recordinvest/models/data.dart';
+import 'package:recordinvest/screens/submenu/hasilsimulasi.dart';
+import 'package:recordinvest/viewmodels/home/homeviewmodel.dart';
 
-import '../components/app_bar_with_back_button.dart';
+import '../../../components/app_bar_with_back_button.dart';
 
 class CarCreditSimulation extends StatefulWidget {
   const CarCreditSimulation({super.key});
@@ -137,37 +139,38 @@ class _CarCreditSimulationState extends State<CarCreditSimulation> {
                   SizedBox(
                     width: 0.05 * width,
                   ),
-                  InkWell(
-                    onTap: () {
-                      usesaldoglobal = 1;
-                      dp.text = saldoglobal.toString();
-                      setState(() {});
-                      // inserttypenproduct();
-                    },
-                    child: Container(
-                      width: width * 0.3,
-                      height: height * 0.07,
-                      // color: Color.fromRGBO(217, 215, 241, 1),
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(249, 249, 249, 1),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 5.0,
-                                color: Colors.black12,
-                                spreadRadius: 2.0,
-                                offset: Offset(0, 2))
-                          ]),
-                      child: Center(
-                        child: Text(
-                          "gunakan saldo\nsaat ini",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            // color: Color.fromRGBO(104, 103, 172, 1),
-                            color: Color.fromRGBO(144, 200, 172, 1),
-                            // color: Color.fromRGBO(246, 198, 234, 1),
+                  Consumer<HomeViewModel>(
+                    builder: (context, value, child) => InkWell(
+                      onTap: () {
+                        usesaldoglobal = 1;
+                        dp.text = saldoglobal.toString();
+                        // inserttypenproduct();
+                      },
+                      child: Container(
+                        width: width * 0.3,
+                        height: height * 0.07,
+                        // color: Color.fromRGBO(217, 215, 241, 1),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(249, 249, 249, 1),
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 5.0,
+                                  color: Colors.black12,
+                                  spreadRadius: 2.0,
+                                  offset: Offset(0, 2))
+                            ]),
+                        child: Center(
+                          child: Text(
+                            "gunakan saldo\nsaat ini",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              // color: Color.fromRGBO(104, 103, 172, 1),
+                              color: Color.fromRGBO(144, 200, 172, 1),
+                              // color: Color.fromRGBO(246, 198, 234, 1),
+                            ),
                           ),
                         ),
                       ),
