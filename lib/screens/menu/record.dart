@@ -44,7 +44,6 @@ class _RecordpageState extends State<Recordpage> {
             msg: "data has been added",
             backgroundColor: Colors.black,
             textColor: Colors.white);
-        Provider.of<HomeViewModel>(context, listen: false).getSaldo();
       }
     } catch (e) {
       print(e.toString());
