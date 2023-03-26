@@ -25,14 +25,28 @@ class Performance extends StatefulWidget {
 
 class _PerformanceState extends State<Performance> {
   List<ChartData> chartData = [];
+  List<PerformanceChartData> performance_chart_data = [];
   List<String> added = [];
   var total = 0.0;
-  var awal = "pick a date";
+  var awal = "start date";
+  var end = "finish date";
+  var df = "";
+  var ds = "";
   final oCcy = NumberFormat.currency(
       locale: 'eu',
       customPattern: '#,### \u00a4',
       symbol: "",
       decimalDigits: 2);
+
+  void filldf_ds() {
+    DateTime currentDate = DateTime.now();
+    int daysAgo = 30;
+    DateTime fewDaysAgo = currentDate.subtract(Duration(days: daysAgo));
+    String formattedDate = DateFormat('yyyy-MM-dd').format(fewDaysAgo);
+    df = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    ds = formattedDate;
+    get_record_range();
+  }
 
   void _showDialogfilter(judul, konten) {
     // flutter defined function
@@ -80,14 +94,15 @@ class _PerformanceState extends State<Performance> {
                                 lastDate: DateTime(2100))
                             .then((date) {
                           setState(() {
-                            awal = DateFormat('yyyy-MM-dd').format(date!);
+                            ds = DateFormat('yyyy-MM-dd').format(date!);
+                            print("ds" + ds);
                             Navigator.of(context).pop();
                             _showDialogfilter("", "");
                           });
                         });
                       },
                       child: Container(
-                        width: sw * 0.5,
+                        width: sw * 0.6,
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -98,7 +113,50 @@ class _PerformanceState extends State<Performance> {
                         ),
                         child: Center(
                             child: Text(
-                          awal,
+                          ds,
+                          style: TextStyle(
+                              color: Color.fromRGBO(160, 160, 160, 1),
+                              fontSize: 14,
+                              // fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600),
+                        )),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 0.1 * sw, top: 10),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: () {
+                        showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2020),
+                                lastDate: DateTime(2100))
+                            .then((date) {
+                          setState(() {
+                            df = DateFormat('yyyy-MM-dd').format(date!);
+                            print("df" + df);
+                            Navigator.of(context).pop();
+                            _showDialogfilter("", "");
+                          });
+                        });
+                      },
+                      child: Container(
+                        width: sw * 0.6,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          border: Border.all(
+                              color: Color.fromRGBO(228, 228, 228, 1),
+                              width: 2),
+                          color: Colors.white,
+                        ),
+                        child: Center(
+                            child: Text(
+                          df,
                           style: TextStyle(
                               color: Color.fromRGBO(160, 160, 160, 1),
                               fontSize: 14,
@@ -136,7 +194,8 @@ class _PerformanceState extends State<Performance> {
                 InkWell(
                   onTap: () {
                     Navigator.of(context).pop();
-                    getrecord();
+                    get_record_range();
+                    // filldf_ds();
                     // if (dataexist == "2") {
                     //   Fluttertoast.showToast(
                     //       msg: "getting report on process, please wait !",
@@ -180,7 +239,7 @@ class _PerformanceState extends State<Performance> {
       listrecord.clear();
       final prefs = await SharedPreferences.getInstance();
       final String? id = prefs.getString('id');
-      var body = {"date": awal, "id": id};
+      var body = {"date": df, "id": id};
       http.Response postdata =
           await http.post(Uri.parse(baseurl + "getrecord"), body: body);
       var data = json.decode(postdata.body);
@@ -207,6 +266,43 @@ class _PerformanceState extends State<Performance> {
           msg: e.toString(),
           backgroundColor: Colors.black,
           textColor: Colors.white);
+    }
+  }
+
+  Future get_record_range() async {
+    try {
+      performance_chart_data.clear();
+      // setState(() {});
+      final prefs = await SharedPreferences.getInstance();
+      final String? id = prefs.getString('id');
+      var body = {"datestart": ds, "datefinish": df, "id": id};
+      print(body);
+      http.Response postdata = await http
+          .post(Uri.parse(baseurl + "get_record_by_range"), body: body);
+      var data = json.decode(postdata.body);
+      print(data);
+      for (int i = 0; i < data["data"].length; i++) {
+        performance_chart_data.add(PerformanceChartData(
+            data["data"][i]["date"], data["data"][i]["money"]));
+      }
+      if (performance_chart_data.isNotEmpty) {
+        performance_chart_data.sort((a, b) => a.day.compareTo(b.day));
+        setState(() {});
+        print("in hereeee");
+        // fill_chart();
+      } else {
+        Fluttertoast.showToast(
+            msg: "There are no data !",
+            backgroundColor: Colors.black,
+            textColor: Colors.white);
+        performance_chart_data.clear();
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
+      performance_chart_data.clear();
     }
   }
 
@@ -276,6 +372,7 @@ class _PerformanceState extends State<Performance> {
   @override
   void initState() {
     listrecord.clear();
+    filldf_ds();
     super.initState();
   }
 
@@ -296,6 +393,64 @@ class _PerformanceState extends State<Performance> {
               _showDialogfilter("filter", "filter");
             },
           ),
+          performance_chart_data.isEmpty
+              ? Container()
+              : Padding(
+                  padding: EdgeInsets.only(
+                      top: 0.02 * height, bottom: 0.02 * height),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 0.9 * width,
+                        height: 0.35 * height,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 5.0,
+                                  color: Colors.black12,
+                                  spreadRadius: 5.0,
+                                  offset: Offset(0, 2))
+                            ]),
+                        child: Center(
+                          child: SfCartesianChart(
+                              primaryXAxis: CategoryAxis(),
+
+                              // Chart title
+                              title: ChartTitle(text: 'Portofolio Data'),
+                              // Enable legend
+                              // legend: Legend(isVisible: true),
+                              // Enable tooltip
+                              margin: EdgeInsets.all(25),
+                              tooltipBehavior: TooltipBehavior(enable: true),
+                              series: <ChartSeries>[
+                                LineSeries<PerformanceChartData, String>(
+                                  dataSource: performance_chart_data,
+                                  color: Color.fromRGBO(144, 200, 172, 1),
+                                  width: 3,
+                                  xValueMapper: (PerformanceChartData pcd, _) =>
+                                      pcd.day,
+                                  yValueMapper: (PerformanceChartData pcd, _) =>
+                                      pcd.money,
+                                  name: 'Sales',
+                                  enableTooltip: true,
+                                  onPointTap: (pointInteractionDetails) {
+                                    df = performance_chart_data[
+                                            pointInteractionDetails.pointIndex!]
+                                        .day;
+                                    print(awal);
+                                    getrecord();
+                                  },
+                                  // Enable data label
+                                  // dataLabelSettings: DataLabelSettings(isVisible: true)
+                                )
+                              ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
           chartData.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.only(top: 10),
@@ -349,7 +504,7 @@ class _PerformanceState extends State<Performance> {
                               padding: EdgeInsets.only(
                                   top: 0.01 * height, left: 0.1 * width),
                               child: Text(
-                                awal,
+                                df,
                                 style: TextStyle(
                                   // color: Color.fromRGBO(157, 157, 157, 1),
                                   // color: Color.fromRGBO(144, 200, 172, 1),
@@ -598,4 +753,10 @@ class ChartData {
   String x;
   double y;
   Color color;
+}
+
+class PerformanceChartData {
+  String day;
+  double money;
+  PerformanceChartData(this.day, this.money);
 }
