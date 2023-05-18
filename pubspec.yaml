@@ -41,6 +41,8 @@ dependencies:
   syncfusion_flutter_charts: ^20.3.47
   shared_preferences: ^2.0.15
   provider: ^6.0.5
+  get: ^4.6.5
+  flutter_screenutil: ^5.7.0
 
 dev_dependencies:
   flutter_test:

@@ -43,7 +43,7 @@ class AppBarWithBackButton extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 0.08 * width, left: 0.05 * width),
             child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.center,
                 child: Text(
                   titleBar,
                   style: TextStyle(
