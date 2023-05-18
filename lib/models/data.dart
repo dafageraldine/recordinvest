@@ -3,7 +3,7 @@ List<String> comboboxproduct = [];
 List<String> combobox = [];
 
 var Build = "1";
-var Major = "1";
+var Major = "2";
 var Minor = "0";
 
 var devurl = "http://127.0.0.1:5000/";
