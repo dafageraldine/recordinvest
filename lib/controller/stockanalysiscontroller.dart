@@ -16,11 +16,11 @@ class StockAnalysisController extends GetxController {
   List<String> combStockType = ['indo', 'us'];
   RxString selectedStockType = "indo".obs;
   RxString selectedStockName = "".obs;
-  RxList<String> combStockName = <String>[].obs;
   Rx<TextEditingController> values = TextEditingController().obs;
   List<Stock> stockdataindo = <Stock>[];
-  RxList<String> combStockUs =
-      <String>['AAPL | Apple', 'MSFT | Microsoft', 'NVDA | Nvidia'].obs;
+  List<Stock> stockdataus = <Stock>[];
+  RxList<String> combStockName = <String>[].obs;
+  RxList<String> combStockUs = <String>[].obs;
   RxList<AnalyzeData> analyzedata = <AnalyzeData>[].obs;
   RxList<ResultAnalyzeDetail> analyzedatadetail = <ResultAnalyzeDetail>[].obs;
   final oCcy = NumberFormat.currency(
@@ -37,21 +37,38 @@ class StockAnalysisController extends GetxController {
         fillcbStockName();
       }
     } else {
-      fillcbStockNameUS();
+      if (stockdataus.isEmpty) {
+        await getListEmiten();
+      } else {
+        fillcbStockNameUS();
+      }
     }
   }
 
   Future getListEmiten() async {
-    stockdataindo.clear();
-    http.Response getdata =
-        await http.get(Uri.parse(baseurl + "get_list_emiten"));
+    var stocktype = selectedStockType.value;
+    if (stocktype == "us") {
+      stockdataus.clear();
+    } else {
+      stockdataindo.clear();
+    }
+    http.Response getdata = await http.get(Uri.parse(
+        baseurl + "get_list_emiten?jenis=${selectedStockType.value}"));
     Map<String, dynamic> json = jsonDecode(getdata.body);
     StockData stockData = StockData.fromJson(json);
-    for (var stock in stockData.data) {
-      stockdataindo.add(stock);
+    if (stocktype == "us") {
+      for (var stock in stockData.data) {
+        stockdataus.add(stock);
+      }
+      fillcbStockNameUS();
+      print(stockdataus.length);
+    } else {
+      for (var stock in stockData.data) {
+        stockdataindo.add(stock);
+      }
+      fillcbStockName();
+      print(stockdataindo.length);
     }
-    fillcbStockName();
-    print(stockdataindo.length);
   }
 
   fillcbStockName() {
@@ -64,7 +81,9 @@ class StockAnalysisController extends GetxController {
 
   fillcbStockNameUS() {
     combStockName.clear();
-    combStockName.addAll(combStockUs);
+    for (var i = 0; i < stockdataus.length; i++) {
+      combStockName.add(stockdataus[i].code + " | " + stockdataus[i].name);
+    }
     selectedStockName.value = combStockName[0];
   }
 
