@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:recordinvest/screens/home/home.dart';
 import 'package:recordinvest/models/data.dart';
 import 'package:http/http.dart' as http;
 import 'package:recordinvest/screens/login/login.dart';
 import 'package:recordinvest/viewmodels/home/homeviewmodel.dart';
-import 'package:recordinvest/viewmodels/login/loginviewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../home/home.dart';
@@ -34,6 +34,10 @@ class _SplashState extends State<Splash> {
           await http.post(Uri.parse(baseurl + "login"), body: body);
       var data = json.decode(postdata.body);
       if (data["data"].length > 0) {
+        //use getx
+        // Get.to(Homepage());
+
+        //use provider
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -41,22 +45,12 @@ class _SplashState extends State<Splash> {
                     create: (context) => HomeViewModel(), child: Homepage())));
       } else {
         Timer(const Duration(seconds: 3), () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Login(
-                        viewModel: LoginViewModel(),
-                      )));
+          Get.to(Login());
         });
       }
     } catch (e) {
       Timer(const Duration(seconds: 3), () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Login(
-                      viewModel: LoginViewModel(),
-                    )));
+        Get.to(Login());
       });
     }
   }

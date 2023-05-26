@@ -23,6 +23,7 @@ class StockAnalysisController extends GetxController {
   RxList<String> combStockUs = <String>[].obs;
   RxList<AnalyzeData> analyzedata = <AnalyzeData>[].obs;
   RxList<ResultAnalyzeDetail> analyzedatadetail = <ResultAnalyzeDetail>[].obs;
+  RxBool isLoading = false.obs;
   final oCcy = NumberFormat.currency(
       locale: 'eu',
       customPattern: '#,### \u00a4',
@@ -89,14 +90,22 @@ class StockAnalysisController extends GetxController {
 
   Future analyzeStock() async {
     analyzedata.clear();
-    http.Response getdata = await http.get(Uri.parse(baseurl +
-        "analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&money=${values.value.text}"));
-    Map<String, dynamic> json = jsonDecode(getdata.body);
-    AnalyzeDataModel dataModel = AnalyzeDataModel.fromJson(json);
-    for (var data in dataModel.data) {
-      analyzedata.add(data);
+    isLoading.value = true;
+    try {
+      http.Response getdata = await http.get(Uri.parse(baseurl +
+          "analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&money=${values.value.text}"));
+      Map<String, dynamic> json = jsonDecode(getdata.body);
+      AnalyzeDataModel dataModel = AnalyzeDataModel.fromJson(json);
+      for (var data in dataModel.data) {
+        analyzedata.add(data);
+      }
+      isLoading.value = false;
+      Get.to(ResultAnalyzeData());
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+          "error", "try again ! make sure you have internet connection");
     }
-    Get.to(ResultAnalyzeData());
   }
 
   Future analyzeDetail(String ma) async {
@@ -112,6 +121,8 @@ class StockAnalysisController extends GetxController {
     for (var data in dataModel.data) {
       analyzedatadetail.add(data);
     }
-    Get.to(AnalyzeDetail());
+    Get.to(AnalyzeDetail(
+      maSelected: ma,
+    ));
   }
 }

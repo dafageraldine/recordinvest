@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,7 +16,6 @@ import 'package:recordinvest/screens/menu/creditsimulation.dart';
 import 'package:recordinvest/screens/menu/portofoliomanagement.dart';
 import 'package:recordinvest/screens/menu/record.dart';
 import 'package:recordinvest/viewmodels/home/homeviewmodel.dart';
-import 'package:recordinvest/viewmodels/login/loginviewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Homepage extends StatefulWidget {
@@ -54,12 +54,7 @@ class _HomepageState extends State<Homepage> {
                 await prefs.remove('uname');
                 await prefs.remove('pass');
                 await prefs.remove('id');
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Login(
-                              viewModel: LoginViewModel(),
-                            )));
+                Get.to(Login());
               },
             ),
             SizedBox(

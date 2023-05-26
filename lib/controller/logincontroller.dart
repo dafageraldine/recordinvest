@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:recordinvest/screens/home/home.dart';
-import 'package:recordinvest/models/data.dart';
-import 'package:recordinvest/viewmodels/home/homeviewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import '../models/data.dart';
+import '../viewmodels/home/homeviewmodel.dart';
 
-class LoginViewModel extends ChangeNotifier {
+class LoginController extends GetxController {
   Future login(BuildContext context, TextEditingController uname,
       TextEditingController pass) async {
     try {
@@ -29,6 +29,10 @@ class LoginViewModel extends ChangeNotifier {
           await prefs.setString('id', data["data"][i]["id"]);
           break;
         }
+        //use getx
+        // Get.to(Homepage());
+
+        //use provider
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -49,7 +53,7 @@ class LoginViewModel extends ChangeNotifier {
     }
   }
 
-  showAlertDialog(BuildContext context) {
+  showAlertDialog() {
     // set up the buttons
     Widget cancelButton = TextButton(
       child: Text(
@@ -57,7 +61,7 @@ class LoginViewModel extends ChangeNotifier {
         style: TextStyle(color: Colors.grey),
       ),
       onPressed: () {
-        Navigator.of(context, rootNavigator: true).pop();
+        Get.back();
       },
     );
     Widget continueButton = TextButton(
@@ -72,23 +76,13 @@ class LoginViewModel extends ChangeNotifier {
       },
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
+    Get.dialog(AlertDialog(
       title: Text("Warning"),
       content: Text("Do you want exit ?"),
       actions: [
         cancelButton,
         continueButton,
       ],
-    );
-
-    // show the dialog
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+    ));
   }
 }

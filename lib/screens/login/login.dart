@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recordinvest/controller/logincontroller.dart';
 import 'package:recordinvest/models/data.dart';
-import 'package:recordinvest/viewmodels/login/loginviewmodel.dart';
 
 class Login extends StatelessWidget {
-  final LoginViewModel viewModel;
-
-  Login({super.key, required this.viewModel});
-
   TextEditingController uname = TextEditingController();
   TextEditingController pass = TextEditingController();
+
+  LoginController _loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,8 @@ class Login extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        viewModel.showAlertDialog(context);
+        // viewModel.showAlertDialog(context);
+        _loginController.showAlertDialog();
         return true;
       },
       child: Scaffold(
@@ -95,7 +95,7 @@ class Login extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () async {
-                      viewModel.login(context, uname, pass);
+                      _loginController.login(context, uname, pass);
                     },
                     child: Container(
                       width: 0.85 * width,

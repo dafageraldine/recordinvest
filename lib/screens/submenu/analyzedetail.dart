@@ -9,6 +9,8 @@ import '../../controller/stockanalysiscontroller.dart';
 
 class AnalyzeDetail extends StatelessWidget {
   StockAnalysisController _stockAnalysisController = Get.find();
+  String maSelected;
+  AnalyzeDetail({super.key, required this.maSelected});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +19,7 @@ class AnalyzeDetail extends StatelessWidget {
           child: Column(
         children: [
           AppBarWithBackButton(
-            titleBar: "Analyze Detail",
+            titleBar: "Analyze Detail ${maSelected}",
             onTap: () {
               Get.back();
             },
