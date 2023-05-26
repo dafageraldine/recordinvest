@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/card_menu.dart';
@@ -17,23 +15,21 @@ class PortofolioManagement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: const Size(360, 690));
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Column(children: [
         AppBarWithBackButton(
           titleBar: 'Portofolio Management',
           onTap: () {
-            Navigator.pop(context);
+            Get.back();
           },
         ),
         SizedBox(
-          height: 0.025 * height,
+          height: 0.025.sh,
         ),
         Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: EdgeInsets.only(left: 0.1 * width),
+              padding: EdgeInsets.only(left: 0.1.sw),
               child: Text(
                 "Menu",
                 style: TextStyle(
@@ -44,14 +40,13 @@ class PortofolioManagement extends StatelessWidget {
               ),
             )),
         SizedBox(
-          height: 0.025 * height,
+          height: 0.025.sh,
         ),
         Row(
           children: [
             CardMenu(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Performance()));
+                  Get.to(Performance());
                 },
                 image: "assets/financial-profit.png",
                 title_card: "Performance"),

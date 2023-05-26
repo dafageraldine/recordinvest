@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class HasilSimulasi extends StatefulWidget {
+class HasilSimulasi extends StatelessWidget {
   final int hargaotr;
   final double dpmobil;
   final int tenorcicilan;
@@ -11,7 +11,7 @@ class HasilSimulasi extends StatefulWidget {
   final double angsuranpokok;
   final double angsuranbunga;
   final double angsuranakhir;
-  const HasilSimulasi(
+  HasilSimulasi(
       this.plafonpinjaman,
       this.angsuranpokok,
       this.angsuranbunga,
@@ -22,16 +22,12 @@ class HasilSimulasi extends StatefulWidget {
       this.bungacicilan,
       {super.key});
 
-  @override
-  State<HasilSimulasi> createState() => _HasilSimulasiState();
-}
-
-class _HasilSimulasiState extends State<HasilSimulasi> {
   final oCcy = NumberFormat.currency(
       locale: 'eu',
       customPattern: '#,### \u00a4',
       symbol: "",
       decimalDigits: 2);
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -79,37 +75,37 @@ class _HasilSimulasiState extends State<HasilSimulasi> {
                     style: TextStyle(color: Colors.black)),
                 TextSpan(
                   text: "Harga Mobil Adalah Rp " +
-                      oCcy.format(widget.hargaotr).toString() +
+                      oCcy.format(hargaotr).toString() +
                       "\n",
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
                   text: "TDP / DP adalah Rp " +
-                      oCcy.format(widget.dpmobil).toString() +
+                      oCcy.format(dpmobil).toString() +
                       "\n\n",
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
                   text: "Angsuran pokok perbulan adalah Rp " +
-                      oCcy.format(widget.angsuranpokok).toString() +
+                      oCcy.format(angsuranpokok).toString() +
                       "\n\n",
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
                   text: "Angsuran bunga perbulan adalah Rp " +
-                      oCcy.format(widget.angsuranbunga).toString() +
+                      oCcy.format(angsuranbunga).toString() +
                       "\n\n",
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
                   text: "Maka angsuran perbulan untuk tenor " +
-                      widget.tenorcicilan.toString() +
+                      tenorcicilan.toString() +
                       " tahun adalah :\n ",
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
                   text: "\nRp " +
-                      oCcy.format(widget.angsuranakhir).toString() +
+                      oCcy.format(angsuranakhir).toString() +
                       " / bulan",
                   style: TextStyle(
                       color: Colors.black,

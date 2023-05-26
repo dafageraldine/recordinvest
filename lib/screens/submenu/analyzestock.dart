@@ -5,12 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
+import 'package:recordinvest/controller/homecontroller.dart';
 import 'package:recordinvest/controller/stockanalysiscontroller.dart';
 
 import '../../models/data.dart';
 
 class AnalyzeStock extends StatelessWidget {
   StockAnalysisController _stockAnalysisController = Get.find();
+  HomeController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +135,7 @@ class AnalyzeStock extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               _stockAnalysisController.values.value.text =
-                                  saldoglobal.toString();
+                                  _homeController.saldo.value.toString();
                             },
                             child: Container(
                               width: 0.3.sw,

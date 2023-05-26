@@ -4,12 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:recordinvest/screens/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../models/data.dart';
-import '../viewmodels/home/homeviewmodel.dart';
 
 class LoginController extends GetxController {
   Future login(BuildContext context, TextEditingController uname,
@@ -30,14 +28,7 @@ class LoginController extends GetxController {
           break;
         }
         //use getx
-        // Get.to(Homepage());
-
-        //use provider
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ChangeNotifierProvider<HomeViewModel>(
-                    create: (context) => HomeViewModel(), child: Homepage())));
+        Get.to(Homepage());
       } else {
         Fluttertoast.showToast(
             msg: "Username atau password salah !",

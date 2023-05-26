@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/components/card_menu.dart';
 import 'package:recordinvest/screens/submenu/carcreditsimulation.dart';
-import 'package:recordinvest/viewmodels/home/homeviewmodel.dart';
 
 class CreditSimulation extends StatelessWidget {
   const CreditSimulation({super.key});
@@ -44,13 +43,7 @@ class CreditSimulation extends StatelessWidget {
           children: [
             CardMenu(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ChangeNotifierProvider<HomeViewModel>(
-                                  create: (context) => HomeViewModel(),
-                                  child: CarCreditSimulation())));
+                  Get.to(CarCreditSimulation());
                 },
                 image: "assets/car.png",
                 title_card: "Car Credit\nSimulation"),

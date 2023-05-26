@@ -1,45 +1,24 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 import 'package:recordinvest/components/app_bar_with_button.dart';
 import 'package:recordinvest/components/card_menu.dart';
 import 'package:recordinvest/components/saldo_card.dart';
-import 'package:recordinvest/models/data.dart';
-import 'package:http/http.dart' as http;
+import 'package:recordinvest/controller/homecontroller.dart';
 import 'package:recordinvest/screens/login/login.dart';
 import 'package:recordinvest/screens/menu/addtype.dart';
 import 'package:recordinvest/screens/menu/creditsimulation.dart';
 import 'package:recordinvest/screens/menu/portofoliomanagement.dart';
-import 'package:recordinvest/screens/menu/record.dart';
-import 'package:recordinvest/viewmodels/home/homeviewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Homepage extends StatefulWidget {
-  const Homepage({super.key});
-
-  @override
-  State<Homepage> createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
-  @override
-  void initState() {
-    Provider.of<HomeViewModel>(context, listen: false).getSaldo();
-    super.initState();
-  }
-
+class Homepage extends StatelessWidget {
+  HomeController _homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        Provider.of<HomeViewModel>(context, listen: false)
-            .showAlertDialog(context);
+        _homeController.showAlertDialog();
         return true;
       },
       child: Scaffold(
@@ -60,14 +39,15 @@ class _HomepageState extends State<Homepage> {
             SizedBox(
               height: 0.025 * height,
             ),
-            Consumer<HomeViewModel>(
-                builder: ((context, value, child) => SaldoCard(
-                    saldo: value.saldo,
-                    date: value.date,
-                    percent: value.percent,
-                    onTap: () {
-                      value.getSaldo();
-                    }))),
+            Obx(() => SaldoCard(
+                saldo: _homeController.oCcy
+                    .format(_homeController.saldo.value)
+                    .toString(),
+                date: _homeController.date.value,
+                percent: _homeController.percent.value,
+                onTap: () {
+                  _homeController.getSaldo();
+                })),
             SizedBox(
               height: 0.025 * height,
             ),
@@ -91,18 +71,14 @@ class _HomepageState extends State<Homepage> {
               children: [
                 CardMenu(
                   onTap: () {
-                    Provider.of<HomeViewModel>(context, listen: false)
-                        .getType(context);
+                    _homeController.getType();
                   },
                   image: "assets/edit.png",
                   title_card: "Create Record",
                 ),
                 CardMenu(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PortofolioManagement()));
+                    Get.to(PortofolioManagement());
                   },
                   image: "assets/pie-chart (1).png",
                   title_card: "Portofolio Management",
@@ -116,18 +92,14 @@ class _HomepageState extends State<Homepage> {
               children: [
                 CardMenu(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AddType()));
+                    Get.to(AddType());
                   },
                   image: "assets/buy.png",
                   title_card: "Add Investment\nType",
                 ),
                 CardMenu(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CreditSimulation()));
+                    Get.to(CreditSimulation());
                   },
                   image: "assets/garage.png",
                   title_card: "credit\nsimulation",

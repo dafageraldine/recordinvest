@@ -4,8 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 
-class HasilSimulasiPorto extends StatefulWidget {
-  // ignore: non_constant_identifier_names
+class HasilSimulasiPorto extends StatelessWidget {
   final double invest_total;
   final double floss;
   // ignore: non_constant_identifier_names
@@ -19,7 +18,7 @@ class HasilSimulasiPorto extends StatefulWidget {
   final double hargabep;
   final double up_percent;
   final double prn;
-  const HasilSimulasiPorto(
+  HasilSimulasiPorto(
       this.invest_total,
       this.floss,
       this.floss_percent,
@@ -34,11 +33,6 @@ class HasilSimulasiPorto extends StatefulWidget {
       this.prn,
       {super.key});
 
-  @override
-  State<HasilSimulasiPorto> createState() => _HasilSimulasiPortoState();
-}
-
-class _HasilSimulasiPortoState extends State<HasilSimulasiPorto> {
   @override
   Widget build(BuildContext context) {
     final oCcy = NumberFormat.currency(
@@ -91,51 +85,48 @@ class _HasilSimulasiPortoState extends State<HasilSimulasiPorto> {
                     style: TextStyle(color: Colors.black)),
                 TextSpan(
                   text: "Anda telah invest sebesar\nRp " +
-                      oCcy.format(widget.invest_total).toString() +
+                      oCcy.format(invest_total).toString() +
                       "\n\n",
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
                   text: "dan mengalami floating loss sebesar\nRp " +
-                      oCcy.format(widget.floss).toString() +
+                      oCcy.format(floss).toString() +
                       " ( " +
-                      oCcy.format(widget.floss_percent).toString() +
+                      oCcy.format(floss_percent).toString() +
                       " %)"
                           "\n\n",
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
                   text: "dan berharap agar meminimalkan kerugian hingga\n" +
-                      oCcy.format(widget.desired_loss).toString() +
+                      oCcy.format(desired_loss).toString() +
                       " % \n\n",
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
                   text:
                       "Atau Switch ke Produk Asuransi lain dengan asset saat ini sebesar Rp " +
-                          oCcy.format(widget.asset_switch).toString() +
+                          oCcy.format(asset_switch).toString() +
                           " dan return perhari " +
-                          widget.return_sitch.toString() +
+                          return_sitch.toString() +
                           "%\n\n",
                   style: TextStyle(color: Colors.black),
                 ),
                 TextSpan(
                   text:
                       "Maka jika anda memilih invest ulang ke produk yang sedang turun, uang yang dibutuhkan adalah sebesar \nRp " +
-                          oCcy.format(widget.money_reinvest).toString() +
+                          oCcy.format(money_reinvest).toString() +
                           "(beli " +
-                          (widget.money_reinvest / widget.prn)
-                              .toStringAsFixed(3) +
+                          (money_reinvest / prn).toStringAsFixed(3) +
                           " unit (" +
-                          ((widget.money_reinvest / widget.prn) / 100)
-                              .ceil()
-                              .toString() +
+                          ((money_reinvest / prn) / 100).ceil().toString() +
                           " lot)) agar floating loss menjadi " +
-                          widget.desired_loss.toString() +
+                          desired_loss.toString() +
                           " %\n\ndan berharap harga naik ke " +
-                          oCcy.format(widget.hargabep).toString() +
+                          oCcy.format(hargabep).toString() +
                           "(" +
-                          widget.up_percent.toStringAsFixed(2) +
+                          up_percent.toStringAsFixed(2) +
                           " %) agar BEP"
                               "\n\n"
                   // +
@@ -149,9 +140,9 @@ class _HasilSimulasiPortoState extends State<HasilSimulasiPorto> {
                 TextSpan(
                   text:
                       "atau jual rugi dan pindahkan ke produk switch dengan estimasi menunggu selama " +
-                          widget.estimated_month.toStringAsFixed(2) +
+                          estimated_month.toStringAsFixed(2) +
                           " bulan(" +
-                          widget.estimated_day.toStringAsFixed(2) +
+                          estimated_day.toStringAsFixed(2) +
                           " hari) hingga BEP"
                   //     " / bulan"
                   ,

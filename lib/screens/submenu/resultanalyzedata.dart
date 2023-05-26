@@ -8,7 +8,6 @@ import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import '../../controller/stockanalysiscontroller.dart';
 
 class ResultAnalyzeData extends StatelessWidget {
-  ResultAnalyzeData({super.key});
   StockAnalysisController _stockAnalysisController = Get.find();
 
   @override
@@ -34,9 +33,6 @@ class ResultAnalyzeData extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w800,
                   color: Colors.grey.shade800,
-                  // color: Color.fromRGBO(157, 157, 157, 1),
-                  // color: Color.fromRGBO(144, 200, 172, 1),
-                  // color: Color.fromRGBO(157, 157, 157, 1),
                   fontSize: 16,
                 ),
               ),
@@ -51,9 +47,6 @@ class ResultAnalyzeData extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w800,
                   color: Colors.grey.shade800,
-                  // color: Color.fromRGBO(157, 157, 157, 1),
-                  // color: Color.fromRGBO(144, 200, 172, 1),
-                  // color: Color.fromRGBO(157, 157, 157, 1),
                   fontSize: 16,
                 ),
               ),
@@ -89,9 +82,6 @@ class ResultAnalyzeData extends StatelessWidget {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w800,
                                         color: Colors.grey.shade800,
-                                        // color: Color.fromRGBO(157, 157, 157, 1),
-                                        // color: Color.fromRGBO(144, 200, 172, 1),
-                                        // color: Color.fromRGBO(157, 157, 157, 1),
                                         fontSize: 16,
                                       ),
                                     ),
@@ -104,8 +94,6 @@ class ResultAnalyzeData extends StatelessWidget {
                                           " %",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w800,
-                                        // color: Color.fromRGBO(157, 157, 157, 1),
-                                        // color: Color.fromRGBO(144, 200, 172, 1),
                                         color: Colors.white,
                                         fontSize: 16,
                                       ),
@@ -120,8 +108,6 @@ class ResultAnalyzeData extends StatelessWidget {
                                                   .toString(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w800,
-                                            // color: Color.fromRGBO(157, 157, 157, 1),
-                                            // color: Color.fromRGBO(144, 200, 172, 1),
                                             color: Colors.red,
                                             fontSize: 16,
                                           ),
@@ -134,8 +120,6 @@ class ResultAnalyzeData extends StatelessWidget {
                                                   .toString(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w800,
-                                            // color: Color.fromRGBO(157, 157, 157, 1),
-                                            // color: Color.fromRGBO(144, 200, 172, 1),
                                             color: Colors.lightBlue,
                                             fontSize: 16,
                                           ),
@@ -151,8 +135,6 @@ class ResultAnalyzeData extends StatelessWidget {
                                           " %",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w800,
-                                        // color: Color.fromRGBO(157, 157, 157, 1),
-                                        // color: Color.fromRGBO(144, 200, 172, 1),
                                         color: Colors.red,
                                         fontSize: 16,
                                       ),
@@ -166,8 +148,6 @@ class ResultAnalyzeData extends StatelessWidget {
                                           " %",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w800,
-                                        // color: Color.fromRGBO(157, 157, 157, 1),
-                                        // color: Color.fromRGBO(144, 200, 172, 1),
                                         color: Colors.lightBlue,
                                         fontSize: 16,
                                       ),
@@ -181,8 +161,6 @@ class ResultAnalyzeData extends StatelessWidget {
                                           " %",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w800,
-                                        // color: Color.fromRGBO(157, 157, 157, 1),
-                                        // color: Color.fromRGBO(144, 200, 172, 1),
                                         color: Colors.black,
                                         fontSize: 16,
                                       ),
@@ -195,8 +173,6 @@ class ResultAnalyzeData extends StatelessWidget {
                                               .estimatedReturnInMoney,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w800,
-                                        // color: Color.fromRGBO(157, 157, 157, 1),
-                                        // color: Color.fromRGBO(144, 200, 172, 1),
                                         color: Colors.black,
                                         fontSize: 16,
                                       ),
