@@ -1,17 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:recordinvest/models/recorddata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 import '../../../components/app_bar_with_back_button_and_icon.dart';
 import '../../../models/data.dart';
@@ -58,16 +54,16 @@ class _PerformanceState extends State<Performance> {
         // return object of type Dialog
         return Dialog(
           backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: Container(
+          child: SizedBox(
             width: 0.85 * sw,
             height: 0.3 * sh,
             child: Column(
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 0.1 * sw, top: 0.03 * sh),
-                  child: Align(
+                  child: const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Choose date",
@@ -78,7 +74,7 @@ class _PerformanceState extends State<Performance> {
                             fontWeight: FontWeight.w600),
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Padding(
@@ -95,7 +91,7 @@ class _PerformanceState extends State<Performance> {
                             .then((date) {
                           setState(() {
                             ds = DateFormat('yyyy-MM-dd').format(date!);
-                            print("ds" + ds);
+                            print("ds$ds");
                             Navigator.of(context).pop();
                             _showDialogfilter("", "");
                           });
@@ -105,16 +101,17 @@ class _PerformanceState extends State<Performance> {
                         width: sw * 0.6,
                         height: 50,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
                           border: Border.all(
-                              color: Color.fromRGBO(228, 228, 228, 1),
+                              color: const Color.fromRGBO(228, 228, 228, 1),
                               width: 2),
                           color: Colors.white,
                         ),
                         child: Center(
                             child: Text(
                           ds,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Color.fromRGBO(160, 160, 160, 1),
                               fontSize: 14,
                               // fontFamily: 'Inter',
@@ -138,7 +135,7 @@ class _PerformanceState extends State<Performance> {
                             .then((date) {
                           setState(() {
                             df = DateFormat('yyyy-MM-dd').format(date!);
-                            print("df" + df);
+                            print("df$df");
                             Navigator.of(context).pop();
                             _showDialogfilter("", "");
                           });
@@ -148,16 +145,17 @@ class _PerformanceState extends State<Performance> {
                         width: sw * 0.6,
                         height: 50,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
                           border: Border.all(
-                              color: Color.fromRGBO(228, 228, 228, 1),
+                              color: const Color.fromRGBO(228, 228, 228, 1),
                               width: 2),
                           color: Colors.white,
                         ),
                         child: Center(
                             child: Text(
                           df,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Color.fromRGBO(160, 160, 160, 1),
                               fontSize: 14,
                               // fontFamily: 'Inter',
@@ -188,7 +186,7 @@ class _PerformanceState extends State<Performance> {
                 //       selectedItem: selectedpilihan,
                 //     )),
                 ,
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 InkWell(
@@ -213,9 +211,9 @@ class _PerformanceState extends State<Performance> {
                     width: 0.7 * sw,
                     height: 0.07 * sh,
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(144, 200, 172, 1),
+                        color: const Color.fromRGBO(144, 200, 172, 1),
                         borderRadius: BorderRadius.circular(10)),
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       "Search",
                       style: TextStyle(
@@ -241,7 +239,7 @@ class _PerformanceState extends State<Performance> {
       final String? id = prefs.getString('id');
       var body = {"date": df, "id": id};
       http.Response postdata =
-          await http.post(Uri.parse(baseurl + "getrecord"), body: body);
+          await http.post(Uri.parse("${baseurl}getrecord"), body: body);
       var data = json.decode(postdata.body);
       print(data);
       for (int i = 0; i < data["data"].length; i++) {
@@ -255,7 +253,7 @@ class _PerformanceState extends State<Performance> {
         fill_chart();
       } else {
         Fluttertoast.showToast(
-            msg: "There are no data for " + awal + " !",
+            msg: "There are no data for $awal !",
             backgroundColor: Colors.black,
             textColor: Colors.white);
         chartData.clear();
@@ -278,7 +276,7 @@ class _PerformanceState extends State<Performance> {
       var body = {"datestart": ds, "datefinish": df, "id": id};
       print(body);
       http.Response postdata = await http
-          .post(Uri.parse(baseurl + "get_record_by_range"), body: body);
+          .post(Uri.parse("${baseurl}get_record_by_range"), body: body);
       var data = json.decode(postdata.body);
       print(data);
       for (int i = 0; i < data["data"].length; i++) {
@@ -360,7 +358,7 @@ class _PerformanceState extends State<Performance> {
 
     for (var i = 0; i < chartData.length; i++) {
       var persen = chartData[i].y / total * 100;
-      chartData[i].x = chartData[i].x + " " + persen.toStringAsFixed(2) + "%";
+      chartData[i].x = "${chartData[i].x} ${persen.toStringAsFixed(2)}%";
     }
 
     //   if(listrecord[i].type == listrecord)
@@ -406,7 +404,7 @@ class _PerformanceState extends State<Performance> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                   blurRadius: 5.0,
                                   color: Colors.black12,
@@ -422,18 +420,18 @@ class _PerformanceState extends State<Performance> {
                               // Enable legend
                               // legend: Legend(isVisible: true),
                               // Enable tooltip
-                              margin: EdgeInsets.all(25),
+                              margin: const EdgeInsets.all(25),
                               tooltipBehavior: TooltipBehavior(enable: true),
                               series: <ChartSeries>[
                                 LineSeries<PerformanceChartData, String>(
                                   dataSource: performance_chart_data,
-                                  color: Color.fromRGBO(144, 200, 172, 1),
+                                  color: const Color.fromRGBO(144, 200, 172, 1),
                                   width: 3,
                                   xValueMapper: (PerformanceChartData pcd, _) =>
                                       pcd.day,
                                   yValueMapper: (PerformanceChartData pcd, _) =>
                                       pcd.money,
-                                  name: 'Sales',
+                                  name: 'money',
                                   enableTooltip: true,
                                   onPointTap: (pointInteractionDetails) {
                                     df = performance_chart_data[
@@ -453,15 +451,15 @@ class _PerformanceState extends State<Performance> {
                 ),
           chartData.isNotEmpty
               ? Padding(
-                  padding: EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Container(
                     width: 0.85 * width,
                     height: 0.125 * height,
                     decoration: BoxDecoration(
                         // color: Color.fromRGBO(250, 244, 183, 1),
-                        color: Color.fromRGBO(157, 157, 157, 1),
+                        color: const Color.fromRGBO(157, 157, 157, 1),
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                               blurRadius: 5.0,
                               color: Colors.black12,
@@ -476,7 +474,7 @@ class _PerformanceState extends State<Performance> {
                             Padding(
                               padding: EdgeInsets.only(
                                   top: 0.02 * height, left: 0.1 * width),
-                              child: Text(
+                              child: const Text(
                                 "Saldo",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
@@ -490,8 +488,8 @@ class _PerformanceState extends State<Performance> {
                             Padding(
                               padding: EdgeInsets.only(left: 0.1 * width),
                               child: Text(
-                                "Rp " + oCcy.format(total),
-                                style: TextStyle(
+                                "Rp ${oCcy.format(total)}",
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   // color: Color.fromRGBO(157, 157, 157, 1),
                                   // color: Color.fromRGBO(144, 200, 172, 1),
@@ -505,7 +503,7 @@ class _PerformanceState extends State<Performance> {
                                   top: 0.01 * height, left: 0.1 * width),
                               child: Text(
                                 df,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   // color: Color.fromRGBO(157, 157, 157, 1),
                                   // color: Color.fromRGBO(144, 200, 172, 1),
                                   color: Color.fromRGBO(249, 249, 249, 1),
@@ -540,7 +538,7 @@ class _PerformanceState extends State<Performance> {
                       )),
                 )
               : Container(),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           chartData.isNotEmpty
@@ -563,9 +561,9 @@ class _PerformanceState extends State<Performance> {
                         height: height * 0.04,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color.fromRGBO(144, 200, 172, 1),
+                          color: const Color.fromRGBO(144, 200, 172, 1),
                         ),
-                        child: Center(
+                        child: const Center(
                             child: Text(
                           "Recolouring",
                           style: TextStyle(
@@ -603,7 +601,7 @@ class _PerformanceState extends State<Performance> {
               return Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Container(
                       width: width * 0.85,
                       height: 0.1 * height,
@@ -617,7 +615,7 @@ class _PerformanceState extends State<Performance> {
                           children: [
                             Text(
                               chartData[index].x,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
@@ -627,8 +625,8 @@ class _PerformanceState extends State<Performance> {
                               ),
                             ),
                             Text(
-                              "Rp " + oCcy.format(chartData[index].y),
-                              style: TextStyle(
+                              "Rp ${oCcy.format(chartData[index].y)}",
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
                                 // color: Color.fromRGBO(144, 200, 172, 1),
@@ -646,13 +644,13 @@ class _PerformanceState extends State<Performance> {
             },
             itemCount: chartData.isEmpty ? 0 : chartData.length,
             shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
           ),
           chartData.isNotEmpty
               ? Padding(
                   padding:
                       EdgeInsets.only(left: width * 0.1, top: height * 0.02),
-                  child: Align(
+                  child: const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Portofolio Detail",
@@ -672,12 +670,12 @@ class _PerformanceState extends State<Performance> {
               return Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Container(
                       width: width * 0.85,
                       height: 0.15 * height,
                       decoration: BoxDecoration(
-                          color: Color.fromRGBO(144, 200, 172, 1),
+                          color: const Color.fromRGBO(144, 200, 172, 1),
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: EdgeInsets.only(left: width * 0.1, top: 20),
@@ -697,7 +695,7 @@ class _PerformanceState extends State<Performance> {
                             ),
                             Text(
                               listrecord[index].type,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
                                 // color: Color.fromRGBO(144, 200, 172, 1),
@@ -706,10 +704,8 @@ class _PerformanceState extends State<Performance> {
                               ),
                             ),
                             Text(
-                              "Rp " +
-                                  oCcy.format(
-                                      double.parse(listrecord[index].value)),
-                              style: TextStyle(
+                              "Rp ${oCcy.format(double.parse(listrecord[index].value))}",
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
                                 // color: Color.fromRGBO(144, 200, 172, 1),
@@ -719,7 +715,7 @@ class _PerformanceState extends State<Performance> {
                             ),
                             Text(
                               listrecord[index].date,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
                                 // color: Color.fromRGBO(144, 200, 172, 1),
@@ -737,9 +733,9 @@ class _PerformanceState extends State<Performance> {
             },
             itemCount: listrecord.isEmpty ? 0 : listrecord.length,
             shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           )
         ]),

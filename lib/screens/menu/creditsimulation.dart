@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
@@ -27,7 +26,7 @@ class CreditSimulation extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: EdgeInsets.only(left: 0.1 * width),
-              child: Text(
+              child: const Text(
                 "Menu",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,

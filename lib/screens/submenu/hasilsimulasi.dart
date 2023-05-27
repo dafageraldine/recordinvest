@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:recordinvest/components/app_bar_with_back_button.dart';
 
 class HasilSimulasi extends StatelessWidget {
   final int hargaotr;
@@ -34,80 +35,46 @@ class HasilSimulasi extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Column(children: [
-        Container(
-          width: width,
-          height: height * 0.12,
-          // color: Color.fromRGBO(217, 215, 241, 1),
-          color: Color.fromRGBO(144, 200, 172, 1),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Padding(
-                padding:
-                    EdgeInsets.only(left: 0.05 * width, top: 0.04 * height),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Simulation Result",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        // color: Color.fromRGBO(104, 103, 172, 1),
-                        color: Color.fromRGBO(249, 249, 249, 1),
-                        // color: Color.fromRGBO(246, 198, 234, 1),
-                      ),
-                    )),
-              ),
-              SizedBox(
-                width: width * 0.325,
-              ),
-            ],
-          ),
-        ),
+        AppBarWithBackButton(
+            titleBar: "Simulation Result",
+            onTap: () {
+              Get.back();
+            }),
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: RichText(
               textAlign: TextAlign.justify,
               text: TextSpan(children: <TextSpan>[
-                TextSpan(
+                const TextSpan(
                     text:
                         "Berdasarkan data yang anda masukkan, berikut adalah hasil simulasinya : \n\n",
                     style: TextStyle(color: Colors.black)),
                 TextSpan(
-                  text: "Harga Mobil Adalah Rp " +
-                      oCcy.format(hargaotr).toString() +
-                      "\n",
-                  style: TextStyle(color: Colors.black),
+                  text: "Harga Mobil Adalah Rp ${oCcy.format(hargaotr)}\n",
+                  style: const TextStyle(color: Colors.black),
                 ),
                 TextSpan(
-                  text: "TDP / DP adalah Rp " +
-                      oCcy.format(dpmobil).toString() +
-                      "\n\n",
-                  style: TextStyle(color: Colors.black),
+                  text: "TDP / DP adalah Rp ${oCcy.format(dpmobil)}\n\n",
+                  style: const TextStyle(color: Colors.black),
                 ),
                 TextSpan(
-                  text: "Angsuran pokok perbulan adalah Rp " +
-                      oCcy.format(angsuranpokok).toString() +
-                      "\n\n",
-                  style: TextStyle(color: Colors.black),
+                  text:
+                      "Angsuran pokok perbulan adalah Rp ${oCcy.format(angsuranpokok)}\n\n",
+                  style: const TextStyle(color: Colors.black),
                 ),
                 TextSpan(
-                  text: "Angsuran bunga perbulan adalah Rp " +
-                      oCcy.format(angsuranbunga).toString() +
-                      "\n\n",
-                  style: TextStyle(color: Colors.black),
+                  text:
+                      "Angsuran bunga perbulan adalah Rp ${oCcy.format(angsuranbunga)}\n\n",
+                  style: const TextStyle(color: Colors.black),
                 ),
                 TextSpan(
-                  text: "Maka angsuran perbulan untuk tenor " +
-                      tenorcicilan.toString() +
-                      " tahun adalah :\n ",
-                  style: TextStyle(color: Colors.black),
+                  text:
+                      "Maka angsuran perbulan untuk tenor $tenorcicilan tahun adalah :\n ",
+                  style: const TextStyle(color: Colors.black),
                 ),
                 TextSpan(
-                  text: "\nRp " +
-                      oCcy.format(angsuranakhir).toString() +
-                      " / bulan",
-                  style: TextStyle(
+                  text: "\nRp ${oCcy.format(angsuranakhir)} / bulan",
+                  style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
                       fontSize: 15),

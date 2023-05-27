@@ -1,6 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -8,11 +7,11 @@ import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/controller/homecontroller.dart';
 import 'package:recordinvest/controller/stockanalysiscontroller.dart';
 
-import '../../models/data.dart';
-
 class AnalyzeStock extends StatelessWidget {
-  StockAnalysisController _stockAnalysisController = Get.find();
-  HomeController _homeController = Get.find();
+  final StockAnalysisController _stockAnalysisController = Get.find();
+  final HomeController _homeController = Get.find();
+
+  AnalyzeStock({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +24,16 @@ class AnalyzeStock extends StatelessWidget {
               Get.back();
             }),
         Obx(() => _stockAnalysisController.isLoading.value
-            ? Lottie.asset('assets/lottie/loading.json', width: 0.5.sw)
+            ? Padding(
+                padding: EdgeInsets.only(top: 0.1.sh),
+                child: Lottie.asset('assets/loading.json'),
+              )
             : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
-                    child: Text(
+                    child: const Text(
                       "Stock Type",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -66,7 +69,7 @@ class AnalyzeStock extends StatelessWidget {
                           )))),
                   Padding(
                     padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
-                    child: Text(
+                    child: const Text(
                       "Stock Name",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -102,7 +105,7 @@ class AnalyzeStock extends StatelessWidget {
                           )))),
                   Padding(
                     padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
-                    child: Text(
+                    child: const Text(
                       "Estimated money invested",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -116,14 +119,14 @@ class AnalyzeStock extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 0.5.sw,
                             height: 0.07.sh,
                             child: TextFormField(
                                 controller:
                                     _stockAnalysisController.values.value,
                                 // obscureText: true,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintStyle: TextStyle(
                                       fontWeight: FontWeight.w400,
@@ -142,16 +145,16 @@ class AnalyzeStock extends StatelessWidget {
                               height: 0.07.sh,
                               // color: Color.fromRGBO(217, 215, 241, 1),
                               decoration: BoxDecoration(
-                                  color: Color.fromRGBO(249, 249, 249, 1),
+                                  color: const Color.fromRGBO(249, 249, 249, 1),
                                   borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                         blurRadius: 5.0,
                                         color: Colors.black12,
                                         spreadRadius: 2.0,
                                         offset: Offset(0, 2))
                                   ]),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "gunakan saldo\nsaat ini",
                                   textAlign: TextAlign.center,
@@ -179,16 +182,16 @@ class AnalyzeStock extends StatelessWidget {
                         height: 0.07.sh,
                         // color: Color.fromRGBO(217, 215, 241, 1),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(249, 249, 249, 1),
+                            color: const Color.fromRGBO(249, 249, 249, 1),
                             borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                   blurRadius: 5.0,
                                   color: Colors.black12,
                                   spreadRadius: 2.0,
                                   offset: Offset(0, 2))
                             ]),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             "Analyze",
                             style: TextStyle(

@@ -13,7 +13,7 @@ class RecordController extends GetxController with StateMixin {
   var selectedtype = "".obs, selectedproduct = "".obs;
   Rx<TextEditingController> values = TextEditingController().obs;
 
-  HomeController _homeController = Get.find();
+  final HomeController _homeController = Get.find();
 
   @override
   void onInit() {
@@ -33,7 +33,7 @@ class RecordController extends GetxController with StateMixin {
         "id": id
       };
       http.Response postdata =
-          await http.post(Uri.parse(baseurl + "insertrecord"), body: body);
+          await http.post(Uri.parse("${baseurl}insertrecord"), body: body);
       var data = json.decode(postdata.body);
       if (data["message"] == "data has been added") {
         list_cb_data.clear();

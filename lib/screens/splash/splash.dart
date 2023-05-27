@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/screens/home/home.dart';
@@ -12,7 +10,6 @@ import 'package:http/http.dart' as http;
 import 'package:recordinvest/screens/login/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../home/home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -29,7 +26,7 @@ class _SplashState extends State<Splash> {
       final String? pass = prefs.getString('pass');
       var body = {"user": uname, "pwd": pass};
       http.Response postdata =
-          await http.post(Uri.parse(baseurl + "login"), body: body);
+          await http.post(Uri.parse("${baseurl}login"), body: body);
       var data = json.decode(postdata.body);
       if (data["data"].length > 0) {
         //use getx
@@ -74,8 +71,8 @@ class _SplashState extends State<Splash> {
             child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
-                  "Record Invest v" + Build + "." + Major + "." + Minor,
-                  style: TextStyle(fontWeight: FontWeight.w700),
+                  "Record Invest v$Build.$Major.$Minor",
+                  style: const TextStyle(fontWeight: FontWeight.w700),
                 )),
           ),
         ],

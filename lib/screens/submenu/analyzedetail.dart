@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
@@ -8,7 +6,7 @@ import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import '../../controller/stockanalysiscontroller.dart';
 
 class AnalyzeDetail extends StatelessWidget {
-  StockAnalysisController _stockAnalysisController = Get.find();
+  final StockAnalysisController _stockAnalysisController = Get.find();
   String maSelected;
   AnalyzeDetail({super.key, required this.maSelected});
   @override
@@ -19,7 +17,7 @@ class AnalyzeDetail extends StatelessWidget {
           child: Column(
         children: [
           AppBarWithBackButton(
-            titleBar: "Analyze Detail ${maSelected}",
+            titleBar: "Analyze Detail $maSelected",
             onTap: () {
               Get.back();
             },
@@ -31,7 +29,7 @@ class AnalyzeDetail extends StatelessWidget {
                   return Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 8),
+                        padding: const EdgeInsets.only(top: 8),
                         child: InkWell(
                           onTap: () {
                             // _stockAnalysisController.analyzeDetail(
@@ -42,7 +40,7 @@ class AnalyzeDetail extends StatelessWidget {
                             width: 0.85.sw,
                             height: 0.15.sh,
                             decoration: BoxDecoration(
-                                color: Color.fromRGBO(144, 200, 172, 1),
+                                color: const Color.fromRGBO(144, 200, 172, 1),
                                 borderRadius: BorderRadius.circular(10)),
                             child: Padding(
                               padding: EdgeInsets.only(left: 0.1.sw, top: 20),
@@ -50,10 +48,8 @@ class AnalyzeDetail extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "action : " +
-                                        _stockAnalysisController
-                                            .analyzedatadetail[i].action
-                                            .toString(),
+                                    "action : ${_stockAnalysisController
+                                            .analyzedatadetail[i].action}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
                                       // color: Color.fromRGBO(157, 157, 157, 1),
@@ -72,7 +68,7 @@ class AnalyzeDetail extends StatelessWidget {
                                     _stockAnalysisController
                                         .analyzedatadetail[i].date
                                         .toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w800,
                                       // color: Color.fromRGBO(157, 157, 157, 1),
                                       // color: Color.fromRGBO(144, 200, 172, 1),
@@ -82,11 +78,10 @@ class AnalyzeDetail extends StatelessWidget {
                                   ),
                                   5.verticalSpace,
                                   Text(
-                                    "price : " +
-                                        _stockAnalysisController.oCcy.format(
+                                    "price : ${_stockAnalysisController.oCcy.format(
                                             _stockAnalysisController
-                                                .analyzedatadetail[i].close),
-                                    style: TextStyle(
+                                                .analyzedatadetail[i].close)}",
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w800,
                                       // color: Color.fromRGBO(157, 157, 157, 1),
                                       // color: Color.fromRGBO(144, 200, 172, 1),
@@ -104,7 +99,7 @@ class AnalyzeDetail extends StatelessWidget {
                   );
                 },
                 shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: _stockAnalysisController.analyzedatadetail.length,
               ),
               20.verticalSpace

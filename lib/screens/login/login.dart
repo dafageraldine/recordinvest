@@ -7,7 +7,9 @@ class Login extends StatelessWidget {
   TextEditingController uname = TextEditingController();
   TextEditingController pass = TextEditingController();
 
-  LoginController _loginController = Get.put(LoginController());
+  final LoginController _loginController = Get.put(LoginController());
+
+  Login({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class Login extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      "Record Invest v" + Build + "." + Major + "." + Minor,
+                      "Record Invest v$Build.$Major.$Minor",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.grey[800],
@@ -53,17 +55,17 @@ class Login extends StatelessWidget {
                     height: 0.02 * height,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       left: 25,
                     ),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Container(
+                      child: SizedBox(
                         width: 0.85 * width,
                         height: 0.07 * height,
                         child: TextFormField(
                             controller: uname,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: "Username")),
                       ),
@@ -73,18 +75,18 @@ class Login extends StatelessWidget {
                     height: 0.02 * height,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       left: 25,
                     ),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Container(
+                      child: SizedBox(
                         width: 0.85 * width,
                         height: 0.07 * height,
                         child: TextFormField(
                             controller: pass,
                             obscureText: true,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: "Password")),
                       ),
@@ -101,9 +103,9 @@ class Login extends StatelessWidget {
                       width: 0.85 * width,
                       height: 0.07 * height,
                       decoration: BoxDecoration(
-                          color: Color.fromRGBO(144, 200, 172, 1),
+                          color: const Color.fromRGBO(144, 200, 172, 1),
                           borderRadius: BorderRadius.circular(5)),
-                      child: Center(
+                      child: const Center(
                           child: Text(
                         "Login",
                         style: TextStyle(

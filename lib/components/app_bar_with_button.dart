@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class AppBarWithButton extends StatelessWidget {
   var onTap;
@@ -21,7 +19,7 @@ class AppBarWithButton extends StatelessWidget {
       width: width,
       height: height * 0.1,
       // color: Color.fromRGBO(217, 215, 241, 1),
-      color: Color.fromRGBO(144, 200, 172, 1),
+      color: const Color.fromRGBO(144, 200, 172, 1),
       child: Padding(
         padding: EdgeInsets.only(left: 0.05 * width, top: 0.04 * height),
         child: Align(
@@ -30,7 +28,7 @@ class AppBarWithButton extends StatelessWidget {
               children: [
                 Text(
                   titleBar,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 18,
                     // color: Color.fromRGBO(104, 103, 172, 1),
@@ -50,7 +48,7 @@ class AppBarWithButton extends StatelessWidget {
                     child: Center(
                         child: Text(
                       titleButton,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                         // color: Color.fromRGBO(104, 103, 172, 1),

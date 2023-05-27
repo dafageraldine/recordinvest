@@ -1,18 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/controller/homecontroller.dart';
-import 'package:recordinvest/models/data.dart';
-import 'package:recordinvest/screens/submenu/hasilsimulasi.dart';
 
 import '../../../components/app_bar_with_back_button.dart';
 import '../../controller/carcreditsimulationcontroller.dart';
 
 class CarCreditSimulation extends StatelessWidget {
-  CarCreditSimulationController _carCreditSimulationController =
+  final CarCreditSimulationController _carCreditSimulationController =
       Get.put(CarCreditSimulationController());
-  HomeController _homeController = Get.find();
+  final HomeController _homeController = Get.find();
+
+  CarCreditSimulation({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +32,7 @@ class CarCreditSimulation extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Harga Mobil",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -45,13 +43,13 @@ class CarCreditSimulation extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
+              child: SizedBox(
                 width: 0.85 * width,
                 height: 0.07 * height,
                 child: TextFormField(
                     controller: _carCreditSimulationController.otr.value,
                     // obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintStyle: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -62,7 +60,7 @@ class CarCreditSimulation extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "TDP/DP",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -75,13 +73,13 @@ class CarCreditSimulation extends StatelessWidget {
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 0.5 * width,
                     height: 0.07 * height,
                     child: TextFormField(
                         controller: _carCreditSimulationController.dp.value,
                         // obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -104,16 +102,16 @@ class CarCreditSimulation extends StatelessWidget {
                       height: height * 0.07,
                       // color: Color.fromRGBO(217, 215, 241, 1),
                       decoration: BoxDecoration(
-                          color: Color.fromRGBO(249, 249, 249, 1),
+                          color: const Color.fromRGBO(249, 249, 249, 1),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                                 blurRadius: 5.0,
                                 color: Colors.black12,
                                 spreadRadius: 2.0,
                                 offset: Offset(0, 2))
                           ]),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "gunakan saldo\nsaat ini",
                           textAlign: TextAlign.center,
@@ -132,7 +130,7 @@ class CarCreditSimulation extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Bunga(persen)",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -143,13 +141,13 @@ class CarCreditSimulation extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
+              child: SizedBox(
                 width: 0.85 * width,
                 height: 0.07 * height,
                 child: TextFormField(
                     controller: _carCreditSimulationController.bunga.value,
                     // obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintStyle: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -160,7 +158,7 @@ class CarCreditSimulation extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Tenor(tahun)",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -171,13 +169,13 @@ class CarCreditSimulation extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
+              child: SizedBox(
                 width: 0.85 * width,
                 height: 0.07 * height,
                 child: TextFormField(
                     controller: _carCreditSimulationController.tenor.value,
                     // obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintStyle: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -198,16 +196,16 @@ class CarCreditSimulation extends StatelessWidget {
                 height: height * 0.07,
                 // color: Color.fromRGBO(217, 215, 241, 1),
                 decoration: BoxDecoration(
-                    color: Color.fromRGBO(249, 249, 249, 1),
+                    color: const Color.fromRGBO(249, 249, 249, 1),
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                           blurRadius: 5.0,
                           color: Colors.black12,
                           spreadRadius: 2.0,
                           offset: Offset(0, 2))
                     ]),
-                child: Center(
+                child: const Center(
                   child: Text(
                     "Calculate",
                     style: TextStyle(

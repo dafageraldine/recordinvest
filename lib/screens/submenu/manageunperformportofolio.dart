@@ -1,20 +1,16 @@
-import 'dart:convert';
 
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/controller/manageunperformportofoliocontroller.dart';
 import 'package:recordinvest/models/comboboxdata.dart';
-import 'package:recordinvest/screens/submenu/hasilsimulasiporto.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/app_bar_with_back_button.dart';
-import '../../../models/data.dart';
 
 class ManageUnperformPortofolio extends StatelessWidget {
-  ManageUnperformPortofolioController _manageUnperformPortofolioController =
+  final ManageUnperformPortofolioController _manageUnperformPortofolioController =
       Get.put(ManageUnperformPortofolioController());
+
+  ManageUnperformPortofolio({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +32,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Floating loss(money)",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -47,14 +43,14 @@ class ManageUnperformPortofolio extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
+              child: SizedBox(
                 width: 0.85 * width,
                 height: 0.07 * height,
                 child: TextFormField(
                     controller:
                         _manageUnperformPortofolioController.floss.value,
                     // obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintStyle: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -65,7 +61,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Kurs",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -78,14 +74,14 @@ class ManageUnperformPortofolio extends StatelessWidget {
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 0.85 * width,
                     height: 0.07 * height,
                     child: TextFormField(
                         controller:
                             _manageUnperformPortofolioController.kurs.value,
                         // obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -98,7 +94,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Money Invested",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -109,13 +105,13 @@ class ManageUnperformPortofolio extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
+              child: SizedBox(
                 width: 0.85 * width,
                 height: 0.07 * height,
                 child: TextFormField(
                     controller: _manageUnperformPortofolioController.mi.value,
                     // obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintStyle: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -126,7 +122,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Desired loss in (%)",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -137,13 +133,13 @@ class ManageUnperformPortofolio extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
+              child: SizedBox(
                 width: 0.85 * width,
                 height: 0.07 * height,
                 child: TextFormField(
                     controller: _manageUnperformPortofolioController.dl.value,
                     // obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintStyle: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -154,7 +150,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Price right now",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -165,13 +161,13 @@ class ManageUnperformPortofolio extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
+              child: SizedBox(
                 width: 0.85 * width,
                 height: 0.07 * height,
                 child: TextFormField(
                     controller: _manageUnperformPortofolioController.prn.value,
                     // obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintStyle: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -182,7 +178,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Assets in hand (in units)",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -193,13 +189,13 @@ class ManageUnperformPortofolio extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
+              child: SizedBox(
                 width: 0.85 * width,
                 height: 0.07 * height,
                 child: TextFormField(
                     controller: _manageUnperformPortofolioController.aih.value,
                     // obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintStyle: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -210,7 +206,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "Total assets in switch",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -223,14 +219,14 @@ class ManageUnperformPortofolio extends StatelessWidget {
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 0.5 * width,
                     height: 0.07 * height,
                     child: TextFormField(
                         controller:
                             _manageUnperformPortofolioController.tais.value,
                         // obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -256,16 +252,16 @@ class ManageUnperformPortofolio extends StatelessWidget {
                       height: height * 0.07,
                       // color: Color.fromRGBO(217, 215, 241, 1),
                       decoration: BoxDecoration(
-                          color: Color.fromRGBO(249, 249, 249, 1),
+                          color: const Color.fromRGBO(249, 249, 249, 1),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                                 blurRadius: 5.0,
                                 color: Colors.black12,
                                 spreadRadius: 2.0,
                                 offset: Offset(0, 2))
                           ]),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Choose Asset",
                           textAlign: TextAlign.center,
@@ -284,7 +280,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
               )),
           Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Text(
+            child: const Text(
               "return switch in a day(%)",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -295,13 +291,13 @@ class ManageUnperformPortofolio extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Container(
+              child: SizedBox(
                 width: 0.85 * width,
                 height: 0.07 * height,
                 child: TextFormField(
                     controller: _manageUnperformPortofolioController.rsia.value,
                     // obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintStyle: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -323,16 +319,16 @@ class ManageUnperformPortofolio extends StatelessWidget {
                 height: height * 0.07,
                 // color: Color.fromRGBO(217, 215, 241, 1),
                 decoration: BoxDecoration(
-                    color: Color.fromRGBO(249, 249, 249, 1),
+                    color: const Color.fromRGBO(249, 249, 249, 1),
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                           blurRadius: 5.0,
                           color: Colors.black12,
                           spreadRadius: 2.0,
                           offset: Offset(0, 2))
                     ]),
-                child: Center(
+                child: const Center(
                   child: Text(
                     "Calculate",
                     style: TextStyle(

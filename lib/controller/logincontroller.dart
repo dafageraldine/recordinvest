@@ -16,8 +16,8 @@ class LoginController extends GetxController {
       print("login");
       var body = {"user": uname.text, "pwd": pass.text};
       http.Response postdata =
-          await http.post(Uri.parse(baseurl + "login"), body: body);
-      print(" url " + baseurl + "login");
+          await http.post(Uri.parse("${baseurl}login"), body: body);
+      print(" url ${baseurl}login");
       var data = json.decode(postdata.body);
       if (data["data"].length > 0) {
         for (int i = 0; i < data["data"].length; i++) {
@@ -47,7 +47,7 @@ class LoginController extends GetxController {
   showAlertDialog() {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text(
+      child: const Text(
         "No",
         style: TextStyle(color: Colors.grey),
       ),
@@ -56,7 +56,7 @@ class LoginController extends GetxController {
       },
     );
     Widget continueButton = TextButton(
-      child: Text(
+      child: const Text(
         "yes",
         style: TextStyle(
           color: Color.fromRGBO(144, 200, 172, 1),
@@ -68,8 +68,8 @@ class LoginController extends GetxController {
     );
 
     Get.dialog(AlertDialog(
-      title: Text("Warning"),
-      content: Text("Do you want exit ?"),
+      title: const Text("Warning"),
+      content: const Text("Do you want exit ?"),
       actions: [
         cancelButton,
         continueButton,

@@ -11,7 +11,9 @@ import 'package:recordinvest/screens/menu/portofoliomanagement.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Homepage extends StatelessWidget {
-  HomeController _homeController = Get.put(HomeController());
+  final HomeController _homeController = Get.put(HomeController());
+
+  Homepage({super.key});
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -55,7 +57,7 @@ class Homepage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(left: 0.1 * width),
-                  child: Text(
+                  child: const Text(
                     "Menu",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
@@ -92,14 +94,14 @@ class Homepage extends StatelessWidget {
               children: [
                 CardMenu(
                   onTap: () {
-                    Get.to(AddType());
+                    Get.to(const AddType());
                   },
                   image: "assets/buy.png",
                   title_card: "Add Investment\nType",
                 ),
                 CardMenu(
                   onTap: () {
-                    Get.to(CreditSimulation());
+                    Get.to(const CreditSimulation());
                   },
                   image: "assets/garage.png",
                   title_card: "credit\nsimulation",

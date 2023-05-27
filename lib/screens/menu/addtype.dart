@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:recordinvest/models/data.dart';
@@ -26,7 +24,7 @@ class _AddTypeState extends State<AddType> {
       final String? id = prefs.getString('id');
       var body = {"type": type.text, "name": product.text, "id": id};
       http.Response postdata = await http
-          .post(Uri.parse(baseurl + "inserttypenproduct"), body: body);
+          .post(Uri.parse("${baseurl}inserttypenproduct"), body: body);
       var data = json.decode(postdata.body);
       if (data["message"] == "data has been added") {
         Fluttertoast.showToast(
@@ -56,7 +54,7 @@ class _AddTypeState extends State<AddType> {
             }),
         Padding(
           padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-          child: Text(
+          child: const Text(
             "Investment Type",
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -67,13 +65,13 @@ class _AddTypeState extends State<AddType> {
         ),
         Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Container(
+            child: SizedBox(
               width: 0.85 * width,
               height: 0.07 * height,
               child: TextFormField(
                   controller: type,
                   // obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -84,7 +82,7 @@ class _AddTypeState extends State<AddType> {
             )),
         Padding(
           padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-          child: Text(
+          child: const Text(
             "Product Name",
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -95,13 +93,13 @@ class _AddTypeState extends State<AddType> {
         ),
         Padding(
             padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-            child: Container(
+            child: SizedBox(
               width: 0.85 * width,
               height: 0.07 * height,
               child: TextFormField(
                   controller: product,
                   // obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -121,16 +119,16 @@ class _AddTypeState extends State<AddType> {
               height: height * 0.07,
               // color: Color.fromRGBO(217, 215, 241, 1),
               decoration: BoxDecoration(
-                  color: Color.fromRGBO(249, 249, 249, 1),
+                  color: const Color.fromRGBO(249, 249, 249, 1),
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                         blurRadius: 5.0,
                         color: Colors.black12,
                         spreadRadius: 2.0,
                         offset: Offset(0, 2))
                   ]),
-              child: Center(
+              child: const Center(
                 child: Text(
                   "Create Investment Type",
                   style: TextStyle(

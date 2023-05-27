@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CardMenu extends StatelessWidget {
   final String image;
@@ -28,9 +25,9 @@ class CardMenu extends StatelessWidget {
                 width: 0.35 * width,
                 height: 0.35 * width,
                 decoration: BoxDecoration(
-                    color: Color.fromRGBO(144, 200, 172, 1),
+                    color: const Color.fromRGBO(144, 200, 172, 1),
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                           blurRadius: 5.0,
                           color: Colors.black12,
@@ -39,7 +36,7 @@ class CardMenu extends StatelessWidget {
                     ]),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Image.asset(
@@ -47,13 +44,13 @@ class CardMenu extends StatelessWidget {
                       width: 0.2 * width,
                       height: 0.2 * width,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(
                       title_card,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         color: Color.fromRGBO(249, 249, 249, 1),
                       ),

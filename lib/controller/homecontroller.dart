@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,7 @@ import '../models/data.dart';
 
 class HomeController extends GetxController with StateMixin {
   var date = "".obs;
-  var saldo = "".obs;
+  var saldo = 0.0.obs;
   var percent = "".obs;
 
   final oCcy = NumberFormat.currency(
@@ -38,7 +37,7 @@ class HomeController extends GetxController with StateMixin {
       final String? id = prefs.getString('id');
       var body = {"id": id};
       http.Response postdata =
-          await http.post(Uri.parse(baseurl + "gettype"), body: body);
+          await http.post(Uri.parse("${baseurl}gettype"), body: body);
       var data = json.decode(postdata.body);
       for (int i = 0; i < data["data"].length; i++) {
         comboboxtype.add(data["data"][i]["type"]);
@@ -58,7 +57,7 @@ class HomeController extends GetxController with StateMixin {
       final String? id = prefs.getString('id');
       var body = {"id": id};
       http.Response postdata =
-          await http.post(Uri.parse(baseurl + "getproduct"), body: body);
+          await http.post(Uri.parse("${baseurl}getproduct"), body: body);
       var data = json.decode(postdata.body);
       for (int i = 0; i < data["data"].length; i++) {
         comboboxproduct.add(data["data"][i]["name"]);
@@ -78,7 +77,7 @@ class HomeController extends GetxController with StateMixin {
       final String? id = prefs.getString('id');
       var body = {"id": id};
       http.Response postdata =
-          await http.post(Uri.parse(baseurl + "getsaldo"), body: body);
+          await http.post(Uri.parse("${baseurl}getsaldo"), body: body);
       // http.Response getdata = await http.get(Uri.parse(baseurl + "getsaldo"));
       var data = json.decode(postdata.body);
       var databefore = 0.0;
@@ -96,16 +95,15 @@ class HomeController extends GetxController with StateMixin {
         persen = (datanow - databefore) / databefore * 100.0;
       }
       if (persen > 0) {
-        percent.value =
-            "+ " + persen.toStringAsFixed(2) + " % than previous data";
+        percent.value = "+ ${persen.toStringAsFixed(2)} % than previous data";
         // print(percent);
       } else if (persen < 0) {
-        percent.value = persen.toStringAsFixed(2) + " % than previous data";
+        percent.value = "${persen.toStringAsFixed(2)} % than previous data";
         // print(percent);
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: "failed to fetch saldo " + e.toString(),
+          msg: "failed to fetch saldo $e",
           backgroundColor: Colors.black,
           textColor: Colors.white);
     }
@@ -114,7 +112,7 @@ class HomeController extends GetxController with StateMixin {
   showAlertDialog() {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text(
+      child: const Text(
         "No",
         style: TextStyle(color: Colors.grey),
       ),
@@ -123,7 +121,7 @@ class HomeController extends GetxController with StateMixin {
       },
     );
     Widget continueButton = TextButton(
-      child: Text(
+      child: const Text(
         "yes",
         style: TextStyle(
           color: Color.fromRGBO(144, 200, 172, 1),
@@ -135,8 +133,8 @@ class HomeController extends GetxController with StateMixin {
     );
 
     Get.dialog(AlertDialog(
-      title: Text("Warning"),
-      content: Text("Do you want exit ?"),
+      title: const Text("Warning"),
+      content: const Text("Do you want exit ?"),
       actions: [
         cancelButton,
         continueButton,

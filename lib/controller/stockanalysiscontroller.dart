@@ -48,34 +48,42 @@ class StockAnalysisController extends GetxController {
 
   Future getListEmiten() async {
     var stocktype = selectedStockType.value;
-    if (stocktype == "us") {
-      stockdataus.clear();
-    } else {
-      stockdataindo.clear();
-    }
-    http.Response getdata = await http.get(Uri.parse(
-        baseurl + "get_list_emiten?jenis=${selectedStockType.value}"));
-    Map<String, dynamic> json = jsonDecode(getdata.body);
-    StockData stockData = StockData.fromJson(json);
-    if (stocktype == "us") {
-      for (var stock in stockData.data) {
-        stockdataus.add(stock);
+    isLoading.value = true;
+    try {
+      if (stocktype == "us") {
+        stockdataus.clear();
+      } else {
+        stockdataindo.clear();
       }
-      fillcbStockNameUS();
-      print(stockdataus.length);
-    } else {
-      for (var stock in stockData.data) {
-        stockdataindo.add(stock);
+      http.Response getdata = await http.get(Uri.parse(
+          "${baseurl}get_list_emiten?jenis=${selectedStockType.value}"));
+      Map<String, dynamic> json = jsonDecode(getdata.body);
+      StockData stockData = StockData.fromJson(json);
+      if (stocktype == "us") {
+        for (var stock in stockData.data) {
+          stockdataus.add(stock);
+        }
+        fillcbStockNameUS();
+        print(stockdataus.length);
+      } else {
+        for (var stock in stockData.data) {
+          stockdataindo.add(stock);
+        }
+        fillcbStockName();
+        print(stockdataindo.length);
       }
-      fillcbStockName();
-      print(stockdataindo.length);
+      isLoading.value = false;
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+          "error", "try again ! make sure you have internet connection");
     }
   }
 
   fillcbStockName() {
     combStockName.clear();
     for (var i = 0; i < stockdataindo.length; i++) {
-      combStockName.add(stockdataindo[i].code + " | " + stockdataindo[i].name);
+      combStockName.add("${stockdataindo[i].code} | ${stockdataindo[i].name}");
     }
     selectedStockName.value = combStockName[0];
   }
@@ -83,7 +91,7 @@ class StockAnalysisController extends GetxController {
   fillcbStockNameUS() {
     combStockName.clear();
     for (var i = 0; i < stockdataus.length; i++) {
-      combStockName.add(stockdataus[i].code + " | " + stockdataus[i].name);
+      combStockName.add("${stockdataus[i].code} | ${stockdataus[i].name}");
     }
     selectedStockName.value = combStockName[0];
   }
@@ -92,8 +100,8 @@ class StockAnalysisController extends GetxController {
     analyzedata.clear();
     isLoading.value = true;
     try {
-      http.Response getdata = await http.get(Uri.parse(baseurl +
-          "analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&money=${values.value.text}"));
+      http.Response getdata = await http.get(Uri.parse(
+          "${baseurl}analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&money=${values.value.text}"));
       Map<String, dynamic> json = jsonDecode(getdata.body);
       AnalyzeDataModel dataModel = AnalyzeDataModel.fromJson(json);
       for (var data in dataModel.data) {
@@ -110,19 +118,27 @@ class StockAnalysisController extends GetxController {
 
   Future analyzeDetail(String ma) async {
     analyzedatadetail.clear();
-    http.Response getdata = await http.get(Uri.parse(baseurl +
-        "detail_analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&maselected=${ma.replaceAll("&", "_")}"));
-    // print(baseurl +
-    //     "detail_analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&maselected=${ma.replaceAll("&", "_")}");
-    // print(getdata.body);
-    Map<String, dynamic> json = jsonDecode(getdata.body);
-    ResultAnalyzeDetailModel dataModel =
-        ResultAnalyzeDetailModel.fromJson(json);
-    for (var data in dataModel.data) {
-      analyzedatadetail.add(data);
+    isLoading.value = true;
+    try {
+      http.Response getdata = await http.get(Uri.parse(
+          "${baseurl}detail_analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&maselected=${ma.replaceAll("&", "_")}"));
+      // print(baseurl +
+      //     "detail_analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&maselected=${ma.replaceAll("&", "_")}");
+      // print(getdata.body);
+      Map<String, dynamic> json = jsonDecode(getdata.body);
+      ResultAnalyzeDetailModel dataModel =
+          ResultAnalyzeDetailModel.fromJson(json);
+      for (var data in dataModel.data) {
+        analyzedatadetail.add(data);
+      }
+      isLoading.value = false;
+      Get.to(AnalyzeDetail(
+        maSelected: ma,
+      ));
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+          "error", "try again ! make sure you have internet connection");
     }
-    Get.to(AnalyzeDetail(
-      maSelected: ma,
-    ));
   }
 }

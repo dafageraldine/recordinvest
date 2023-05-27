@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class AppBarWithBackButton extends StatelessWidget {
   final String titleBar;
@@ -16,7 +14,7 @@ class AppBarWithBackButton extends StatelessWidget {
       width: width,
       height: height * 0.12,
       // color: Color.fromRGBO(217, 215, 241, 1),
-      color: Color.fromRGBO(144, 200, 172, 1),
+      color: const Color.fromRGBO(144, 200, 172, 1),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -34,7 +32,7 @@ class AppBarWithBackButton extends StatelessWidget {
                 height: 0.125 * width,
                 child: Icon(
                   Icons.arrow_back_ios_new,
-                  color: Color.fromRGBO(144, 200, 172, 1),
+                  color: const Color.fromRGBO(144, 200, 172, 1),
                   size: 0.06 * width,
                 ),
               ),
@@ -46,7 +44,7 @@ class AppBarWithBackButton extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   titleBar,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 18,
                     // color: Color.fromRGBO(104, 103, 172, 1),

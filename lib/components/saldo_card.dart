@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class SaldoCard extends StatelessWidget {
   final String saldo;
@@ -25,9 +22,9 @@ class SaldoCard extends StatelessWidget {
       height: 0.125 * height,
       decoration: BoxDecoration(
           // color: Color.fromRGBO(250, 244, 183, 1),
-          color: Color.fromRGBO(157, 157, 157, 1),
+          color: const Color.fromRGBO(157, 157, 157, 1),
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
                 blurRadius: 5.0,
                 color: Colors.black12,
@@ -47,16 +44,16 @@ class SaldoCard extends StatelessWidget {
                   height: 30,
                   decoration: BoxDecoration(
                       // color: Color.fromRGBO(250, 244, 183, 1),
-                      color: Color.fromRGBO(144, 200, 172, 1),
+                      color: const Color.fromRGBO(144, 200, 172, 1),
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             blurRadius: 5.0,
                             color: Colors.black12,
                             spreadRadius: 5.0,
                             offset: Offset(0, 2))
                       ]),
-                  child: Center(
+                  child: const Center(
                       child: Text(
                     "Refresh",
                     style: TextStyle(
@@ -78,7 +75,7 @@ class SaldoCard extends StatelessWidget {
                 padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
                 child: Row(
                   children: [
-                    Text(
+                    const Text(
                       "Saldo",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -89,7 +86,7 @@ class SaldoCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      " " + percent,
+                      " $percent",
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
                         // color: Color.fromRGBO(157, 157, 157, 1),
@@ -108,7 +105,7 @@ class SaldoCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 0.1 * width),
                 child: Text(
-                  "Rp " + saldo,
+                  "Rp $saldo",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     // color: Color.fromRGBO(157, 157, 157, 1),
@@ -126,7 +123,7 @@ class SaldoCard extends StatelessWidget {
                 padding: EdgeInsets.only(top: 0.01 * height, left: 0.1 * width),
                 child: Text(
                   date,
-                  style: TextStyle(
+                  style: const TextStyle(
                     // color: Color.fromRGBO(157, 157, 157, 1),
                     // color: Color.fromRGBO(144, 200, 172, 1),
                     color: Color.fromRGBO(249, 249, 249, 1),

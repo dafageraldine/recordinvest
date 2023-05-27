@@ -6,7 +6,9 @@ import 'package:recordinvest/controller/recordcontroller.dart';
 import '../../../../models/data.dart';
 
 class Recordpage extends StatelessWidget {
-  RecordController _recordController = Get.put(RecordController());
+  final RecordController _recordController = Get.put(RecordController());
+
+  Recordpage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class Recordpage extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Text(
+              child: const Text(
                 "Investment Type",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -61,7 +63,7 @@ class Recordpage extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Text(
+              child: const Text(
                 "Product Name",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -98,7 +100,7 @@ class Recordpage extends StatelessWidget {
                 )),
             Padding(
               padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-              child: Text(
+              child: const Text(
                 "Value",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -109,13 +111,13 @@ class Recordpage extends StatelessWidget {
             ),
             Padding(
                 padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
-                child: Container(
+                child: SizedBox(
                   width: 0.85 * width,
                   height: 0.07 * height,
                   child: TextFormField(
                       controller: _recordController.values.value,
                       // obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintStyle: TextStyle(
                             fontWeight: FontWeight.w400,
@@ -135,16 +137,16 @@ class Recordpage extends StatelessWidget {
                   height: height * 0.07,
                   // color: Color.fromRGBO(217, 215, 241, 1),
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(249, 249, 249, 1),
+                      color: const Color.fromRGBO(249, 249, 249, 1),
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             blurRadius: 5.0,
                             color: Colors.black12,
                             spreadRadius: 2.0,
                             offset: Offset(0, 2))
                       ]),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       "Create Record",
                       style: TextStyle(

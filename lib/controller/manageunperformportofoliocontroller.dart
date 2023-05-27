@@ -29,7 +29,7 @@ class ManageUnperformPortofolioController extends GetxController {
       final String? id = prefs.getString('id');
       var body = {"id": id};
       http.Response postdata =
-          await http.post(Uri.parse(baseurl + "get_latest_asset"), body: body);
+          await http.post(Uri.parse("${baseurl}get_latest_asset"), body: body);
       print(postdata.body);
       var data = json.decode(postdata.body);
       for (int i = 0; i < data["data"].length; i++) {
@@ -37,7 +37,7 @@ class ManageUnperformPortofolioController extends GetxController {
             data["data"][i]["value"].toString(), data["data"][i]["product"]));
       }
       list_cb_data.sort(((a, b) => a.product.compareTo(b.product)));
-      print("length : " + list_cb_data.length.toString());
+      print("length : ${list_cb_data.length}");
       for (int i = 0; i < list_cb_data.length; i++) {
         combobox.add(list_cb_data[i].product);
       }
@@ -53,49 +53,49 @@ class ManageUnperformPortofolioController extends GetxController {
 
   void calculate() {
     var kurs_ = double.parse(kurs.value.text.toString());
-    var floating_loss = double.parse(floss.value.text.toString());
-    var uang_invest_awal = double.parse(mi.value.text.toString());
-    var harga_saat_ini = double.parse(prn.value.text.toString());
-    var unit_dimiliki = double.parse(aih.value.text.toString());
-    var desired_loss = double.parse(dl.value.text.toString());
-    var asset_switch_now = double.parse(tais.value.text.toString());
-    var return_switch_percent = double.parse(rsia.value.text.toString());
-    var floating_loss_in_percent =
-        (floating_loss * kurs_ / (uang_invest_awal * kurs_)) * 100;
-    var asset_akhir = (100 / desired_loss) * (kurs_ * floating_loss);
-    var uang_harus_diinvest = asset_akhir - (uang_invest_awal * kurs_);
-    var hargabep = (asset_akhir /
-            (unit_dimiliki +
-                (uang_harus_diinvest / (harga_saat_ini * kurs_)))) /
+    var floatingLoss = double.parse(floss.value.text.toString());
+    var uangInvestAwal = double.parse(mi.value.text.toString());
+    var hargaSaatIni = double.parse(prn.value.text.toString());
+    var unitDimiliki = double.parse(aih.value.text.toString());
+    var desiredLoss = double.parse(dl.value.text.toString());
+    var assetSwitchNow = double.parse(tais.value.text.toString());
+    var returnSwitchPercent = double.parse(rsia.value.text.toString());
+    var floatingLossInPercent =
+        (floatingLoss * kurs_ / (uangInvestAwal * kurs_)) * 100;
+    var assetAkhir = (100 / desiredLoss) * (kurs_ * floatingLoss);
+    var uangHarusDiinvest = assetAkhir - (uangInvestAwal * kurs_);
+    var hargabep = (assetAkhir /
+            (unitDimiliki +
+                (uangHarusDiinvest / (hargaSaatIni * kurs_)))) /
         kurs_;
-    var up_percent = ((hargabep - harga_saat_ini) / harga_saat_ini) * 100;
-    var return_perhari_switch_money =
-        (asset_switch_now + (kurs_ * (uang_invest_awal - floating_loss))) *
-            (return_switch_percent / 100);
-    var estimated_day = (floating_loss * kurs_) / return_perhari_switch_money;
-    var estimated_month = estimated_day / 30;
+    var upPercent = ((hargabep - hargaSaatIni) / hargaSaatIni) * 100;
+    var returnPerhariSwitchMoney =
+        (assetSwitchNow + (kurs_ * (uangInvestAwal - floatingLoss))) *
+            (returnSwitchPercent / 100);
+    var estimatedDay = (floatingLoss * kurs_) / returnPerhariSwitchMoney;
+    var estimatedMonth = estimatedDay / 30;
     Get.to(HasilSimulasiPorto(
-        uang_invest_awal * kurs_,
-        floating_loss * kurs_,
-        floating_loss_in_percent,
-        desired_loss,
-        asset_switch_now,
-        return_switch_percent,
-        uang_harus_diinvest,
-        estimated_day,
-        estimated_month,
+        uangInvestAwal * kurs_,
+        floatingLoss * kurs_,
+        floatingLossInPercent,
+        desiredLoss,
+        assetSwitchNow,
+        returnSwitchPercent,
+        uangHarusDiinvest,
+        estimatedDay,
+        estimatedMonth,
         hargabep,
-        up_percent,
-        harga_saat_ini));
+        upPercent,
+        hargaSaatIni));
   }
 
   void showcb() {
     // flutter defined function
     Get.dialog(Dialog(
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Container(
+      child: SizedBox(
         width: Get.width * 0.85,
         height: 0.3 * Get.height,
         child: Column(
@@ -103,7 +103,7 @@ class ManageUnperformPortofolioController extends GetxController {
             Padding(
               padding: EdgeInsets.only(
                   left: 0.1 * Get.width, top: 0.05 * Get.height),
-              child: Align(
+              child: const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Choose Asset",
@@ -114,7 +114,7 @@ class ManageUnperformPortofolioController extends GetxController {
                         fontWeight: FontWeight.w600),
                   )),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Obx(
               () => Container(
                   width: 0.7 * Get.width,
@@ -153,9 +153,9 @@ class ManageUnperformPortofolioController extends GetxController {
                 width: 0.7 * Get.width,
                 height: 0.07 * Get.height,
                 decoration: BoxDecoration(
-                    color: Color.fromRGBO(144, 200, 172, 1),
+                    color: const Color.fromRGBO(144, 200, 172, 1),
                     borderRadius: BorderRadius.circular(10)),
-                child: Center(
+                child: const Center(
                     child: Text(
                   "Select",
                   style: TextStyle(
@@ -165,7 +165,7 @@ class ManageUnperformPortofolioController extends GetxController {
                 )),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             )
           ],
