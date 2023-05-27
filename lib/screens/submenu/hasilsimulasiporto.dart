@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
@@ -39,8 +40,7 @@ class HasilSimulasiPorto extends StatelessWidget {
         customPattern: '#,### \u00a4',
         symbol: "",
         decimalDigits: 2);
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
       body: Column(children: [
         AppBarWithBackButton(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/controller/addtypecontroller.dart';
 import '../../../../components/app_bar_with_back_button.dart';
@@ -15,8 +16,7 @@ class _AddTypeState extends State<AddType> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
         backgroundColor: Colors.white,
         body: Obx(
@@ -27,7 +27,7 @@ class _AddTypeState extends State<AddType> {
                   Navigator.pop(context);
                 }),
             Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: const Text(
                 "Investment Type",
                 style: TextStyle(
@@ -38,10 +38,10 @@ class _AddTypeState extends State<AddType> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+                padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
                 child: SizedBox(
-                  width: 0.85 * width,
-                  height: 0.07 * height,
+                  width: 0.85.sw,
+                  height: 0.07.sh,
                   child: TextFormField(
                       controller: _addTypeController.type.value,
                       // obscureText: true,
@@ -55,7 +55,7 @@ class _AddTypeState extends State<AddType> {
                           hintText: "Reksadana Saham")),
                 )),
             Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: const Text(
                 "Product Name",
                 style: TextStyle(
@@ -66,10 +66,10 @@ class _AddTypeState extends State<AddType> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+                padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
                 child: SizedBox(
-                  width: 0.85 * width,
-                  height: 0.07 * height,
+                  width: 0.85.sw,
+                  height: 0.07.sh,
                   child: TextFormField(
                       controller: _addTypeController.product.value,
                       // obscureText: true,
@@ -83,14 +83,14 @@ class _AddTypeState extends State<AddType> {
                           hintText: "Sucorinvest equity fund")),
                 )),
             Padding(
-              padding: EdgeInsets.only(top: 0.04 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.04.sh, left: 0.1.sw),
               child: InkWell(
                 onTap: () {
                   _addTypeController.inserttypenproduct();
                 },
                 child: Container(
-                  width: width * 0.85,
-                  height: height * 0.07,
+                  width: 0.85.sw,
+                  height: 0.07.sh,
                   // color: Color.fromRGBO(217, 215, 241, 1),
                   decoration: BoxDecoration(
                       color: const Color.fromRGBO(249, 249, 249, 1),

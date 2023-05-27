@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recordinvest/components/app_bar_with_button.dart';
@@ -16,8 +17,7 @@ class Homepage extends StatelessWidget {
   Homepage({super.key});
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return WillPopScope(
       onWillPop: () async {
         _homeController.showAlertDialog();
@@ -39,7 +39,7 @@ class Homepage extends StatelessWidget {
               },
             ),
             SizedBox(
-              height: 0.025 * height,
+              height: 0.025.sh,
             ),
             Obx(() => SaldoCard(
                 saldo: _homeController.oCcy
@@ -51,12 +51,12 @@ class Homepage extends StatelessWidget {
                   _homeController.getSaldo();
                 })),
             SizedBox(
-              height: 0.025 * height,
+              height: 0.025.sh,
             ),
             Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 0.1 * width),
+                  padding: EdgeInsets.only(left: 0.1.sw),
                   child: const Text(
                     "Menu",
                     style: TextStyle(
@@ -67,7 +67,7 @@ class Homepage extends StatelessWidget {
                   ),
                 )),
             SizedBox(
-              height: 0.025 * height,
+              height: 0.025.sh,
             ),
             Row(
               children: [
@@ -88,7 +88,7 @@ class Homepage extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 0.025 * height,
+              height: 0.025.sh,
             ),
             Row(
               children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recordinvest/models/data.dart';
 
 class AppBarWithBackButton extends StatelessWidget {
@@ -9,11 +10,10 @@ class AppBarWithBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Container(
-      width: width,
-      height: height * 0.12,
+      width: 1.sw,
+      height: 0.12.sh,
       // color: Color.fromRGBO(217, 215, 241, 1),
       color: theme,
       child: Row(
@@ -21,7 +21,7 @@ class AppBarWithBackButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 0.1 * width, top: 0.1 * width),
+            padding: EdgeInsets.only(left: 0.1.sw, top: 0.1.sw),
             child: InkWell(
               onTap: onTap,
               child: Container(
@@ -29,18 +29,18 @@ class AppBarWithBackButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
                 ),
-                width: 0.125 * width,
-                height: 0.125 * width,
+                width: 0.125.sw,
+                height: 0.125.sw,
                 child: Icon(
                   Icons.arrow_back_ios_new,
                   color: theme,
-                  size: 0.06 * width,
+                  size: 0.06.sw,
                 ),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 0.08 * width, left: 0.05 * width),
+            padding: EdgeInsets.only(top: 0.08.sw, left: 0.05.sw),
             child: Align(
                 alignment: Alignment.center,
                 child: Text(

@@ -17,17 +17,16 @@ class CardMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Align(
         alignment: Alignment.centerLeft,
         child: Padding(
-            padding: EdgeInsets.only(left: 0.08 * width),
+            padding: EdgeInsets.only(left: 0.08.sw),
             child: InkWell(
               onTap: onTap,
               child: Container(
-                width: 0.38 * width,
-                height: 0.38 * width,
+                width: 0.38.sw,
+                height: 0.38.sw,
                 decoration: BoxDecoration(
                     color: theme,
                     borderRadius: BorderRadius.circular(10),
@@ -45,8 +44,8 @@ class CardMenu extends StatelessWidget {
                     ),
                     Image.asset(
                       image,
-                      width: 0.18 * width,
-                      height: 0.18 * width,
+                      width: 0.18.sw,
+                      height: 0.18.sw,
                     ),
                     const SizedBox(
                       height: 5,

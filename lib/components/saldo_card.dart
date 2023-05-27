@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../models/data.dart';
 
@@ -17,11 +18,10 @@ class SaldoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Container(
-      width: 0.85 * width,
-      height: 0.125 * height,
+      width: 0.85.sw,
+      height: 0.125.sw,
       decoration: BoxDecoration(
           // color: Color.fromRGBO(250, 244, 183, 1),
           color: const Color.fromRGBO(157, 157, 157, 1),
@@ -42,7 +42,7 @@ class SaldoCard extends StatelessWidget {
               child: InkWell(
                 onTap: onTap,
                 child: Container(
-                  width: width * 0.2,
+                  width: 0.2.sw,
                   height: 30,
                   decoration: BoxDecoration(
                       // color: Color.fromRGBO(250, 244, 183, 1),
@@ -74,7 +74,7 @@ class SaldoCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+                padding: EdgeInsets.only(top: 0.02.sw, left: 0.1.sw),
                 child: Row(
                   children: [
                     const Text(
@@ -105,7 +105,7 @@ class SaldoCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 0.1 * width),
+                padding: EdgeInsets.only(left: 0.1.sw),
                 child: Text(
                   "Rp $saldo",
                   style: TextStyle(
@@ -122,7 +122,7 @@ class SaldoCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 0.01 * height, left: 0.1 * width),
+                padding: EdgeInsets.only(top: 0.01.sw, left: 0.1.sw),
                 child: Text(
                   date,
                   style: const TextStyle(

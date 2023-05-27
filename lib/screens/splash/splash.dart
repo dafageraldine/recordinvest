@@ -17,8 +17,6 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: const Size(360, 690));
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -26,8 +24,8 @@ class _SplashState extends State<Splash> {
           Center(
             child: Image.asset(
               "assets/icon.png",
-              width: 0.6 * width,
-              height: 0.6 * width,
+              width: 0.6.sw,
+              height: 0.6.sw,
               fit: BoxFit.contain,
             ),
           ),

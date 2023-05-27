@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -49,20 +50,19 @@ class _PerformanceState extends State<Performance> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        double sw = MediaQuery.of(context).size.width;
-        double sh = MediaQuery.of(context).size.height;
+        ScreenUtil.init(context, designSize: const Size(360, 690));
         // return object of type Dialog
         return Dialog(
           backgroundColor: Colors.white,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
           child: SizedBox(
-            width: 0.85 * sw,
-            height: 0.3 * sh,
+            width: 0.85.sw,
+            height: 0.3.sh,
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 0.1 * sw, top: 0.03 * sh),
+                  padding: EdgeInsets.only(left: 0.1.sw, top: 0.03.sh),
                   child: const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -78,7 +78,7 @@ class _PerformanceState extends State<Performance> {
                   height: 10,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 0.1 * sw),
+                  padding: EdgeInsets.only(left: 0.1.sw),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
@@ -98,7 +98,7 @@ class _PerformanceState extends State<Performance> {
                         });
                       },
                       child: Container(
-                        width: sw * 0.6,
+                        width: 0.6.sw,
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius:
@@ -122,7 +122,7 @@ class _PerformanceState extends State<Performance> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 0.1 * sw, top: 10),
+                  padding: EdgeInsets.only(left: 0.1.sw, top: 10),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
@@ -142,7 +142,7 @@ class _PerformanceState extends State<Performance> {
                         });
                       },
                       child: Container(
-                        width: sw * 0.6,
+                        width: 0.6.sw,
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius:
@@ -208,8 +208,8 @@ class _PerformanceState extends State<Performance> {
                     // }
                   },
                   child: Container(
-                    width: 0.7 * sw,
-                    height: 0.07 * sh,
+                    width: 0.7.sw,
+                    height: 0.07.sh,
                     decoration: BoxDecoration(
                         color: theme, borderRadius: BorderRadius.circular(10)),
                     child: const Center(
@@ -375,8 +375,7 @@ class _PerformanceState extends State<Performance> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -393,13 +392,12 @@ class _PerformanceState extends State<Performance> {
           performance_chart_data.isEmpty
               ? Container()
               : Padding(
-                  padding: EdgeInsets.only(
-                      top: 0.02 * height, bottom: 0.02 * height),
+                  padding: EdgeInsets.only(top: 0.02.sh, bottom: 0.02.sh),
                   child: Column(
                     children: [
                       Container(
-                        width: 0.9 * width,
-                        height: 0.35 * height,
+                        width: 0.9.sw,
+                        height: 0.35.sh,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
@@ -452,8 +450,8 @@ class _PerformanceState extends State<Performance> {
               ? Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Container(
-                    width: 0.85 * width,
-                    height: 0.125 * height,
+                    width: 0.85.sw,
+                    height: 0.125.sh,
                     decoration: BoxDecoration(
                         // color: Color.fromRGBO(250, 244, 183, 1),
                         color: const Color.fromRGBO(157, 157, 157, 1),
@@ -471,8 +469,8 @@ class _PerformanceState extends State<Performance> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(
-                                  top: 0.02 * height, left: 0.1 * width),
+                              padding:
+                                  EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
                               child: const Text(
                                 "Saldo",
                                 style: TextStyle(
@@ -485,7 +483,7 @@ class _PerformanceState extends State<Performance> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 0.1 * width),
+                              padding: EdgeInsets.only(left: 0.1.sw),
                               child: Text(
                                 "Rp ${oCcy.format(total)}",
                                 style: const TextStyle(
@@ -498,8 +496,8 @@ class _PerformanceState extends State<Performance> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(
-                                  top: 0.01 * height, left: 0.1 * width),
+                              padding:
+                                  EdgeInsets.only(top: 0.01.sh, left: 0.1.sw),
                               child: Text(
                                 df,
                                 style: const TextStyle(
@@ -520,8 +518,7 @@ class _PerformanceState extends State<Performance> {
               : Container(),
           chartData.isNotEmpty
               ? Padding(
-                  padding:
-                      EdgeInsets.only(left: width * 0.1, top: height * 0.02),
+                  padding: EdgeInsets.only(left: 0.1.sw, top: 0.02.sh),
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -542,7 +539,7 @@ class _PerformanceState extends State<Performance> {
           ),
           chartData.isNotEmpty
               ? Padding(
-                  padding: EdgeInsets.only(left: width * 0.1),
+                  padding: EdgeInsets.only(left: 0.1.sw),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
@@ -556,8 +553,8 @@ class _PerformanceState extends State<Performance> {
                         setState(() {});
                       },
                       child: Container(
-                        width: width * 0.2,
-                        height: height * 0.04,
+                        width: 0.2.sw,
+                        height: 0.04.sh,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: theme,
@@ -602,13 +599,13 @@ class _PerformanceState extends State<Performance> {
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Container(
-                      width: width * 0.85,
-                      height: 0.1 * height,
+                      width: 0.85.sw,
+                      height: 0.1.sh,
                       decoration: BoxDecoration(
                           color: chartData[index].color,
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
-                        padding: EdgeInsets.only(left: width * 0.1, top: 20),
+                        padding: EdgeInsets.only(left: 0.1.sw, top: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -647,8 +644,7 @@ class _PerformanceState extends State<Performance> {
           ),
           chartData.isNotEmpty
               ? Padding(
-                  padding:
-                      EdgeInsets.only(left: width * 0.1, top: height * 0.02),
+                  padding: EdgeInsets.only(left: 0.1.sw, top: 0.02.sh),
                   child: const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -671,13 +667,13 @@ class _PerformanceState extends State<Performance> {
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Container(
-                      width: width * 0.85,
-                      height: 0.15 * height,
+                      width: 0.85.sw,
+                      height: 0.15.sh,
                       decoration: BoxDecoration(
                           color: theme,
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
-                        padding: EdgeInsets.only(left: width * 0.1, top: 20),
+                        padding: EdgeInsets.only(left: 0.1.sw, top: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

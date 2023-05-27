@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/controller/homecontroller.dart';
 
@@ -14,8 +15,7 @@ class CarCreditSimulation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
@@ -28,10 +28,10 @@ class CarCreditSimulation extends StatelessWidget {
                 Navigator.pop(context);
               }),
           SizedBox(
-            height: 0.025 * height,
+            height: 0.025.sh,
           ),
           Padding(
-            padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+            padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
             child: const Text(
               "Harga Mobil",
               style: TextStyle(
@@ -42,10 +42,10 @@ class CarCreditSimulation extends StatelessWidget {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: SizedBox(
-                width: 0.85 * width,
-                height: 0.07 * height,
+                width: 0.85.sw,
+                height: 0.07.sh,
                 child: TextFormField(
                     controller: _carCreditSimulationController.otr.value,
                     // obscureText: true,
@@ -59,7 +59,7 @@ class CarCreditSimulation extends StatelessWidget {
                         hintText: "110000000")),
               )),
           Padding(
-            padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+            padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
             child: const Text(
               "TDP/DP",
               style: TextStyle(
@@ -70,12 +70,12 @@ class CarCreditSimulation extends StatelessWidget {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: Row(
                 children: [
                   SizedBox(
-                    width: 0.5 * width,
-                    height: 0.07 * height,
+                    width: 0.5.sw,
+                    height: 0.07.sh,
                     child: TextFormField(
                         controller: _carCreditSimulationController.dp.value,
                         // obscureText: true,
@@ -89,7 +89,7 @@ class CarCreditSimulation extends StatelessWidget {
                             hintText: "30000000")),
                   ),
                   SizedBox(
-                    width: 0.05 * width,
+                    width: 0.05.sw,
                   ),
                   InkWell(
                     onTap: () {
@@ -98,8 +98,8 @@ class CarCreditSimulation extends StatelessWidget {
                       // inserttypenproduct();
                     },
                     child: Container(
-                      width: width * 0.3,
-                      height: height * 0.07,
+                      width: 0.3.sw,
+                      height: 0.07.sh,
                       // color: Color.fromRGBO(217, 215, 241, 1),
                       decoration: BoxDecoration(
                           color: const Color.fromRGBO(249, 249, 249, 1),
@@ -129,7 +129,7 @@ class CarCreditSimulation extends StatelessWidget {
                 ],
               )),
           Padding(
-            padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+            padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
             child: const Text(
               "Bunga(persen)",
               style: TextStyle(
@@ -140,10 +140,10 @@ class CarCreditSimulation extends StatelessWidget {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: SizedBox(
-                width: 0.85 * width,
-                height: 0.07 * height,
+                width: 0.85.sw,
+                height: 0.07.sh,
                 child: TextFormField(
                     controller: _carCreditSimulationController.bunga.value,
                     // obscureText: true,
@@ -157,7 +157,7 @@ class CarCreditSimulation extends StatelessWidget {
                         hintText: "5")),
               )),
           Padding(
-            padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+            padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
             child: const Text(
               "Tenor(tahun)",
               style: TextStyle(
@@ -168,10 +168,10 @@ class CarCreditSimulation extends StatelessWidget {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: SizedBox(
-                width: 0.85 * width,
-                height: 0.07 * height,
+                width: 0.85.sw,
+                height: 0.07.sh,
                 child: TextFormField(
                     controller: _carCreditSimulationController.tenor.value,
                     // obscureText: true,
@@ -185,15 +185,15 @@ class CarCreditSimulation extends StatelessWidget {
                         hintText: "5")),
               )),
           Padding(
-            padding: EdgeInsets.only(top: 0.04 * height, left: 0.1 * width),
+            padding: EdgeInsets.only(top: 0.04.sh, left: 0.1.sw),
             child: InkWell(
               onTap: () {
                 _carCreditSimulationController.calculate();
                 // inserttypenproduct();
               },
               child: Container(
-                width: width * 0.85,
-                height: height * 0.07,
+                width: 0.85.sw,
+                height: 0.07.sh,
                 // color: Color.fromRGBO(217, 215, 241, 1),
                 decoration: BoxDecoration(
                     color: const Color.fromRGBO(249, 249, 249, 1),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/controller/logincontroller.dart';
 import 'package:recordinvest/models/data.dart';
@@ -13,8 +14,7 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return WillPopScope(
       onWillPop: () async {
         // viewModel.showAlertDialog(context);
@@ -43,16 +43,16 @@ class Login extends StatelessWidget {
               Column(
                 children: [
                   SizedBox(
-                    height: 0.225 * height,
+                    height: 0.225.sh,
                   ),
                   Image.asset(
                     "assets/icon.png",
-                    width: 0.4 * width,
-                    height: 0.4 * width,
+                    width: 0.4.sw,
+                    height: 0.4.sw,
                     fit: BoxFit.contain,
                   ),
                   SizedBox(
-                    height: 0.02 * height,
+                    height: 0.02.sh,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -61,8 +61,8 @@ class Login extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: SizedBox(
-                        width: 0.85 * width,
-                        height: 0.07 * height,
+                        width: 0.85.sw,
+                        height: 0.07.sw,
                         child: TextFormField(
                             controller: uname,
                             decoration: const InputDecoration(
@@ -72,7 +72,7 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 0.02 * height,
+                    height: 0.02.sh,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -81,8 +81,8 @@ class Login extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: SizedBox(
-                        width: 0.85 * width,
-                        height: 0.07 * height,
+                        width: 0.85.sw,
+                        height: 0.07.sh,
                         child: TextFormField(
                             controller: pass,
                             obscureText: true,
@@ -93,15 +93,15 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 0.02 * height,
+                    height: 0.02.sh,
                   ),
                   InkWell(
                     onTap: () async {
                       _loginController.login(context, uname, pass);
                     },
                     child: Container(
-                      width: 0.85 * width,
-                      height: 0.07 * height,
+                      width: 0.85.sw,
+                      height: 0.07.sh,
                       decoration: BoxDecoration(
                           color: theme, borderRadius: BorderRadius.circular(5)),
                       child: const Center(

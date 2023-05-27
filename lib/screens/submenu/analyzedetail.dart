@@ -12,6 +12,7 @@ class AnalyzeDetail extends StatelessWidget {
   AnalyzeDetail({super.key, required this.maSelected});
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

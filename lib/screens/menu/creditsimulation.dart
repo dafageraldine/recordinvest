@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/components/card_menu.dart';
@@ -9,8 +10,7 @@ class CreditSimulation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(children: [
@@ -20,12 +20,12 @@ class CreditSimulation extends StatelessWidget {
               Navigator.pop(context);
             }),
         SizedBox(
-          height: 0.025 * height,
+          height: 0.025.sh,
         ),
         Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: EdgeInsets.only(left: 0.1 * width),
+              padding: EdgeInsets.only(left: 0.1.sw),
               child: const Text(
                 "Menu",
                 style: TextStyle(
@@ -36,7 +36,7 @@ class CreditSimulation extends StatelessWidget {
               ),
             )),
         SizedBox(
-          height: 0.025 * height,
+          height: 0.025.sh,
         ),
         Row(
           children: [

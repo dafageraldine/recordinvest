@@ -16,15 +16,14 @@ class AppBarWithButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Container(
-      width: width,
-      height: height * 0.1,
+      width: 1.sw,
+      height: 0.1.sh,
       // color: Color.fromRGBO(217, 215, 241, 1),
       color: theme,
       child: Padding(
-        padding: EdgeInsets.only(left: 0.05 * width, top: 0.04 * height),
+        padding: EdgeInsets.only(left: 0.05.sw, top: 0.04.sh),
         child: Align(
             alignment: Alignment.centerLeft,
             child: Row(
@@ -36,13 +35,13 @@ class AppBarWithButton extends StatelessWidget {
                       color: const Color.fromRGBO(249, 249, 249, 1),
                     )),
                 SizedBox(
-                  width: 0.2 * width,
+                  width: 0.2.sw,
                 ),
                 InkWell(
                   onTap: onTap,
                   child: Container(
-                    width: 0.15 * width,
-                    height: 0.04 * height,
+                    width: 0.15.sw,
+                    height: 0.04.sh,
                     color: Colors.white,
                     child: Center(
                         child: Text(titleButton,

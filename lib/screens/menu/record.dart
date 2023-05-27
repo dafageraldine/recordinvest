@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/controller/recordcontroller.dart';
@@ -11,8 +12,7 @@ class Recordpage extends StatelessWidget {
   Recordpage({super.key});
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
         backgroundColor: Colors.white,
         body: Obx(
@@ -24,7 +24,7 @@ class Recordpage extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: const Text(
                 "Investment Type",
                 style: TextStyle(
@@ -35,10 +35,10 @@ class Recordpage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: Container(
-                  width: 0.85 * width,
-                  height: 0.07 * height,
+                  width: 0.85.sw,
+                  height: 0.07.sh,
                   decoration: BoxDecoration(
                     // color: Colors.grey[600],
                     borderRadius: BorderRadius.circular(10),
@@ -61,7 +61,7 @@ class Recordpage extends StatelessWidget {
                   )),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: const Text(
                 "Product Name",
                 style: TextStyle(
@@ -72,10 +72,10 @@ class Recordpage extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+                padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
                 child: Container(
-                  width: 0.85 * width,
-                  height: 0.07 * height,
+                  width: 0.85.sw,
+                  height: 0.07.sh,
                   decoration: BoxDecoration(
                     // color: Colors.grey[600],
                     borderRadius: BorderRadius.circular(10),
@@ -98,7 +98,7 @@ class Recordpage extends StatelessWidget {
                   ),
                 )),
             Padding(
-              padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
               child: const Text(
                 "Value",
                 style: TextStyle(
@@ -109,10 +109,10 @@ class Recordpage extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 0.02 * height, left: 0.1 * width),
+                padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
                 child: SizedBox(
-                  width: 0.85 * width,
-                  height: 0.07 * height,
+                  width: 0.85.sw,
+                  height: 0.07.sh,
                   child: TextFormField(
                       controller: _recordController.values.value,
                       // obscureText: true,
@@ -126,14 +126,14 @@ class Recordpage extends StatelessWidget {
                           hintText: "15000000.00")),
                 )),
             Padding(
-              padding: EdgeInsets.only(top: 0.04 * height, left: 0.1 * width),
+              padding: EdgeInsets.only(top: 0.04.sh, left: 0.1.sw),
               child: InkWell(
                 onTap: () {
                   _recordController.insertrecord();
                 },
                 child: Container(
-                  width: width * 0.85,
-                  height: height * 0.07,
+                  width: 0.85.sw,
+                  height: 0.07.sh,
                   // color: Color.fromRGBO(217, 215, 241, 1),
                   decoration: BoxDecoration(
                       color: const Color.fromRGBO(249, 249, 249, 1),
