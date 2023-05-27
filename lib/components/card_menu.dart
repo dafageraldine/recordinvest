@@ -21,12 +21,12 @@ class CardMenu extends StatelessWidget {
     return Align(
         alignment: Alignment.centerLeft,
         child: Padding(
-            padding: EdgeInsets.only(left: 0.08.sw),
+            padding: EdgeInsets.only(left: 0.09.sw),
             child: InkWell(
               onTap: onTap,
               child: Container(
-                width: 0.38.sw,
-                height: 0.38.sw,
+                width: 0.37.sw,
+                height: 0.37.sw,
                 decoration: BoxDecoration(
                     color: theme,
                     borderRadius: BorderRadius.circular(10),

@@ -21,7 +21,7 @@ class SaldoCard extends StatelessWidget {
     ScreenUtil.init(context, designSize: const Size(360, 690));
     return Container(
       width: 0.85.sw,
-      height: 0.125.sw,
+      height: 0.125.sh,
       decoration: BoxDecoration(
           // color: Color.fromRGBO(250, 244, 183, 1),
           color: const Color.fromRGBO(157, 157, 157, 1),
@@ -74,7 +74,7 @@ class SaldoCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 0.02.sw, left: 0.1.sw),
+                padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
                 child: Row(
                   children: [
                     const Text(

@@ -35,7 +35,9 @@ class Homepage extends StatelessWidget {
                 await prefs.remove('uname');
                 await prefs.remove('pass');
                 await prefs.remove('id');
-                Get.to(Login());
+                Get.deleteAll();
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Login()));
               },
             ),
             SizedBox(
