@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import '../models/data.dart';
 
 class LoginController extends GetxController {
+  Rx<TextEditingController> uname = TextEditingController().obs;
+  Rx<TextEditingController> pass = TextEditingController().obs;
   Future login(BuildContext context, TextEditingController uname,
       TextEditingController pass) async {
     try {
