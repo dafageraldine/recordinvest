@@ -1,377 +1,16 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
-import 'package:recordinvest/models/recorddata.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
+import 'package:recordinvest/controller/performancecontroller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import '../../../components/app_bar_with_back_button_and_icon.dart';
 import '../../../models/data.dart';
 
-class Performance extends StatefulWidget {
-  const Performance({Key? key}) : super(key: key);
+class Performance extends StatelessWidget {
+  Performance({super.key});
 
-  @override
-  State<Performance> createState() => _PerformanceState();
-}
-
-class _PerformanceState extends State<Performance> {
-  List<ChartData> chartData = [];
-  List<PerformanceChartData> performance_chart_data = [];
-  List<String> added = [];
-  var total = 0.0;
-  var awal = "start date";
-  var end = "finish date";
-  var df = "";
-  var ds = "";
-  final oCcy = NumberFormat.currency(
-      locale: 'eu',
-      customPattern: '#,### \u00a4',
-      symbol: "",
-      decimalDigits: 2);
-
-  void filldf_ds() {
-    DateTime currentDate = DateTime.now();
-    int daysAgo = 30;
-    DateTime fewDaysAgo = currentDate.subtract(Duration(days: daysAgo));
-    String formattedDate = DateFormat('yyyy-MM-dd').format(fewDaysAgo);
-    df = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    ds = formattedDate;
-    get_record_range();
-  }
-
-  void _showDialogfilter(judul, konten) {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        ScreenUtil.init(context, designSize: const Size(360, 690));
-        // return object of type Dialog
-        return Dialog(
-          backgroundColor: Colors.white,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: SizedBox(
-            width: 0.85.sw,
-            height: 0.3.sh,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.1.sw, top: 0.03.sh),
-                  child: const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Choose date",
-                        style: TextStyle(
-                            color: Color.fromRGBO(82, 82, 82, 1),
-                            fontSize: 14,
-                            // fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600),
-                      )),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 0.1.sw),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      onTap: () {
-                        showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2020),
-                                lastDate: DateTime(2100))
-                            .then((date) {
-                          setState(() {
-                            ds = DateFormat('yyyy-MM-dd').format(date!);
-                            print("ds$ds");
-                            Navigator.of(context).pop();
-                            _showDialogfilter("", "");
-                          });
-                        });
-                      },
-                      child: Container(
-                        width: 0.6.sw,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(
-                              color: const Color.fromRGBO(228, 228, 228, 1),
-                              width: 2),
-                          color: Colors.white,
-                        ),
-                        child: Center(
-                            child: Text(
-                          ds,
-                          style: const TextStyle(
-                              color: Color.fromRGBO(160, 160, 160, 1),
-                              fontSize: 14,
-                              // fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600),
-                        )),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 0.1.sw, top: 10),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      onTap: () {
-                        showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2020),
-                                lastDate: DateTime(2100))
-                            .then((date) {
-                          setState(() {
-                            df = DateFormat('yyyy-MM-dd').format(date!);
-                            print("df$df");
-                            Navigator.of(context).pop();
-                            _showDialogfilter("", "");
-                          });
-                        });
-                      },
-                      child: Container(
-                        width: 0.6.sw,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(
-                              color: const Color.fromRGBO(228, 228, 228, 1),
-                              width: 2),
-                          color: Colors.white,
-                        ),
-                        child: Center(
-                            child: Text(
-                          df,
-                          style: const TextStyle(
-                              color: Color.fromRGBO(160, 160, 160, 1),
-                              fontSize: 14,
-                              // fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600),
-                        )),
-                      ),
-                    ),
-                  ),
-                )
-                // Container(
-                //     width: 0.7*sw,
-                //     height: 0.07*sh,
-                //     decoration: BoxDecoration(
-                //       // color: Colors.grey[600],
-                //       borderRadius: BorderRadius.circular(10),
-                //     ),
-                //     child: DropdownSearch<String>(
-                //       popupProps: PopupProps.menu(
-                //         itemBuilder: (context, item, isSelected) =>
-                //             ListTile(title: Text(item)),
-                //         showSearchBox: true,
-                //       ),
-                //       items: combobox,
-                //       dropdownBuilder: (context, item) => Text(item!),
-                //       onChanged: (value) => setState(() {
-                //         selectedpilihan = value!;
-                //       }),
-                //       selectedItem: selectedpilihan,
-                //     )),
-                ,
-                const SizedBox(
-                  height: 15,
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    get_record_range();
-                    // filldf_ds();
-                    // if (dataexist == "2") {
-                    //   Fluttertoast.showToast(
-                    //       msg: "getting report on process, please wait !",
-                    //       backgroundColor: Colors.black,
-                    //       textColor: Colors.white);
-                    // } else {
-                    //   setState(() {
-                    //     title_refresh = selectedpilihan;
-                    //     dataexist = "2";
-                    //   });
-                    //   get_report_at_ro(selectedpilihan);
-                    // }
-                  },
-                  child: Container(
-                    width: 0.7.sw,
-                    height: 0.07.sh,
-                    decoration: BoxDecoration(
-                        color: theme, borderRadius: BorderRadius.circular(10)),
-                    child: const Center(
-                        child: Text(
-                      "Search",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    )),
-                  ),
-                ),
-                // 15.verticalSpace,
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Future getrecord() async {
-    try {
-      listrecord.clear();
-      final prefs = await SharedPreferences.getInstance();
-      final String? id = prefs.getString('id');
-      var body = {"date": df, "id": id};
-      http.Response postdata =
-          await http.post(Uri.parse("${baseurl}getrecord"), body: body);
-      var data = json.decode(postdata.body);
-      print(data);
-      for (int i = 0; i < data["data"].length; i++) {
-        listrecord.add(RecordData(
-            data["data"][i]["date"],
-            data["data"][i]["value"].toString(),
-            data["data"][i]["type"],
-            data["data"][i]["product"]));
-      }
-      if (listrecord.isNotEmpty) {
-        fill_chart();
-      } else {
-        Fluttertoast.showToast(
-            msg: "There are no data for $awal !",
-            backgroundColor: Colors.black,
-            textColor: Colors.white);
-        chartData.clear();
-      }
-      setState(() {});
-    } catch (e) {
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
-    }
-  }
-
-  Future get_record_range() async {
-    try {
-      performance_chart_data.clear();
-      // setState(() {});
-      final prefs = await SharedPreferences.getInstance();
-      final String? id = prefs.getString('id');
-      var body = {"datestart": ds, "datefinish": df, "id": id};
-      print(body);
-      http.Response postdata = await http
-          .post(Uri.parse("${baseurl}get_record_by_range"), body: body);
-      var data = json.decode(postdata.body);
-      print(data);
-      for (int i = 0; i < data["data"].length; i++) {
-        performance_chart_data.add(PerformanceChartData(
-            data["data"][i]["date"], data["data"][i]["money"]));
-      }
-      if (performance_chart_data.isNotEmpty) {
-        performance_chart_data.sort((a, b) => a.day.compareTo(b.day));
-        setState(() {});
-        print("in hereeee");
-        // fill_chart();
-      } else {
-        Fluttertoast.showToast(
-            msg: "There are no data !",
-            backgroundColor: Colors.black,
-            textColor: Colors.white);
-        performance_chart_data.clear();
-      }
-    } catch (e) {
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
-      performance_chart_data.clear();
-    }
-  }
-
-  fill_chart() {
-    chartData.clear();
-    added.clear();
-    total = 0.0;
-    for (var i = 0; i < listrecord.length; i++) {
-      for (var j = 0; j < listrecord.length; j++) {
-        if (listrecord[i].type == listrecord[j].type) {
-          if (chartData.isEmpty) {
-            added.add(listrecord[j].product);
-            chartData.add(ChartData(listrecord[i].type,
-                double.tryParse(listrecord[j].value)!, Colors.blue));
-          } else {
-            int flag = 0;
-            for (var m = 0; m < chartData.length; m++) {
-              if (flag == 1) {
-                break;
-              } else {
-                if (listrecord[i].type == chartData[m].x) {
-                  for (var l = 0; l < added.length; l++) {
-                    if (listrecord[j].product == added[l]) {
-                      flag = 1;
-                      break;
-                    }
-                  }
-                  if (flag == 0) {
-                    added.add(listrecord[j].product);
-                    chartData[m].y =
-                        chartData[m].y + double.tryParse(listrecord[j].value)!;
-                    flag = 1;
-                  }
-                }
-              }
-            }
-            if (flag == 0) {
-              added.add(listrecord[j].product);
-              chartData.add(ChartData(listrecord[i].type,
-                  double.tryParse(listrecord[j].value)!, Colors.blue));
-            }
-          }
-        }
-        // print("ini isi j " + j.toString() + "ini isi i " + i.toString());
-      }
-    }
-    // --------------------
-    for (var i = 0; i < chartData.length; i++) {
-      total = total + chartData[i].y;
-      var rng = Random();
-      chartData[i].color = Color.fromRGBO(
-          rng.nextInt(155), rng.nextInt(200), rng.nextInt(180), 1);
-      // print(chartData[i].x + " " + chartData[i].y.toString() + " ");
-    }
-
-    for (var i = 0; i < chartData.length; i++) {
-      var persen = chartData[i].y / total * 100;
-      chartData[i].x = "${chartData[i].x} ${persen.toStringAsFixed(2)}%";
-    }
-
-    //   if(listrecord[i].type == listrecord)
-    //   var data = double.tryParse(listrecord[i].value.toString());
-    //   total = total + data!;
-    // print(total);
-  }
-
-  @override
-  void initState() {
-    listrecord.clear();
-    filldf_ds();
-    super.initState();
-  }
+  final PerformanceController _performanceController =
+      Get.put(PerformanceController());
 
   @override
   Widget build(BuildContext context) {
@@ -379,17 +18,18 @@ class _PerformanceState extends State<Performance> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Column(children: [
+          child: Obx(
+        () => Column(children: [
           AppBarWithBackButtonAndIconButton(
             titleBar: 'Portofolio Performance',
             onTap: () {
-              Navigator.pop(context);
+              Get.back();
             },
             onTapIcon: () {
-              _showDialogfilter("filter", "filter");
+              _performanceController.showDialogfilter("filter", "filter");
             },
           ),
-          performance_chart_data.isEmpty
+          _performanceController.performance_chart_data.isEmpty
               ? Container()
               : Padding(
                   padding: EdgeInsets.only(top: 0.02.sh, bottom: 0.02.sh),
@@ -421,7 +61,8 @@ class _PerformanceState extends State<Performance> {
                               tooltipBehavior: TooltipBehavior(enable: true),
                               series: <ChartSeries>[
                                 LineSeries<PerformanceChartData, String>(
-                                  dataSource: performance_chart_data,
+                                  dataSource: _performanceController
+                                      .performance_chart_data,
                                   color: theme,
                                   width: 3,
                                   xValueMapper: (PerformanceChartData pcd, _) =>
@@ -431,11 +72,14 @@ class _PerformanceState extends State<Performance> {
                                   name: 'money',
                                   enableTooltip: true,
                                   onPointTap: (pointInteractionDetails) {
-                                    df = performance_chart_data[
-                                            pointInteractionDetails.pointIndex!]
-                                        .day;
-                                    print(awal);
-                                    getrecord();
+                                    _performanceController.df.value =
+                                        _performanceController
+                                            .performance_chart_data[
+                                                pointInteractionDetails
+                                                    .pointIndex!]
+                                            .day;
+                                    _performanceController.getrecord();
+                                    print("here");
                                   },
                                   // Enable data label
                                   // dataLabelSettings: DataLabelSettings(isVisible: true)
@@ -446,7 +90,7 @@ class _PerformanceState extends State<Performance> {
                     ],
                   ),
                 ),
-          chartData.isNotEmpty
+          _performanceController.chartData.isNotEmpty
               ? Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Container(
@@ -485,7 +129,7 @@ class _PerformanceState extends State<Performance> {
                             Padding(
                               padding: EdgeInsets.only(left: 0.1.sw),
                               child: Text(
-                                "Rp ${oCcy.format(total)}",
+                                "Rp ${_performanceController.oCcy.format(_performanceController.total.value)}",
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   // color: Color.fromRGBO(157, 157, 157, 1),
@@ -499,7 +143,7 @@ class _PerformanceState extends State<Performance> {
                               padding:
                                   EdgeInsets.only(top: 0.01.sh, left: 0.1.sw),
                               child: Text(
-                                df,
+                                _performanceController.df.value,
                                 style: const TextStyle(
                                   // color: Color.fromRGBO(157, 157, 157, 1),
                                   // color: Color.fromRGBO(144, 200, 172, 1),
@@ -516,7 +160,7 @@ class _PerformanceState extends State<Performance> {
                   ),
                 )
               : Container(),
-          chartData.isNotEmpty
+          _performanceController.chartData.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.only(left: 0.1.sw, top: 0.02.sh),
                   child: Align(
@@ -537,20 +181,16 @@ class _PerformanceState extends State<Performance> {
           const SizedBox(
             height: 10,
           ),
-          chartData.isNotEmpty
+          _performanceController.chartData.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.only(left: 0.1.sw),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
                       onTap: () {
-                        for (var i = 0; i < chartData.length; i++) {
-                          var rng = Random();
-                          chartData[i].color = Color.fromRGBO(rng.nextInt(155),
-                              rng.nextInt(200), rng.nextInt(180), 1);
-                          // print(chartData[i].x + " " + chartData[i].y.toString() + " ");
-                        }
-                        setState(() {});
+                        _performanceController.fill_chart();
+
+                        // print(chartData[i].x + " " + chartData[i].y.toString() + " ");
                       },
                       child: Container(
                         width: 0.2.sw,
@@ -576,7 +216,7 @@ class _PerformanceState extends State<Performance> {
                   ),
                 )
               : Container(),
-          chartData.isNotEmpty
+          _performanceController.chartData.isNotEmpty
               ? Container(
                   child: SfCircularChart(
                       legend: Legend(
@@ -586,7 +226,7 @@ class _PerformanceState extends State<Performance> {
                       series: <CircularSeries>[
                       // Render pie chart
                       PieSeries<ChartData, String>(
-                          dataSource: chartData,
+                          dataSource: _performanceController.chartData,
                           pointColorMapper: (ChartData data, _) => data.color,
                           xValueMapper: (ChartData data, _) => data.x,
                           yValueMapper: (ChartData data, _) => data.y)
@@ -602,7 +242,7 @@ class _PerformanceState extends State<Performance> {
                       width: 0.85.sw,
                       height: 0.1.sh,
                       decoration: BoxDecoration(
-                          color: chartData[index].color,
+                          color: _performanceController.chartData[index].color,
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: EdgeInsets.only(left: 0.1.sw, top: 20),
@@ -610,7 +250,7 @@ class _PerformanceState extends State<Performance> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              chartData[index].x,
+                              _performanceController.chartData[index].x,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,
@@ -621,7 +261,7 @@ class _PerformanceState extends State<Performance> {
                               ),
                             ),
                             Text(
-                              "Rp ${oCcy.format(chartData[index].y)}",
+                              "Rp ${_performanceController.oCcy.format(_performanceController.chartData[index].y)}",
                               style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
@@ -638,11 +278,13 @@ class _PerformanceState extends State<Performance> {
                 ],
               );
             },
-            itemCount: chartData.isEmpty ? 0 : chartData.length,
+            itemCount: _performanceController.chartData.isEmpty
+                ? 0
+                : _performanceController.chartData.length,
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
           ),
-          chartData.isNotEmpty
+          _performanceController.chartData.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.only(left: 0.1.sw, top: 0.02.sh),
                   child: const Align(
@@ -678,7 +320,7 @@ class _PerformanceState extends State<Performance> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              listrecord[index].product,
+                              _performanceController.listrecord[index].product,
                               style: TextStyle(
                                 fontWeight: FontWeight.w800,
                                 color: Colors.grey[800],
@@ -689,7 +331,7 @@ class _PerformanceState extends State<Performance> {
                               ),
                             ),
                             Text(
-                              listrecord[index].type,
+                              _performanceController.listrecord[index].type,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
@@ -699,7 +341,7 @@ class _PerformanceState extends State<Performance> {
                               ),
                             ),
                             Text(
-                              "Rp ${oCcy.format(double.parse(listrecord[index].value))}",
+                              "Rp ${_performanceController.oCcy.format(double.parse(_performanceController.listrecord[index].value))}",
                               style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
@@ -709,7 +351,7 @@ class _PerformanceState extends State<Performance> {
                               ),
                             ),
                             Text(
-                              listrecord[index].date,
+                              _performanceController.listrecord[index].date,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
@@ -726,7 +368,9 @@ class _PerformanceState extends State<Performance> {
                 ],
               );
             },
-            itemCount: listrecord.isEmpty ? 0 : listrecord.length,
+            itemCount: _performanceController.listrecord.isEmpty
+                ? 0
+                : _performanceController.listrecord.length,
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
           ),
@@ -734,20 +378,7 @@ class _PerformanceState extends State<Performance> {
             height: 20,
           )
         ]),
-      ),
+      )),
     );
   }
-}
-
-class ChartData {
-  ChartData(this.x, this.y, this.color);
-  String x;
-  double y;
-  Color color;
-}
-
-class PerformanceChartData {
-  String day;
-  double money;
-  PerformanceChartData(this.day, this.money);
 }

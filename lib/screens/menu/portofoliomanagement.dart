@@ -79,10 +79,6 @@ class PortofolioManagement extends StatelessWidget {
                           title_card: "Analyze stock"),
                       // CardMenu(
                       //     onTap: () {
-                      //       Navigator.push(
-                      //           context,
-                      //           MaterialPageRoute(
-                      //               builder: (context) => ManageUnperformPortofolio()));
                       //     },
                       //     image: "assets/accounting.png",
                       //     title_card: "Manage Unperform Portofolio"),

@@ -17,7 +17,7 @@ class CreditSimulation extends StatelessWidget {
         AppBarWithBackButton(
             titleBar: "Credit Simulation",
             onTap: () {
-              Navigator.pop(context);
+              Get.back();
             }),
         SizedBox(
           height: 0.025.sh,

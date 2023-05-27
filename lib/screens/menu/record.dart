@@ -20,7 +20,7 @@ class Recordpage extends StatelessWidget {
             AppBarWithBackButton(
               titleBar: "Create Record",
               onTap: () {
-                Navigator.pop(context);
+                Get.back();
               },
             ),
             Padding(

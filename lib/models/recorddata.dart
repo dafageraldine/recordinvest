@@ -1,5 +1,3 @@
-List<RecordData> listrecord = <RecordData>[];
-
 class RecordData {
   String date;
   String value;

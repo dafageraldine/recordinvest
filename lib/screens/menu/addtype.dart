@@ -24,7 +24,7 @@ class _AddTypeState extends State<AddType> {
             AppBarWithBackButton(
                 titleBar: "Add Investment Type",
                 onTap: () {
-                  Navigator.pop(context);
+                  Get.back();
                 }),
             Padding(
               padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),

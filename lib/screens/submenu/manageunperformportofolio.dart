@@ -24,7 +24,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
           AppBarWithBackButton(
               titleBar: "Manage Unperform Portofolio",
               onTap: () {
-                Navigator.pop(context);
+                Get.back();
               }),
           SizedBox(
             height: 0.025.sh,

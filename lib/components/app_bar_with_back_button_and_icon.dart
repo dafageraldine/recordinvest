@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:recordinvest/models/data.dart';
 
 class AppBarWithBackButtonAndIconButton extends StatelessWidget {
@@ -46,10 +47,10 @@ class AppBarWithBackButtonAndIconButton extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   titleBar,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    color: Color.fromRGBO(249, 249, 249, 1),
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp,
+                    color: const Color.fromRGBO(249, 249, 249, 1),
                   ),
                 )),
           ),
