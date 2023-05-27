@@ -1,15 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:recordinvest/screens/home/home.dart';
+import 'package:recordinvest/controller/splashcontroller.dart';
 import 'package:recordinvest/models/data.dart';
-import 'package:http/http.dart' as http;
-import 'package:recordinvest/screens/login/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -19,35 +12,7 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  Future login() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final String? uname = prefs.getString('uname');
-      final String? pass = prefs.getString('pass');
-      var body = {"user": uname, "pwd": pass};
-      http.Response postdata =
-          await http.post(Uri.parse("${baseurl}login"), body: body);
-      var data = json.decode(postdata.body);
-      if (data["data"].length > 0) {
-        //use getx
-        Get.to(Homepage());
-      } else {
-        Timer(const Duration(seconds: 3), () {
-          Get.to(Login());
-        });
-      }
-    } catch (e) {
-      Timer(const Duration(seconds: 3), () {
-        Get.to(Login());
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    login();
-    super.initState();
-  }
+  SplashController _splashController = Get.put(SplashController());
 
   @override
   Widget build(BuildContext context) {

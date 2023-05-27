@@ -12,9 +12,6 @@ import '../submenu/analyzestock.dart';
 class PortofolioManagement extends StatelessWidget {
   final StockAnalysisController _stockAnalysisController =
       Get.put(StockAnalysisController());
-
-  PortofolioManagement({super.key});
-
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: const Size(360, 690));

@@ -7,9 +7,6 @@ import '../../../../models/data.dart';
 
 class Recordpage extends StatelessWidget {
   final RecordController _recordController = Get.put(RecordController());
-
-  Recordpage({super.key});
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

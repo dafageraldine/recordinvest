@@ -5,8 +5,6 @@ import 'package:recordinvest/components/card_menu.dart';
 import 'package:recordinvest/screens/submenu/carcreditsimulation.dart';
 
 class CreditSimulation extends StatelessWidget {
-  const CreditSimulation({super.key});
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
