@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/models/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,16 +22,11 @@ class AddTypeController extends GetxController {
           .post(Uri.parse("${baseurl}inserttypenproduct"), body: body);
       var data = json.decode(postdata.body);
       if (data["message"] == "data has been added") {
-        Fluttertoast.showToast(
-            msg: "data has been added",
-            backgroundColor: Colors.black,
-            textColor: Colors.white);
+        Get.snackbar("success", "data has been added",
+            backgroundColor: sucswithopacity);
       }
     } catch (e) {
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
+      Get.snackbar("error", e.toString(), backgroundColor: errwithopacity);
     }
   }
 }

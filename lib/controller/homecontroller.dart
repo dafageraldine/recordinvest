@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:recordinvest/screens/menu/record.dart';
@@ -44,10 +43,7 @@ class HomeController extends GetxController with StateMixin {
       }
       getProduct();
     } catch (e) {
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
+      Get.snackbar("error", e.toString(), backgroundColor: errwithopacity);
     }
   }
 
@@ -64,10 +60,7 @@ class HomeController extends GetxController with StateMixin {
       }
       Get.to(Recordpage());
     } catch (e) {
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
+      Get.snackbar("error", e.toString(), backgroundColor: errwithopacity);
     }
   }
 
@@ -102,10 +95,8 @@ class HomeController extends GetxController with StateMixin {
         // print(percent);
       }
     } catch (e) {
-      Fluttertoast.showToast(
-          msg: "failed to fetch saldo $e",
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
+      Get.snackbar("error", "failed to fetch saldo $e",
+          backgroundColor: errwithopacity);
     }
   }
 

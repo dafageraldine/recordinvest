@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/screens/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +18,7 @@ class LoginController extends GetxController {
       print(" url ${baseurl}login");
       var data = json.decode(postdata.body);
       if (data["data"].length > 0) {
-        for (int i = 0; i < data["data"].length; i++) {
+        for (var i = 0; i < data["data"].length; i++) {
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('uname', data["data"][i]["user"]);
           await prefs.setString('pass', pass.text);
@@ -30,17 +28,11 @@ class LoginController extends GetxController {
         //use getx
         Get.to(Homepage());
       } else {
-        Fluttertoast.showToast(
-            msg: "Username atau password salah !",
-            backgroundColor: Colors.black,
-            textColor: Colors.white);
+        Get.snackbar("error", "Username atau password salah !",
+            backgroundColor: errwithopacity);
       }
     } catch (e) {
-      print(e.toString());
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
+      Get.snackbar("error", e.toString(), backgroundColor: errwithopacity);
     }
   }
 

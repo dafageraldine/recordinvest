@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/screens/submenu/hasilsimulasi.dart';
+
+import '../models/data.dart';
 
 class CarCreditSimulationController extends GetxController {
   Rx<TextEditingController> bunga = TextEditingController().obs;
@@ -38,10 +39,8 @@ class CarCreditSimulationController extends GetxController {
           tenorcicilan,
           bungacicilan));
     } catch (e) {
-      Fluttertoast.showToast(
-          msg: "masukkan data yang valid !",
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
+      Get.snackbar("error", "masukkan data yang valid !",
+          backgroundColor: errwithopacity);
     }
   }
 }

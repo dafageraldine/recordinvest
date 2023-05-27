@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/screens/submenu/hasilsimulasiporto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,17 +36,13 @@ class ManageUnperformPortofolioController extends GetxController {
             data["data"][i]["value"].toString(), data["data"][i]["product"]));
       }
       list_cb_data.sort(((a, b) => a.product.compareTo(b.product)));
-      print("length : ${list_cb_data.length}");
       for (int i = 0; i < list_cb_data.length; i++) {
         combobox.add(list_cb_data[i].product);
       }
       selectedpilihan.value = list_cb_data[0].product;
       showcb();
     } catch (e) {
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
+      Get.snackbar("error", e.toString(), backgroundColor: errwithopacity);
     }
   }
 

@@ -55,7 +55,7 @@ class PortofolioManagement extends StatelessWidget {
                     children: [
                       CardMenu(
                           onTap: () {
-                            Get.to(const Performance());
+                            Get.to(Performance());
                           },
                           image: "assets/financial-profit.png",
                           title_card: "Performance"),

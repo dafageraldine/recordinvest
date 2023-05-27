@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/controller/homecontroller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,17 +37,11 @@ class RecordController extends GetxController with StateMixin {
         list_cb_data.clear();
         combobox.clear();
         await _homeController.getSaldo();
-        Fluttertoast.showToast(
-            msg: "data has been added",
-            backgroundColor: Colors.black,
-            textColor: Colors.white);
+        Get.snackbar("success", "data has been added",
+            backgroundColor: sucswithopacity);
       }
     } catch (e) {
-      print(e.toString());
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
+      Get.snackbar("error", e.toString(), backgroundColor: errwithopacity);
     }
   }
 }
