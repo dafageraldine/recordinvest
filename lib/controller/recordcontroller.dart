@@ -25,8 +25,8 @@ class RecordController extends GetxController with StateMixin {
       final prefs = await SharedPreferences.getInstance();
       final String? id = prefs.getString('id');
       var body = {
-        "type": selectedtype,
-        "product": selectedproduct,
+        "type": selectedtype.value,
+        "product": selectedproduct.value,
         "value": values.value.text,
         "id": id
       };
