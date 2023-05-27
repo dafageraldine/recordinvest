@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/data.dart';
+
 class SaldoCard extends StatelessWidget {
   final String saldo;
   final String date;
@@ -44,7 +46,7 @@ class SaldoCard extends StatelessWidget {
                   height: 30,
                   decoration: BoxDecoration(
                       // color: Color.fromRGBO(250, 244, 183, 1),
-                      color: const Color.fromRGBO(144, 200, 172, 1),
+                      color: theme,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: const [
                         BoxShadow(

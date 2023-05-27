@@ -103,8 +103,7 @@ class Login extends StatelessWidget {
                       width: 0.85 * width,
                       height: 0.07 * height,
                       decoration: BoxDecoration(
-                          color: const Color.fromRGBO(144, 200, 172, 1),
-                          borderRadius: BorderRadius.circular(5)),
+                          color: theme, borderRadius: BorderRadius.circular(5)),
                       child: const Center(
                           child: Text(
                         "Login",

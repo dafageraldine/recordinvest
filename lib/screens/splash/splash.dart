@@ -12,7 +12,7 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  SplashController _splashController = Get.put(SplashController());
+  final SplashController _splashController = Get.put(SplashController());
 
   @override
   Widget build(BuildContext context) {

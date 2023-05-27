@@ -10,6 +10,8 @@ class CarCreditSimulation extends StatelessWidget {
       Get.put(CarCreditSimulationController());
   final HomeController _homeController = Get.find();
 
+  CarCreditSimulation({super.key});
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

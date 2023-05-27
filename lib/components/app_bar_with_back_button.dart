@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recordinvest/models/data.dart';
 
 class AppBarWithBackButton extends StatelessWidget {
   final String titleBar;
@@ -14,7 +15,7 @@ class AppBarWithBackButton extends StatelessWidget {
       width: width,
       height: height * 0.12,
       // color: Color.fromRGBO(217, 215, 241, 1),
-      color: const Color.fromRGBO(144, 200, 172, 1),
+      color: theme,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -32,7 +33,7 @@ class AppBarWithBackButton extends StatelessWidget {
                 height: 0.125 * width,
                 child: Icon(
                   Icons.arrow_back_ios_new,
-                  color: const Color.fromRGBO(144, 200, 172, 1),
+                  color: theme,
                   size: 0.06 * width,
                 ),
               ),

@@ -65,8 +65,7 @@ class ManageUnperformPortofolioController extends GetxController {
     var assetAkhir = (100 / desiredLoss) * (kurs_ * floatingLoss);
     var uangHarusDiinvest = assetAkhir - (uangInvestAwal * kurs_);
     var hargabep = (assetAkhir /
-            (unitDimiliki +
-                (uangHarusDiinvest / (hargaSaatIni * kurs_)))) /
+            (unitDimiliki + (uangHarusDiinvest / (hargaSaatIni * kurs_)))) /
         kurs_;
     var upPercent = ((hargabep - hargaSaatIni) / hargaSaatIni) * 100;
     var returnPerhariSwitchMoney =
@@ -153,8 +152,7 @@ class ManageUnperformPortofolioController extends GetxController {
                 width: 0.7 * Get.width,
                 height: 0.07 * Get.height,
                 decoration: BoxDecoration(
-                    color: const Color.fromRGBO(144, 200, 172, 1),
-                    borderRadius: BorderRadius.circular(10)),
+                    color: theme, borderRadius: BorderRadius.circular(10)),
                 child: const Center(
                     child: Text(
                   "Select",

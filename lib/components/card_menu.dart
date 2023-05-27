@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../models/data.dart';
 
 class CardMenu extends StatelessWidget {
   final String image;
@@ -18,14 +22,14 @@ class CardMenu extends StatelessWidget {
     return Align(
         alignment: Alignment.centerLeft,
         child: Padding(
-            padding: EdgeInsets.only(left: 0.1 * width),
+            padding: EdgeInsets.only(left: 0.08 * width),
             child: InkWell(
               onTap: onTap,
               child: Container(
-                width: 0.35 * width,
-                height: 0.35 * width,
+                width: 0.38 * width,
+                height: 0.38 * width,
                 decoration: BoxDecoration(
-                    color: const Color.fromRGBO(144, 200, 172, 1),
+                    color: theme,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: const [
                       BoxShadow(
@@ -37,23 +41,25 @@ class CardMenu extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 15,
+                      height: 18,
                     ),
                     Image.asset(
                       image,
-                      width: 0.2 * width,
-                      height: 0.2 * width,
+                      width: 0.18 * width,
+                      height: 0.18 * width,
                     ),
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      title_card,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        color: Color.fromRGBO(249, 249, 249, 1),
-                      ),
+                    SizedBox(
+                      width: 0.35.sw,
+                      child: Text(title_card,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12.sp,
+                            color: const Color.fromRGBO(249, 249, 249, 1),
+                          )),
                     )
                   ],
                 ),

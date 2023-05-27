@@ -101,7 +101,7 @@ class Homepage extends StatelessWidget {
                 ),
                 CardMenu(
                   onTap: () {
-                    Get.to(CreditSimulation());
+                    Get.to(const CreditSimulation());
                   },
                   image: "assets/garage.png",
                   title_card: "credit\nsimulation",

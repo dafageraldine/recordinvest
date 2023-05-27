@@ -211,8 +211,7 @@ class _PerformanceState extends State<Performance> {
                     width: 0.7 * sw,
                     height: 0.07 * sh,
                     decoration: BoxDecoration(
-                        color: const Color.fromRGBO(144, 200, 172, 1),
-                        borderRadius: BorderRadius.circular(10)),
+                        color: theme, borderRadius: BorderRadius.circular(10)),
                     child: const Center(
                         child: Text(
                       "Search",
@@ -425,7 +424,7 @@ class _PerformanceState extends State<Performance> {
                               series: <ChartSeries>[
                                 LineSeries<PerformanceChartData, String>(
                                   dataSource: performance_chart_data,
-                                  color: const Color.fromRGBO(144, 200, 172, 1),
+                                  color: theme,
                                   width: 3,
                                   xValueMapper: (PerformanceChartData pcd, _) =>
                                       pcd.day,
@@ -561,7 +560,7 @@ class _PerformanceState extends State<Performance> {
                         height: height * 0.04,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: const Color.fromRGBO(144, 200, 172, 1),
+                          color: theme,
                         ),
                         child: const Center(
                             child: Text(
@@ -675,7 +674,7 @@ class _PerformanceState extends State<Performance> {
                       width: width * 0.85,
                       height: 0.15 * height,
                       decoration: BoxDecoration(
-                          color: const Color.fromRGBO(144, 200, 172, 1),
+                          color: theme,
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: EdgeInsets.only(left: width * 0.1, top: 20),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
 
 import '../../controller/stockanalysiscontroller.dart';
+import '../../models/data.dart';
 
 class AnalyzeDetail extends StatelessWidget {
   final StockAnalysisController _stockAnalysisController = Get.find();
@@ -40,7 +41,7 @@ class AnalyzeDetail extends StatelessWidget {
                             width: 0.85.sw,
                             height: 0.15.sh,
                             decoration: BoxDecoration(
-                                color: const Color.fromRGBO(144, 200, 172, 1),
+                                color: theme,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Padding(
                               padding: EdgeInsets.only(left: 0.1.sw, top: 20),
@@ -48,8 +49,7 @@ class AnalyzeDetail extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "action : ${_stockAnalysisController
-                                            .analyzedatadetail[i].action}",
+                                    "action : ${_stockAnalysisController.analyzedatadetail[i].action}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
                                       // color: Color.fromRGBO(157, 157, 157, 1),
@@ -78,9 +78,7 @@ class AnalyzeDetail extends StatelessWidget {
                                   ),
                                   5.verticalSpace,
                                   Text(
-                                    "price : ${_stockAnalysisController.oCcy.format(
-                                            _stockAnalysisController
-                                                .analyzedatadetail[i].close)}",
+                                    "price : ${_stockAnalysisController.oCcy.format(_stockAnalysisController.analyzedatadetail[i].close)}",
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w800,
                                       // color: Color.fromRGBO(157, 157, 157, 1),
