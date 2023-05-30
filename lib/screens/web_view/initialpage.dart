@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tesflutter/webview.dart';
-import 'package:tesflutter/webviewnavigator.dart';
+import 'package:recordinvest/screens/web_view/webview.dart';
+import 'package:recordinvest/screens/web_view/webviewnavigator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../models/data.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -39,7 +41,7 @@ class _InitialPageState extends State<InitialPage> {
           actions: [
             WebViewNavigator(controller: controller),
           ],
-          backgroundColor: const Color.fromRGBO(144, 200, 172, 1)),
+          backgroundColor: theme),
       body: WebViewPage(
         controller: controller,
       ),
