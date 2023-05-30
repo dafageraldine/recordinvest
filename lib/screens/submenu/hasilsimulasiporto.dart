@@ -11,7 +11,7 @@ class HasilSimulasiPorto extends StatelessWidget {
   final double floss_percent;
   final double desired_loss;
   final double asset_switch;
-  final double return_sitch;
+  final double return_switch;
   final double money_reinvest;
   final double estimated_day;
   final double estimated_month;
@@ -24,7 +24,7 @@ class HasilSimulasiPorto extends StatelessWidget {
       this.floss_percent,
       this.desired_loss,
       this.asset_switch,
-      this.return_sitch,
+      this.return_switch,
       this.money_reinvest,
       this.estimated_day,
       this.estimated_month,
@@ -75,7 +75,7 @@ class HasilSimulasiPorto extends StatelessWidget {
                 ),
                 TextSpan(
                   text:
-                      "Atau Switch ke Produk Asuransi lain dengan asset saat ini sebesar Rp ${oCcy.format(asset_switch)} dan return perhari $return_sitch%\n\n",
+                      "Atau Switch ke Produk Investasi lain dengan asset saat ini sebesar Rp ${oCcy.format(asset_switch)} dan return perhari $return_switch%\n\n",
                   style: const TextStyle(color: Colors.black),
                 ),
                 TextSpan(
