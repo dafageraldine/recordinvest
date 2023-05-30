@@ -8,20 +8,12 @@ class HasilSimulasi extends StatelessWidget {
   final int hargaotr;
   final double dpmobil;
   final int tenorcicilan;
-  final int bungacicilan;
   final double plafonpinjaman;
   final double angsuranpokok;
   final double angsuranbunga;
   final double angsuranakhir;
-  HasilSimulasi(
-      this.plafonpinjaman,
-      this.angsuranpokok,
-      this.angsuranbunga,
-      this.angsuranakhir,
-      this.hargaotr,
-      this.dpmobil,
-      this.tenorcicilan,
-      this.bungacicilan,
+  HasilSimulasi(this.plafonpinjaman, this.angsuranpokok, this.angsuranbunga,
+      this.angsuranakhir, this.hargaotr, this.dpmobil, this.tenorcicilan,
       {super.key});
 
   final oCcy = NumberFormat.currency(

@@ -116,6 +116,28 @@ class StockAnalysisController extends GetxController {
     }
   }
 
+  Future updateStockData() async {
+    try {
+      // example
+      // https://dafageraldine.pythonanywhere.com/update_stock?jenis=us&kode=GOOG&saveas=GOOG&start=2018-01-01&end=2023-05-29
+      http.Response getdata = await http.get(Uri.parse(
+          "${baseurl}update_stock?jenis=${selectedStockType.value}&kode=${selectedStockName.split("| ")[0].trim()}&saveas=${values.value.text}&start=2018-01-01&end=2023-05-29"));
+      var data = json.decode(getdata.body);
+      if (data['message'] == "success") {
+        Get.snackbar("success",
+            "data for ${selectedStockName.split("| ")[0].trim()} updated !",
+            backgroundColor: sucswithopacity);
+      } else {
+        Get.snackbar("error", data['message'].toString(),
+            backgroundColor: errwithopacity);
+      }
+    } catch (e) {
+      Get.snackbar(
+          "error", "try again ! make sure you have internet connection",
+          backgroundColor: errwithopacity);
+    }
+  }
+
   Future analyzeDetail(String ma) async {
     analyzedatadetail.clear();
     isLoading.value = true;

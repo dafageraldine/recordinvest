@@ -19,7 +19,7 @@ class CarCreditSimulationController extends GetxController {
       var hargaotr = int.tryParse(otr.value.text);
       var dpmobil = double.tryParse(dp.value.text)!;
       var tenorcicilan = int.tryParse(tenor.value.text);
-      var bungacicilan = int.tryParse(bunga.value.text);
+      var bungacicilan = double.tryParse(bunga.value.text);
       var plafonpinjaman = hargaotr! - dpmobil;
       var angsuranpokok = plafonpinjaman / (tenorcicilan! * 12);
       var angsuranbunga = (plafonpinjaman * (bungacicilan! / 100)) / 12;
@@ -36,8 +36,7 @@ class CarCreditSimulationController extends GetxController {
           finalangsuranakhir.value,
           hargaotr,
           dpmobil,
-          tenorcicilan,
-          bungacicilan));
+          tenorcicilan));
     } catch (e) {
       Get.snackbar("error", "masukkan data yang valid !",
           backgroundColor: errwithopacity);
