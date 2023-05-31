@@ -43,6 +43,7 @@ dependencies:
   lottie: ^2.3.2
   google_fonts: ^4.0.5
   webview_flutter: ^3.0.4
+  persistent_bottom_nav_bar: ^5.0.2
 
 dev_dependencies:
   flutter_test:

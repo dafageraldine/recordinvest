@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:recordinvest/models/data.dart';
+import 'package:recordinvest/screens/bottombar/bottombar.dart';
 import 'package:recordinvest/screens/login/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:recordinvest/screens/home/home.dart';
@@ -25,7 +27,7 @@ class SplashController extends GetxController with StateMixin {
       var data = json.decode(postdata.body);
       if (data["data"].length > 0) {
         //use getx
-        Get.to(Homepage());
+        Get.to(BottomBar());
       } else {
         Timer(const Duration(seconds: 3), () {
           Get.to(Login());
