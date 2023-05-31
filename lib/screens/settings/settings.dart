@@ -8,6 +8,8 @@ import 'package:recordinvest/controller/settingcontroller.dart';
 import 'package:recordinvest/models/data.dart';
 import 'package:recordinvest/screens/web_view/initialpage.dart';
 
+import '../submenu/updatestock.dart';
+
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
 
@@ -62,8 +64,8 @@ class SettingsPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: theme,
                       ),
-                      child:
-                          const Icon(Icons.exit_to_app_rounded, color: Colors.white),
+                      child: const Icon(Icons.exit_to_app_rounded,
+                          color: Colors.white),
                     ),
                   ),
                 )
@@ -112,7 +114,8 @@ class SettingsPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: theme,
                       ),
-                      child: const Icon(Icons.code_rounded, color: Colors.white),
+                      child:
+                          const Icon(Icons.code_rounded, color: Colors.white),
                     ),
                   ),
                 )
@@ -148,7 +151,9 @@ class SettingsPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 0.1.sw),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(UpdateStock());
+                    },
                     child: Container(
                       width: 0.15.sw,
                       height: 0.05.sh,
