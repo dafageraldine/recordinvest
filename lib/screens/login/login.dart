@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:recordinvest/components/appversion.dart';
 import 'package:recordinvest/controller/logincontroller.dart';
 import 'package:recordinvest/models/data.dart';
 
@@ -25,18 +26,10 @@ class Login extends StatelessWidget {
             () => Center(
               child: Stack(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
+                  const Padding(
+                    padding: EdgeInsets.all(18.0),
                     child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Text(
-                          "Record Invest v$Build.$Major.$Minor",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey[800],
-                            fontSize: 16,
-                          ),
-                        )),
+                        alignment: Alignment.bottomCenter, child: AppVersion()),
                   ),
                   Column(
                     children: [

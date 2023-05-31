@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recordinvest/screens/bottombar/bottombar.dart';
 import 'package:recordinvest/screens/splash/splash.dart';
 
 void main() {
@@ -19,6 +18,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         debugShowCheckedModeBanner: false,
-        home: Splash());
+        home: const Splash());
   }
 }

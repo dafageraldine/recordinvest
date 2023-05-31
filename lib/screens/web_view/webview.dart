@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -46,7 +45,7 @@ class _WebViewPageState extends State<WebViewPage> {
         if (loadingPercentage < 100)
           LinearProgressIndicator(
             value: loadingPercentage / 100.0,
-            color: Colors.orange,
+            color: Colors.grey.shade300,
             backgroundColor: Colors.white,
             minHeight: 0.01 * height,
           ),

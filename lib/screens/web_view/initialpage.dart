@@ -33,8 +33,8 @@ class _InitialPageState extends State<InitialPage> {
               onTap: () {
                 Get.back();
               },
-              child: Icon(Icons.arrow_back_rounded)),
-          title: Text(
+              child: const Icon(Icons.arrow_back_rounded)),
+          title: const Text(
             "Developer",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
           ),

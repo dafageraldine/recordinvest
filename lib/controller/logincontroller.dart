@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recordinvest/screens/home/home.dart';
+import 'package:recordinvest/screens/bottombar/bottombar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../models/data.dart';
@@ -28,7 +28,7 @@ class LoginController extends GetxController {
           break;
         }
         //use getx
-        Get.to(Homepage());
+        Get.to(BottomBar());
       } else {
         Get.snackbar("error", "Username atau password salah !",
             backgroundColor: errwithopacity);

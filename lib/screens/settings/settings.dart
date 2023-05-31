@@ -3,20 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recordinvest/components/app_bar_only.dart';
+import 'package:recordinvest/components/appversion.dart';
+import 'package:recordinvest/controller/settingcontroller.dart';
 import 'package:recordinvest/models/data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../login/login.dart';
+import 'package:recordinvest/screens/web_view/initialpage.dart';
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+  SettingsPage({super.key});
+
+  final SettingController _settingController = Get.put(SettingController());
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       child: Column(children: [
-        AppBarOnly(
+        const AppBarOnly(
           titleBar: 'Application Settings',
         ),
         5.verticalSpace,
@@ -47,17 +49,9 @@ class SettingsPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 0.1.sw),
                   child: InkWell(
-                    onTap: () async {
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.remove('uname');
-                      await prefs.remove('pass');
-                      await prefs.remove('id');
-                      Get.deleteAll();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                        // Set rootNavigator to true
-                      );
+                    onTap: () {
+                      _settingController.showAlertDialog();
+
                       // Navigator.push(context,
                       //     MaterialPageRoute(builder: (context) => Login()));
                     },
@@ -69,7 +63,7 @@ class SettingsPage extends StatelessWidget {
                         color: theme,
                       ),
                       child:
-                          Icon(Icons.exit_to_app_rounded, color: Colors.white),
+                          const Icon(Icons.exit_to_app_rounded, color: Colors.white),
                     ),
                   ),
                 )
@@ -77,15 +71,6 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
         ),
-        // Padding(
-        //   padding: EdgeInsets.only(left: 0.1.sw),
-        //   child: Align(
-        //     alignment: Alignment.centerLeft,
-        //     child: Text("Exit Application",
-        //         style: GoogleFonts.poppins(
-        //             fontWeight: FontWeight.normal, fontSize: 12.sp)),
-        //   ),
-        // ),
         5.verticalSpace,
         Divider(
           color: Colors.grey.shade300,
@@ -93,6 +78,101 @@ class SettingsPage extends StatelessWidget {
           indent: 30,
           endIndent: 30,
         ),
+        Padding(
+          padding: EdgeInsets.only(left: 0.1.sw),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Developer Profile",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600, fontSize: 14.sp)),
+                    Text("About Developer Profile",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.normal, fontSize: 12.sp))
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 0.1.sw),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(const InitialPage());
+
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => Login()));
+                    },
+                    child: Container(
+                      width: 0.15.sw,
+                      height: 0.05.sh,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: theme,
+                      ),
+                      child: const Icon(Icons.code_rounded, color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        5.verticalSpace,
+        Divider(
+          color: Colors.grey.shade300,
+          thickness: 2,
+          indent: 30,
+          endIndent: 30,
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 0.1.sw),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Update Stock",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600, fontSize: 14.sp)),
+                    Text("Update historical price data",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.normal, fontSize: 12.sp))
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 0.1.sw),
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      width: 0.15.sw,
+                      height: 0.05.sh,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: theme,
+                      ),
+                      child: const Icon(Icons.web_sharp, color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        5.verticalSpace,
+        Divider(
+          color: Colors.grey.shade300,
+          thickness: 2,
+          indent: 30,
+          endIndent: 30,
+        ),
+        5.verticalSpace,
+        const AppVersion()
       ]),
     );
   }

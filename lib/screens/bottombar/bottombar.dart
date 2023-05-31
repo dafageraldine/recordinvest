@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:recordinvest/controller/homecontroller.dart';
 import 'package:recordinvest/models/data.dart';
 import 'package:recordinvest/screens/home/home.dart';
 import 'package:recordinvest/screens/settings/settings.dart';
-import 'package:recordinvest/screens/web_view/initialpage.dart';
 
 class BottomBar extends StatelessWidget {
+  BottomBar({super.key});
+
   showAlertDialog() {
     // set up the buttons
     Widget cancelButton = TextButton(
@@ -51,13 +51,13 @@ class BottomBar extends StatelessWidget {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home_rounded),
+        icon: const Icon(Icons.home_rounded),
         title: ("Home"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.grey.shade500,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.settings),
+        icon: const Icon(Icons.settings),
         title: ("Settings"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.grey.shade500,
@@ -65,7 +65,7 @@ class BottomBar extends StatelessWidget {
     ];
   }
 
-  PersistentTabController _controller =
+  final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
 
   @override
@@ -90,19 +90,19 @@ class BottomBar extends StatelessWidget {
         stateManagement: true, // Default is true.
         hideNavigationBarWhenKeyboardShows:
             true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-        decoration: NavBarDecoration(
+        decoration: const NavBarDecoration(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           colorBehindNavBar: Colors.white,
         ),
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: ItemAnimationProperties(
+        itemAnimationProperties: const ItemAnimationProperties(
           // Navigation Bar's items animation properties.
           duration: Duration(milliseconds: 200),
           curve: Curves.ease,
         ),
-        screenTransitionAnimation: ScreenTransitionAnimation(
+        screenTransitionAnimation: const ScreenTransitionAnimation(
           // Screen transition animation on change of selected tab.
           animateTabTransition: true,
           curve: Curves.ease,

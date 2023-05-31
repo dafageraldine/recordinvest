@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:recordinvest/components/appversion.dart';
 import 'package:recordinvest/controller/splashcontroller.dart';
-import 'package:recordinvest/models/data.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -29,14 +29,10 @@ class _SplashState extends State<Splash> {
               fit: BoxFit.contain,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  "Record Invest v$Build.$Major.$Minor",
-                  style: const TextStyle(fontWeight: FontWeight.w700),
-                )),
+          const Padding(
+            padding: EdgeInsets.all(18.0),
+            child:
+                Align(alignment: Alignment.bottomCenter, child: AppVersion()),
           ),
         ],
       ),

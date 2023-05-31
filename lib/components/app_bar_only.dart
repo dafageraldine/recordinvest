@@ -7,7 +7,7 @@ import '../models/data.dart';
 class AppBarOnly extends StatelessWidget {
   final String titleBar;
 
-  AppBarOnly({super.key, required this.titleBar});
+  const AppBarOnly({super.key, required this.titleBar});
 
   @override
   Widget build(BuildContext context) {

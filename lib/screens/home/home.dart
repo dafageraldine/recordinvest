@@ -2,15 +2,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recordinvest/components/app_bar_only.dart';
-import 'package:recordinvest/components/app_bar_with_button.dart';
 import 'package:recordinvest/components/card_menu.dart';
 import 'package:recordinvest/components/saldo_card.dart';
 import 'package:recordinvest/controller/homecontroller.dart';
-import 'package:recordinvest/screens/login/login.dart';
 import 'package:recordinvest/screens/menu/addtype.dart';
 import 'package:recordinvest/screens/menu/creditsimulation.dart';
 import 'package:recordinvest/screens/menu/portofoliomanagement.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Homepage extends StatelessWidget {
   final HomeController _homeController = Get.put(HomeController());
@@ -23,7 +20,7 @@ class Homepage extends StatelessWidget {
       color: Colors.white,
       child: Column(
         children: [
-          AppBarOnly(titleBar: 'My InvestMent Portofolio'),
+          const AppBarOnly(titleBar: 'My InvestMent Portofolio'),
           // AppBarWithButton(
           //   titleButton: "Log Out",
           //   titleBar: "My InvestMent Portofolio",

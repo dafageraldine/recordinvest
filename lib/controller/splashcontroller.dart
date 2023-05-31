@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:recordinvest/models/data.dart';
 import 'package:recordinvest/screens/bottombar/bottombar.dart';
 import 'package:recordinvest/screens/login/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:recordinvest/screens/home/home.dart';
 import 'dart:async';
 import 'dart:convert';
 
