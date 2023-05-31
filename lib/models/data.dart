@@ -5,8 +5,8 @@ List<String> comboboxproduct = [];
 List<String> combobox = [];
 
 var Build = "1";
-var Major = "3";
-var Minor = "2";
+var Major = "4";
+var Minor = "0";
 
 var devurl = "http://127.0.0.1:5000/";
 var profurl = "http://dafageraldine.pythonanywhere.com/";
