@@ -38,7 +38,7 @@ class _InitialPageState extends State<InitialPage> {
               child: const Icon(Icons.arrow_back_rounded)),
           title: Text(
             widget.title,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
           ),
           actions: [
             WebViewNavigator(controller: controller, urlweb: widget.urlweb),

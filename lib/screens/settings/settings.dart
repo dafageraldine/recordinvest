@@ -53,9 +53,6 @@ class SettingsPage extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       _settingController.showAlertDialog();
-
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => Login()));
                     },
                     child: Container(
                       width: 0.15.sw,
@@ -106,9 +103,6 @@ class SettingsPage extends StatelessWidget {
                         urlweb: 'http://dafageraldine.pythonanywhere.com/',
                         title: "Developer",
                       ));
-
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => Login()));
                     },
                     child: Container(
                       width: 0.15.sw,
@@ -205,9 +199,6 @@ class SettingsPage extends StatelessWidget {
                         urlweb: 'https://www.pythonanywhere.com/',
                         title: 'Webserver',
                       ));
-
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => Login()));
                     },
                     child: Container(
                       width: 0.15.sw,
