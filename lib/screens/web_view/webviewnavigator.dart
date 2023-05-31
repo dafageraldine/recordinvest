@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewNavigator extends StatelessWidget {
-  const WebViewNavigator({required this.controller, super.key});
+  String urlweb;
+  WebViewNavigator({required this.controller, super.key, required this.urlweb});
 
   final Completer<WebViewController> controller;
 
@@ -31,7 +32,7 @@ class WebViewNavigator extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.home),
               onPressed: () {
-                controller.loadUrl('http://dafageraldine.pythonanywhere.com/');
+                controller.loadUrl(urlweb);
               },
             ),
             IconButton(

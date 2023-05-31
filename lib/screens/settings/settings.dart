@@ -102,7 +102,10 @@ class SettingsPage extends StatelessWidget {
                   padding: EdgeInsets.only(right: 0.1.sw),
                   child: InkWell(
                     onTap: () {
-                      Get.to(const InitialPage());
+                      Get.to(InitialPage(
+                        urlweb: 'http://dafageraldine.pythonanywhere.com/',
+                        title: "Developer",
+                      ));
 
                       // Navigator.push(context,
                       //     MaterialPageRoute(builder: (context) => Login()));
@@ -162,6 +165,59 @@ class SettingsPage extends StatelessWidget {
                         color: theme,
                       ),
                       child: const Icon(Icons.web_sharp, color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        5.verticalSpace,
+        Divider(
+          color: Colors.grey.shade300,
+          thickness: 2,
+          indent: 30,
+          endIndent: 30,
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 0.1.sw),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Extend Server",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600, fontSize: 14.sp)),
+                    Text("Extend Webserver",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.normal, fontSize: 12.sp))
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 0.1.sw),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(InitialPage(
+                        urlweb: 'https://www.pythonanywhere.com/',
+                        title: 'Webserver',
+                      ));
+
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => Login()));
+                    },
+                    child: Container(
+                      width: 0.15.sw,
+                      height: 0.05.sh,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: theme,
+                      ),
+                      child: const Icon(Icons.computer_rounded,
+                          color: Colors.white),
                     ),
                   ),
                 )

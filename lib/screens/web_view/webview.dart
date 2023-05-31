@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatefulWidget {
-  const WebViewPage({required this.controller, super.key});
+  String urlweb;
+  WebViewPage({required this.controller, super.key, required this.urlweb});
 
   final Completer<WebViewController> controller;
 
@@ -21,7 +22,7 @@ class _WebViewPageState extends State<WebViewPage> {
     return Stack(
       children: [
         WebView(
-          initialUrl: 'http://dafageraldine.pythonanywhere.com/',
+          initialUrl: widget.urlweb,
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (webViewController) {
             widget.controller.complete(webViewController);

@@ -9,7 +9,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../models/data.dart';
 
 class InitialPage extends StatefulWidget {
-  const InitialPage({super.key});
+  String urlweb;
+  String title;
+  InitialPage({super.key, required this.urlweb, required this.title});
 
   @override
   State<InitialPage> createState() => _InitialPageState();
@@ -34,16 +36,17 @@ class _InitialPageState extends State<InitialPage> {
                 Get.back();
               },
               child: const Icon(Icons.arrow_back_rounded)),
-          title: const Text(
-            "Developer",
+          title: Text(
+            widget.title,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
           ),
           actions: [
-            WebViewNavigator(controller: controller),
+            WebViewNavigator(controller: controller, urlweb: widget.urlweb),
           ],
           backgroundColor: theme),
       body: WebViewPage(
         controller: controller,
+        urlweb: widget.urlweb,
       ),
     );
   }
