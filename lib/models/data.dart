@@ -1,12 +1,14 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 List<String> comboboxtype = [];
 List<String> comboboxproduct = [];
 List<String> combobox = [];
+List<CameraDescription> camerasg = <CameraDescription>[];
 
 var Build = "1";
 var Major = "4";
-var Minor = "0";
+var Minor = "1";
 
 var devurl = "http://127.0.0.1:5000/";
 var profurl = "http://dafageraldine.pythonanywhere.com/";

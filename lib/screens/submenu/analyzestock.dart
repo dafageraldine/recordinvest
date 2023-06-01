@@ -174,11 +174,14 @@ class AnalyzeStock extends StatelessWidget {
                           ),
                         ],
                       )),
-                  ProcessButton(
-                    title: 'Analyze',
-                    onTap: () {
-                      _stockAnalysisController.analyzeStock();
-                    },
+                  Padding(
+                    padding: EdgeInsets.only(top: 0.04.sh, left: 0.1.sw),
+                    child: ProcessButton(
+                      title: 'Analyze',
+                      onTap: () {
+                        _stockAnalysisController.analyzeStock();
+                      },
+                    ),
                   )
                 ],
               ))

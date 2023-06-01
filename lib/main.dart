@@ -1,8 +1,16 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recordinvest/models/data.dart';
 import 'package:recordinvest/screens/splash/splash.dart';
 
-void main() {
+Future<void> main() async {
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    camerasg = await availableCameras();
+  } on CameraException catch (e) {
+    Get.snackbar("error", e.toString());
+  }
   runApp(const MyApp());
 }
 

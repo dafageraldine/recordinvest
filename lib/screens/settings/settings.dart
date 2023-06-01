@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:recordinvest/components/app_bar_only.dart';
 import 'package:recordinvest/components/appversion.dart';
 import 'package:recordinvest/controller/settingcontroller.dart';
 import 'package:recordinvest/models/data.dart';
+import 'package:recordinvest/screens/camera/camera.dart';
 import 'package:recordinvest/screens/web_view/initialpage.dart';
 
 import '../submenu/updatestock.dart';
@@ -224,7 +226,11 @@ class SettingsPage extends StatelessWidget {
           endIndent: 30,
         ),
         5.verticalSpace,
-        const AppVersion()
+        InkWell(
+            onTap: () {
+              Get.to(CameraApp());
+            },
+            child: const AppVersion())
       ]),
     );
   }

@@ -156,11 +156,14 @@ class UpdateStock extends StatelessWidget {
                     _updateStockController.datepick('end');
                   },
                 ),
-                ProcessButton(
-                  title: 'Update',
-                  onTap: () {
-                    _updateStockController.updateStockData();
-                  },
+                Padding(
+                  padding: EdgeInsets.only(top: 0.04.sh, left: 0.1.sw),
+                  child: ProcessButton(
+                    title: 'Update',
+                    onTap: () {
+                      _updateStockController.updateStockData();
+                    },
+                  ),
                 )
               ],
             ))
