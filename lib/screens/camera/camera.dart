@@ -4,12 +4,10 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/components/processbutton.dart';
-import 'package:recordinvest/main.dart';
 import 'package:recordinvest/models/data.dart';
 import 'package:recordinvest/screens/camera/video.dart';
 import 'package:video_player/video_player.dart';
@@ -225,14 +223,14 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                               onTap: () {
                                 deleteFile(fileslist[i].path);
                               },
-                              child: Icon(Icons.delete))
+                              child: const Icon(Icons.delete))
                         ],
                       ),
                     );
                   },
                   itemCount: fileslist.length,
                   shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                 ),
               ],
             )

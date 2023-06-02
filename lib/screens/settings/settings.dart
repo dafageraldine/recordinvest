@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -228,7 +227,7 @@ class SettingsPage extends StatelessWidget {
         5.verticalSpace,
         InkWell(
             onTap: () {
-              Get.to(CameraApp());
+              Get.to(const CameraApp());
             },
             child: const AppVersion())
       ]),
