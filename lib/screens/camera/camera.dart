@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -131,6 +132,38 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
   }
   // #enddocregion AppLifecycle
 
+  Future<String> convertVideoToBase64(String filePath) async {
+    File file = File(filePath);
+    List<int> videoBytes = await file.readAsBytes();
+    String base64Video = base64Encode(videoBytes);
+    return base64Video;
+  }
+
+  Future updVideo(String path) async {
+    String base64Video = await convertVideoToBase64(path);
+    print(base64Video);
+    await sendBase64Video(base64Video);
+  }
+
+  Future<String> sendBase64Video(String base64Video) async {
+    final url = Uri.parse('http://192.168.18.9:5000/save_video');
+    final response = await http.post(
+      url,
+      body: {
+        'base64video': base64Video,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Get.snackbar("success", "video saved", backgroundColor: sucswithopacity);
+      return 'Video saved successfully';
+    } else {
+      Get.snackbar("failed", "failed to save video",
+          backgroundColor: errwithopacity);
+      return 'Failed to save video';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -225,7 +258,13 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                               onTap: () {
                                 deleteFile(fileslist[i].path);
                               },
-                              child: Icon(Icons.delete))
+                              child: Icon(Icons.delete)),
+                          InkWell(
+                            onTap: () {
+                              updVideo(fileslist[i].path);
+                            },
+                            child: Icon(Icons.upload),
+                          )
                         ],
                       ),
                     );
