@@ -26,7 +26,7 @@ class VideoApp extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: theme,
           title: const Text('Video player'),
-          actions: <Widget>[
+          actions: const <Widget>[
             // IconButton(
             //   key: const ValueKey<String>('push_tab'),
             //   icon: const Icon(Icons.navigation),
