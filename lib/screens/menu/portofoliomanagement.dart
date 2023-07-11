@@ -77,11 +77,10 @@ class PortofolioManagement extends StatelessWidget {
                           },
                           image: "assets/robot.png",
                           title_card: "Analyze stock"),
-                      // CardMenu(
-                      //     onTap: () {
-                      //     },
-                      //     image: "assets/accounting.png",
-                      //     title_card: "Manage Unperform Portofolio"),
+                      CardMenu(
+                          onTap: () {},
+                          image: "assets/target.png",
+                          title_card: "Calculate Target"),
                       Container()
                     ],
                   )
