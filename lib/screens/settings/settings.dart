@@ -224,6 +224,56 @@ class SettingsPage extends StatelessWidget {
           indent: 30,
           endIndent: 30,
         ),
+        Padding(
+          padding: EdgeInsets.only(left: 0.1.sw),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Other Menu",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600, fontSize: 14.sp)),
+                    Text("Access Webview Menu",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.normal, fontSize: 12.sp))
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 0.1.sw),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(InitialPage(
+                        urlweb:
+                            'https://dafageraldine.pythonanywhere.com/webview/',
+                        title: 'Other Menu',
+                      ));
+                    },
+                    child: Container(
+                      width: 0.15.sw,
+                      height: 0.05.sh,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: theme,
+                      ),
+                      child: const Icon(Icons.link_sharp, color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        5.verticalSpace,
+        Divider(
+          color: Colors.grey.shade300,
+          thickness: 2,
+          indent: 30,
+          endIndent: 30,
+        ),
         5.verticalSpace,
         InkWell(
             onTap: () {

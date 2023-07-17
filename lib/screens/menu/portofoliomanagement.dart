@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:recordinvest/components/card_menu.dart';
+import 'package:recordinvest/screens/submenu/calculatetarget.dart';
 import 'package:recordinvest/screens/submenu/manageunperformportofolio.dart';
 import 'package:recordinvest/screens/submenu/performance.dart';
 import '../../../components/app_bar_with_back_button.dart';
@@ -78,9 +79,11 @@ class PortofolioManagement extends StatelessWidget {
                           image: "assets/robot.png",
                           title_card: "Analyze stock"),
                       CardMenu(
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(CalculateTarget());
+                          },
                           image: "assets/target.png",
-                          title_card: "Calculate Target"),
+                          title_card: "Calculate\nTarget"),
                       Container()
                     ],
                   )

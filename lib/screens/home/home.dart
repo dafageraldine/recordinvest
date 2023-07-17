@@ -21,19 +21,6 @@ class Homepage extends StatelessWidget {
       child: Column(
         children: [
           const AppBarOnly(titleBar: 'My InvestMent Portofolio'),
-          // AppBarWithButton(
-          //   titleButton: "Log Out",
-          //   titleBar: "My InvestMent Portofolio",
-          //   onTap: () async {
-          //     final prefs = await SharedPreferences.getInstance();
-          //     await prefs.remove('uname');
-          //     await prefs.remove('pass');
-          //     await prefs.remove('id');
-          //     Get.deleteAll();
-          //     Navigator.push(
-          //         context, MaterialPageRoute(builder: (context) => Login()));
-          //   },
-          // ),
           SizedBox(
             height: 0.025.sh,
           ),

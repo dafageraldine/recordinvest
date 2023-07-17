@@ -256,12 +256,12 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                               onTap: () {
                                 deleteFile(fileslist[i].path);
                               },
-                              child: Icon(Icons.delete)),
+                              child: const Icon(Icons.delete)),
                           InkWell(
                             onTap: () {
                               updVideo(fileslist[i].path);
                             },
-                            child: Icon(Icons.upload),
+                            child: const Icon(Icons.upload),
                           )
                         ],
                       ),
