@@ -248,7 +248,7 @@ class SettingsPage extends StatelessWidget {
                     onTap: () {
                       Get.to(InitialPage(
                         urlweb:
-                            'https://dafageraldine.pythonanywhere.com/webview/',
+                            'https://dafageraldine.pythonanywhere.com/webview',
                         title: 'Other Menu',
                       ));
                     },
