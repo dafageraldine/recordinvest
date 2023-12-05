@@ -10,7 +10,7 @@ class ListSetting extends StatelessWidget {
   IconData icon;
   ListSetting(
       {super.key,
-      required ontap,
+      required this.ontap,
       required this.title,
       required this.desc,
       required this.icon});

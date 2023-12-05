@@ -1,16 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/components/processbutton.dart';
 import 'package:recordinvest/models/data.dart';
 import 'package:recordinvest/screens/camera/video.dart';
+import 'package:recordinvest/screens/camera/viewvideo.dart';
 import 'package:video_player/video_player.dart';
 
 /// Camera example home widget.
@@ -69,6 +74,21 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
   double _currentScale = 1.0;
   double _baseScale = 1.0;
   List<FileSystemEntity> fileslist = <FileSystemEntity>[];
+  String hour = "13";
+  String minute = "28";
+
+  bool disguiseactivated = false;
+  void activatedisguise() {
+    if (disguiseactivated) {
+      disguiseactivated = false;
+    } else {
+      disguiseactivated = true;
+    }
+    var clock = DateTime.now();
+    hour = clock.hour.toString();
+    minute = clock.minute.toString();
+    setState(() {});
+  }
 
   // Counting pointers (number of user fingers on screen)
   int _pointers = 0;
@@ -139,7 +159,6 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
   Future updVideo(String path) async {
     String base64Video = await convertVideoToBase64(path);
-    print(base64Video);
     await sendBase64Video(base64Video);
   }
 
@@ -162,121 +181,274 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     }
   }
 
+  moveFileToAndroidStorage(String sourcePath) async {
+    try {
+      // Get the external storage directory
+      Directory? externalDir = await getExternalStorageDirectory();
+
+      // Create a new directory named 'vid' if it doesn't exist
+      Directory vidDir = Directory(
+          '${externalDir?.path}/Android/data/com.example.recordinvest/files/vid');
+      if (!vidDir.existsSync()) {
+        vidDir.createSync(recursive: true);
+      }
+
+      // Get the file name from the source path
+      String fileName = sourcePath.split('/').last;
+
+      // Build the destination path in the 'vid' directory
+      String destinationPath = '/storage/emulated/0/vid/$fileName';
+
+      // Copy the file
+      File sourceFile = File(sourcePath);
+      File destinationFile = File(destinationPath);
+      await sourceFile.copy(destinationFile.path);
+
+      // Delete the original file
+      await sourceFile.delete();
+
+      print('File moved successfully to: $destinationPath');
+    } catch (e) {
+      print('Error moving file: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            AppBarWithBackButton(
-                titleBar: 'Device check',
-                onTap: () {
-                  Get.back();
-                }),
-            // Expanded(
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       color: Colors.black,
-            //       border: Border.all(
-            //         color:
-            //             controller != null && controller!.value.isRecordingVideo
-            //                 ? Colors.redAccent
-            //                 : Colors.grey,
-            //         width: 3.0,
-            //       ),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(1.0),
-            //       child: Center(
-            //         child: _cameraPreviewWidget(),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            0.02.sh.verticalSpace,
-            _captureControlRowWidget(),
-            _modeControlRowWidget(),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
+      backgroundColor: disguiseactivated ? Colors.black : Colors.white,
+      body: disguiseactivated
+          ? Stack(
+              children: [
+                Center(
+                  child: Image.asset(
+                    "assets/amoled.jpg",
+                    // width: 0.4.sw,
+                    // height: 0.4.sw,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 150, left: 150),
+                  child: Stack(
+                    children: [
+                      Text(hour,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 70.sp,
+                              color: Colors.blueAccent)),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 80),
+                        child: Text(minute,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 60.sp,
+                                color: Colors.purpleAccent)),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      activatedisguise();
+                    },
+                    child: Text("Poco F5",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20.sp,
+                            color: Colors.greenAccent)),
+                  ),
+                )
+              ],
+            )
+          : SingleChildScrollView(
+              child: Column(
                 children: <Widget>[
-                  _cameraTogglesRowWidget(),
-                  // _thumbnailWidget(),
+                  AppBarWithBackButton(
+                      titleBar: 'Information',
+                      onTap: () {
+                        Get.back();
+                      }),
+                  // Expanded(
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.black,
+                  //       border: Border.all(
+                  //         color:
+                  //             controller != null && controller!.value.isRecordingVideo
+                  //                 ? Colors.redAccent
+                  //                 : Colors.grey,
+                  //         width: 3.0,
+                  //       ),
+                  //     ),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.all(1.0),
+                  //       child: Center(
+                  //         child: _cameraPreviewWidget(),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  0.02.sh.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 0.05 * width, bottom: 0.02 * height),
+                    child: Row(
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              activatedisguise();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: theme,
+                              ),
+                              width: 0.4 * width,
+                              height: 0.06 * height,
+                              child: Center(
+                                  child: Text("Blend",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.sp,
+                                          color: Colors.white))),
+                            )),
+                        SizedBox(
+                          width: 0.1 * width,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              SystemChrome.setEnabledSystemUIMode(
+                                  SystemUiMode.manual,
+                                  overlays: [
+                                    SystemUiOverlay.bottom,
+                                    SystemUiOverlay.top
+                                  ]);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: theme,
+                              ),
+                              width: 0.4 * width,
+                              height: 0.06 * height,
+                              child: Center(
+                                child: Text("Restore",
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14.sp,
+                                        color: Colors.white)),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  _captureControlRowWidget(),
+                  _modeControlRowWidget(),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: <Widget>[
+                        _cameraTogglesRowWidget(),
+                        // _thumbnailWidget(),
+                      ],
+                    ),
+                  ),
+                  ProcessButton(
+                    title: 'show to me',
+                    onTap: () {
+                      fileslist.isEmpty
+                          ? listFilesInFolder(folderPath)
+                          : fileslist.clear();
+                      setState(() {});
+                    },
+                  ),
+                  20.verticalSpace,
+                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    selectedpath == ""
+                        ? Container()
+                        : selectedpath.contains('.mp4')
+                            ? Container()
+                            : _thumbnailWidget(selectedpath),
+                  ]),
+                  Column(
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ListView.builder(
+                        itemBuilder: (c, i) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (fileslist[i].path.contains('.mp4')) {
+                                      Get.to(
+                                          ViewVideoScreen(fileslist[i].path));
+                                      // Get.to(VideoApp(
+                                      //   pathvid: fileslist[i].path,
+                                      // ));
+                                    } else {
+                                      selectedpath = fileslist[i].path;
+                                      setState(() {});
+                                    }
+                                    // Get.to(ViewFile(filepath: fileslist[i].path));
+                                    // print(selectedpath);
+                                  },
+                                  child: Text(fileslist[i]
+                                      .path
+                                      .split(folderPath)[1]
+                                      .toString()),
+                                ),
+                                InkWell(
+                                    onTap: () {
+                                      deleteFile(fileslist[i].path);
+                                    },
+                                    child: const Icon(Icons.delete)),
+                                InkWell(
+                                  onTap: () {
+                                    updVideo(fileslist[i].path);
+                                  },
+                                  child: const Icon(Icons.upload),
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    print("here");
+
+                                    await requestStoragePermission(fileslist[i].path);
+                                  },
+                                  child: const Icon(Icons.download),
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                        itemCount: fileslist.length,
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
-
-            ProcessButton(
-              title: 'show to me',
-              onTap: () {
-                fileslist.isEmpty
-                    ? listFilesInFolder(folderPath)
-                    : fileslist.clear();
-                setState(() {});
-              },
-            ),
-            20.verticalSpace,
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              selectedpath == ""
-                  ? Container()
-                  : selectedpath.contains('.mp4')
-                      ? Container()
-                      : _thumbnailWidget(selectedpath),
-            ]),
-            Column(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ListView.builder(
-                  itemBuilder: (c, i) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              if (fileslist[i].path.contains('.mp4')) {
-                                Get.to(VideoApp(
-                                  pathvid: fileslist[i].path,
-                                ));
-                              } else {
-                                selectedpath = fileslist[i].path;
-                                setState(() {});
-                              }
-                              // Get.to(ViewFile(filepath: fileslist[i].path));
-                              // print(selectedpath);
-                            },
-                            child: Text(fileslist[i]
-                                .path
-                                .split(folderPath)[1]
-                                .toString()),
-                          ),
-                          InkWell(
-                              onTap: () {
-                                deleteFile(fileslist[i].path);
-                              },
-                              child: const Icon(Icons.delete)),
-                          InkWell(
-                            onTap: () {
-                              updVideo(fileslist[i].path);
-                            },
-                            child: const Icon(Icons.upload),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                  itemCount: fileslist.length,
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
     );
+  }
+
+  Future<void> requestStoragePermission(String source) async {
+    var status = await Permission.storage.request();
+    if (status.isGranted) {
+      moveFileToAndroidStorage(source);
+      print("Storage permission granted");
+    } else {
+      print("Storage permission denied");
+    }
   }
 
   void deleteFile(String filePath) {
@@ -1236,6 +1408,18 @@ class CameraApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: CameraExampleHome(),
+    );
+  }
+}
+
+class DummyLockScreen extends StatelessWidget {
+  const DummyLockScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(children: []),
     );
   }
 }
