@@ -35,6 +35,7 @@ class SaldoCard extends StatelessWidget {
           ]),
       child: Stack(
         children: [
+          /* btn refresh
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Align(
@@ -70,6 +71,7 @@ class SaldoCard extends StatelessWidget {
               ),
             ),
           ),
+          */
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

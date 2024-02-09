@@ -18,6 +18,8 @@ import 'package:recordinvest/screens/camera/video.dart';
 import 'package:recordinvest/screens/camera/viewvideo.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../controller/settingcontroller.dart';
+
 /// Camera example home widget.
 class CameraExampleHome extends StatefulWidget {
   /// Default Constructor
@@ -52,6 +54,9 @@ void _logError(String code, String? message) {
 
 class _CameraExampleHomeState extends State<CameraExampleHome>
     with WidgetsBindingObserver, TickerProviderStateMixin {
+
+      
+  final SettingController _settingController = Get.find();
   String selectedpath = "";
   CameraController? controller;
   XFile? imageFile;
@@ -408,19 +413,25 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                                 ),
                                 InkWell(
                                     onTap: () {
-                                      deleteFile(fileslist[i].path);
+                                      _settingController.showAlertDialog((){
+                                          deleteFile(fileslist[i].path);
+                                          Get.back();
+                                      },"Warning","Apakah ingin hapus file ${fileslist[i].path} ?");
+                                      
                                     },
                                     child: const Icon(Icons.delete)),
                                 InkWell(
                                   onTap: () {
-                                    updVideo(fileslist[i].path);
+                                      _settingController.showAlertDialog(() async{
+                                          updVideo(fileslist[i].path);
+                                          Get.back();
+                                      },"Warning","Apakah ingin upload file ${fileslist[i].path} ?");
+                                    
                                   },
                                   child: const Icon(Icons.upload),
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    print("here");
-
                                     await requestStoragePermission(fileslist[i].path);
                                   },
                                   child: const Icon(Icons.download),

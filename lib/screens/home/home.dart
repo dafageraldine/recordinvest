@@ -1,7 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:recordinvest/components/app_bar_only.dart';
+import 'package:recordinvest/components/app_bar_with_notif.dart';
 import 'package:recordinvest/components/card_menu.dart';
 import 'package:recordinvest/components/saldo_card.dart';
 import 'package:recordinvest/controller/homecontroller.dart';
@@ -20,7 +20,7 @@ class Homepage extends StatelessWidget {
       color: Colors.white,
       child: Column(
         children: [
-          const AppBarOnly(titleBar: 'My InvestMent Portofolio'),
+          AppBarWithNotif(titleBar: 'My InvestMent Portofolio',showNNotif: true,notifcount: "12"),
           SizedBox(
             height: 0.025.sh,
           ),

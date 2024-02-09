@@ -6,13 +6,13 @@ List<String> comboboxproduct = [];
 List<String> combobox = [];
 List<CameraDescription> camerasg = <CameraDescription>[];
 
-var Build = "1";
-var Major = "4";
-var Minor = "2";
+const String Build = "1";
+const String Major = "5";
+const String Minor = "0";
 
-var devurl = "http://127.0.0.1:5000/";
-var profurl = "http://dafageraldine.pythonanywhere.com/";
-var baseurl = profurl;
+const String devurl = "http://127.0.0.1:5000/";
+const String produrl = "http://dafageraldine.pythonanywhere.com/";
+String baseurl = produrl;
 
 //for color
 Color theme = const Color.fromRGBO(144, 200, 172, 1);

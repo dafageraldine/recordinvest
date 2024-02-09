@@ -14,7 +14,7 @@ class SettingController extends GetxController {
     Get.offAll(Login());
   }
 
-  showAlertDialog() {
+  showAlertDialog(var action, String tittle,String  msg) {
     // set up the buttons
     Widget cancelButton = TextButton(
       child: const Text(
@@ -32,15 +32,12 @@ class SettingController extends GetxController {
           color: Color.fromRGBO(144, 200, 172, 1),
         ),
       ),
-      onPressed: () async {
-        // exit(0);
-        logout();
-      },
+      onPressed: action,
     );
 
     Get.dialog(AlertDialog(
-      title: const Text("Warning"),
-      content: const Text("Do you want to log out ?"),
+      title:  Text(tittle),
+      content: Text(msg),
       actions: [
         cancelButton,
         continueButton,

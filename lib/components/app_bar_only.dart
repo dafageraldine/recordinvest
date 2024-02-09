@@ -20,7 +20,7 @@ class AppBarOnly extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(left: 0.05.sw, top: 0.04.sh),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(titleBar,
                 style: GoogleFonts.poppins(

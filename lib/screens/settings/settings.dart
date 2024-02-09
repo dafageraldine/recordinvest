@@ -24,7 +24,7 @@ class SettingsPage extends StatelessWidget {
       color: Colors.white,
       child: Column(children: [
         const AppBarOnly(
-          titleBar: 'Application Settings',
+          titleBar: 'Application Settings'
         ),
         5.verticalSpace,
         Divider(
@@ -35,7 +35,9 @@ class SettingsPage extends StatelessWidget {
         ),
         ListSetting(
             ontap: () {
-              _settingController.showAlertDialog();
+              _settingController.showAlertDialog(() async {
+        _settingController.logout();
+      },"Warning","Do you want to log out ?");
             },
             title: "Log Out",
             icon: Icons.exit_to_app_rounded,

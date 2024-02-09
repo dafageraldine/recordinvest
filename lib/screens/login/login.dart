@@ -93,20 +93,23 @@ class Login extends StatelessWidget {
                               _loginController.uname.value,
                               _loginController.pass.value);
                         },
-                        child: Container(
-                          width: 0.85.sw,
-                          height: 0.07.sh,
-                          decoration: BoxDecoration(
-                              color: theme,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: const Center(
-                              child: Text(
-                            "Login",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
-                          )),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Container(
+                            width: 0.85.sw,
+                            height: 0.07.sh,
+                            decoration: BoxDecoration(
+                                color: theme,
+                                borderRadius: BorderRadius.circular(5)),
+                            child: const Center(
+                                child: Text(
+                              "Login",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            )),
+                          ),
                         ),
                       ),
                     ],
