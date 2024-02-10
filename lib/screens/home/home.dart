@@ -5,8 +5,10 @@ import 'package:recordinvest/components/app_bar_with_notif.dart';
 import 'package:recordinvest/components/card_menu.dart';
 import 'package:recordinvest/components/saldo_card.dart';
 import 'package:recordinvest/controller/homecontroller.dart';
-import 'package:recordinvest/screens/menu/addtype.dart';
+import 'package:recordinvest/screens/menu/tradingassistance.dart';
+import 'package:recordinvest/screens/submenu/addtype.dart';
 import 'package:recordinvest/screens/menu/creditsimulation.dart';
+import 'package:recordinvest/screens/menu/investmentrecordandtype.dart';
 import 'package:recordinvest/screens/menu/portofoliomanagement.dart';
 import 'package:recordinvest/screens/submenu/notificationpage.dart';
 
@@ -64,10 +66,10 @@ class Homepage extends StatelessWidget {
             children: [
               CardMenu(
                 onTap: () {
-                  _homeController.getType();
+                  Get.to(InvestmentRecordAndType());
                 },
-                image: "assets/edit.png",
-                title_card: "Create Record",
+                image: "assets/server.png",
+                title_card: "Investment\nRecord And Type",
               ),
               CardMenu(
                 onTap: () {
@@ -85,10 +87,10 @@ class Homepage extends StatelessWidget {
             children: [
               CardMenu(
                 onTap: () {
-                  Get.to(const AddType());
+                  Get.to(TradingAssistance());
                 },
-                image: "assets/buy.png",
-                title_card: "Add Investment\nType",
+                image: "assets/trading.png",
+                title_card: "Trading \nAssistance",
               ),
               CardMenu(
                 onTap: () {

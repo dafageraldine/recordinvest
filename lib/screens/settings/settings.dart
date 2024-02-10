@@ -15,7 +15,7 @@ import '../submenu/updatestock.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
-
+  int counter = 0;
   final SettingController _settingController = Get.put(SettingController());
 
   @override
@@ -23,9 +23,7 @@ class SettingsPage extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: Column(children: [
-        const AppBarOnly(
-          titleBar: 'Application Settings'
-        ),
+        const AppBarOnly(titleBar: 'Application Settings'),
         5.verticalSpace,
         Divider(
           color: Colors.grey.shade300,
@@ -36,8 +34,8 @@ class SettingsPage extends StatelessWidget {
         ListSetting(
             ontap: () {
               _settingController.showAlertDialog(() async {
-        _settingController.logout();
-      },"Warning","Do you want to log out ?");
+                _settingController.logout();
+              }, "Warning", "Do you want to log out ?");
             },
             title: "Log Out",
             icon: Icons.exit_to_app_rounded,
@@ -121,9 +119,14 @@ class SettingsPage extends StatelessWidget {
         5.verticalSpace,
         InkWell(
             onTap: () {
-              SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-                  overlays: []);
-              Get.to(const CameraApp());
+              if (counter > 3) {
+                counter = 0;
+                SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+                    overlays: []);
+                Get.to(const CameraApp());
+                return;
+              }
+              counter++;
             },
             child: const AppVersion())
       ]),

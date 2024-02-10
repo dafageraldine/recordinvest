@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:recordinvest/models/notifmodel.dart';
-import 'package:recordinvest/screens/menu/record.dart';
+import 'package:recordinvest/screens/submenu/record.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/data.dart';
