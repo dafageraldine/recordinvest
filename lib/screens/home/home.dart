@@ -8,6 +8,7 @@ import 'package:recordinvest/controller/homecontroller.dart';
 import 'package:recordinvest/screens/menu/addtype.dart';
 import 'package:recordinvest/screens/menu/creditsimulation.dart';
 import 'package:recordinvest/screens/menu/portofoliomanagement.dart';
+import 'package:recordinvest/screens/submenu/notificationpage.dart';
 
 class Homepage extends StatelessWidget {
   final HomeController _homeController = Get.put(HomeController());
@@ -20,7 +21,14 @@ class Homepage extends StatelessWidget {
       color: Colors.white,
       child: Column(
         children: [
-          AppBarWithNotif(titleBar: 'My InvestMent Portofolio',showNNotif: true,notifcount: "12"),
+          Obx(() => AppBarWithNotif(
+              titleBar: 'My InvestMent Portofolio',
+              showNNotif: true,
+              notifcount: _homeController.listNotif.length.toString(),
+              onTap: () async {
+                _homeController.saveData("testing", "data tes");
+                Get.to(NotificationPage());
+              })),
           SizedBox(
             height: 0.025.sh,
           ),

@@ -8,8 +8,14 @@ class AppBarWithNotif extends StatelessWidget {
   final String titleBar;
   final bool showNNotif;
   final String notifcount;
+  var onTap;
 
-  const AppBarWithNotif({super.key, required this.titleBar, required this.showNNotif, required this.notifcount});
+  AppBarWithNotif(
+      {super.key,
+      required this.titleBar,
+      required this.showNNotif,
+      required this.notifcount,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -30,30 +36,44 @@ class AppBarWithNotif extends StatelessWidget {
                   fontSize: 16.sp,
                   color: const Color.fromRGBO(249, 249, 249, 1),
                 )),
-            showNNotif ?
-            Padding(
-              padding: EdgeInsets.only(right: 0.07.sw),
-              child: Stack(
-                children: [
-                  Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                        size: 0.08.sw,
+            showNNotif
+                ? Padding(
+                    padding: EdgeInsets.only(right: 0.07.sw),
+                    child: InkWell(
+                      onTap: onTap,
+                      child: Stack(
+                        children: [
+                          Icon(
+                            Icons.notifications,
+                            color: Colors.white,
+                            size: 0.08.sw,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0, left: 15),
+                            child: notifcount == "0"
+                                ? const SizedBox()
+                                : Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle),
+                                    child: Center(
+                                      child: Text(notifcount,
+                                          style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 10.sp,
+                                            color: const Color.fromRGBO(
+                                                249, 249, 249, 1),
+                                          )),
+                                    ),
+                                  ),
+                          ),
+                        ],
                       ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0,left: 15),
-                    child: Container(width: 20,height: 20,decoration: BoxDecoration(color: Colors.red,shape: BoxShape.circle),child: Center(
-                      child: Text(notifcount,
-                                    style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 10.sp,
-                                      color: const Color.fromRGBO(249, 249, 249, 1),
-                                    )),
-                    ),),
-                  ),
-                ],
-              ),
-            ) : const SizedBox()
+                    ),
+                  )
+                : const SizedBox()
           ],
         ),
       ),

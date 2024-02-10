@@ -19,17 +19,27 @@ class SplashController extends GetxController with StateMixin {
       final prefs = await SharedPreferences.getInstance();
       final String? uname = prefs.getString('uname');
       final String? pass = prefs.getString('pass');
-      var body = {"user": uname, "pwd": pass};
-      http.Response postdata =
-          await http.post(Uri.parse("${baseurl}login"), body: body);
-      var data = json.decode(postdata.body);
-      if (data["data"].length > 0) {
-        //use getx
-        Get.to(BottomBar());
-      } else {
-        Timer(const Duration(seconds: 3), () {
-          Get.to(Login());
-        });
+      try {
+        var body = {"user": uname, "pwd": pass};
+        http.Response postdata =
+            await http.post(Uri.parse("${baseurl}login"), body: body);
+        var data = json.decode(postdata.body);
+        if (data["data"].length > 0) {
+          //use getx
+          Get.to(BottomBar());
+        } else {
+          Timer(const Duration(seconds: 3), () {
+            Get.to(Login());
+          });
+        }
+      } catch (e) {
+        if (uname != null && uname != "") {
+          Get.to(BottomBar());
+        } else {
+          Timer(const Duration(seconds: 3), () {
+            Get.to(Login());
+          });
+        }
       }
     } catch (e) {
       Timer(const Duration(seconds: 3), () {
