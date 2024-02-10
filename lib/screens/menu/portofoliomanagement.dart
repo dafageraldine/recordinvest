@@ -7,8 +7,6 @@ import 'package:recordinvest/screens/submenu/calculatetarget.dart';
 import 'package:recordinvest/screens/submenu/manageunperformportofolio.dart';
 import 'package:recordinvest/screens/submenu/performance.dart';
 import '../../../components/app_bar_with_back_button.dart';
-import '../../controller/stockanalysiscontroller.dart';
-import '../submenu/analyzestock.dart';
 
 class PortofolioManagement extends StatelessWidget {
   PortofolioManagement({super.key});

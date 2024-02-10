@@ -34,8 +34,8 @@ class UpdateStockController extends GetxController {
       // https://dafageraldine.pythonanywhere.com/update_stock?jenis=us&kode=GOOG&saveas=GOOG&start=2018-01-01&end=2023-05-29
       http.Response getdata = await http.get(Uri.parse(
           "${baseurl}update_stock?jenis=${selectedStockType.value}&kode=${values.value.text}&saveas=${filename.value.text}&start=${startdate.value}&end=${enddate.value}"));
-      print(
-          "${baseurl}update_stock?jenis=${selectedStockType.value}&kode=${values.value.text}&saveas=${filename.value.text}&start=${startdate.value}&end=${enddate.value}");
+      // print(
+      //     "${baseurl}update_stock?jenis=${selectedStockType.value}&kode=${values.value.text}&saveas=${filename.value.text}&start=${startdate.value}&end=${enddate.value}");
       var data = json.decode(getdata.body);
       if (data['message'] == "success") {
         Get.snackbar("success", "data for ${values.value.text} updated !",

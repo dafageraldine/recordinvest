@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:recordinvest/components/app_bar_with_notif.dart';
 import 'package:recordinvest/components/card_menu.dart';
 import 'package:recordinvest/components/saldo_card.dart';

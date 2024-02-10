@@ -118,7 +118,10 @@ class NotificationPage extends StatelessWidget {
                   )),
               InkWell(
                 onTap: () {
-                  _homeController.showAlertDialog(() {}, "Konfirmasi Hapus",
+                  _homeController.showAlertDialog(() {
+                    _homeController.deleteNotif();
+                    Get.back();
+                  }, "Konfirmasi Hapus",
                       "Apakah anda ingin hapus notifikasi ?");
                 },
                 child: Icon(

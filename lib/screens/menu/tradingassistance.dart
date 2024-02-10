@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:recordinvest/screens/submenu/tradingmonitor.dart';
 
 import '../../components/app_bar_with_back_button.dart';
 import '../../components/card_menu.dart';
+import '../../controller/homecontroller.dart';
 import '../../controller/stockanalysiscontroller.dart';
 import '../submenu/analyzestock.dart';
 
@@ -12,6 +14,7 @@ class TradingAssistance extends StatelessWidget {
   TradingAssistance({super.key});
   final StockAnalysisController _stockAnalysisController =
       Get.put(StockAnalysisController());
+  final HomeController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +67,12 @@ class TradingAssistance extends StatelessWidget {
                               image: "assets/robot.png",
                               title_card: "Analyze Stock"),
                           CardMenu(
-                              onTap: () {
-                                // Get.to(const AddType());
+                              onTap: () async {
+                                await _homeController.getWlList();
+                                Get.to(TradingMonitor());
                               },
                               image: "assets/stock.png",
-                              title_card: "Trading"),
+                              title_card: "Trading Monitor"),
                         ],
                       ),
                     ],
