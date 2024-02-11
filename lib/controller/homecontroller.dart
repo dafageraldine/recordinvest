@@ -30,7 +30,7 @@ class HomeController extends GetxController with StateMixin {
   Rx<TextEditingController> filename = TextEditingController().obs;
   RxString startdate = "choose date".obs;
   RxString enddate = "choose date".obs;
-  RxList<watchlistData> wlData = <watchlistData>[].obs;
+  RxList<WatchlistData> wlData = <WatchlistData>[].obs;
 
   final oCcy = NumberFormat.currency(
       locale: 'eu',
@@ -41,17 +41,26 @@ class HomeController extends GetxController with StateMixin {
   @override
   void onInit() {
     getSaldo();
-    // fillDummy();
+    fillNotif();
     super.onInit();
   }
 
-  // fillDummy() {
-  //   listNotif.clear();
-  //   listNotif.add(NotifModel("Rekomendasi Saham",
-  //       "Beli Saham BBCA dengan teknikal analisis MA5 & MA20", "2024-02-10"));
-  // }
+  fillNotif() async {
+    Box boxNotif = await getBoxOnly();
+    var keyNotif = boxNotif.keys
+        .where((k) => k.toString().toLowerCase().contains("|notif"))
+        .toList();
+    listNotif.clear();
+    for (var i = 0; i < keyNotif.length; i++) {
+      var dataNotif = await getData(keyNotif[i]);
+      var decodedata = jsonDecode(dataNotif);
+      listNotif.add(NotifModel(decodedata['judul'], decodedata['body'],
+          decodedata['tgl'], keyNotif[i]));
+    }
+    await closeBox();
+  }
 
-  deleteWlList(watchlistData selectedwldata) async {
+  deleteWlList(WatchlistData selectedwldata) async {
     try {
       Box boxwldata = await getBoxOnly();
       await boxwldata.delete("${selectedwldata.name}|wl");
@@ -59,6 +68,8 @@ class HomeController extends GetxController with StateMixin {
     } catch (e) {
       Get.snackbar("error", "error delete watchlist $e",
           backgroundColor: errwithopacity);
+    } finally {
+      await closeBox();
     }
   }
 
@@ -77,13 +88,14 @@ class HomeController extends GetxController with StateMixin {
     for (var i = 0; i < keyWl.length; i++) {
       var dataWl = await getData(keyWl[i]);
       var decodedata = jsonDecode(dataWl);
-      wlData.add(watchlistData(decodedata['name'], decodedata['kode'],
+      wlData.add(WatchlistData(decodedata['name'], decodedata['kode'],
           decodedata['jenis'], decodedata['start'], decodedata['url']));
     }
+    await closeBox();
     wlData.refresh();
   }
 
-  editwL(watchlistData selectedwldata) {
+  editwL(WatchlistData selectedwldata) {
     selectedStockType.value = selectedwldata.jenis;
     values.value.text = selectedwldata.code;
     filename.value.text = selectedwldata.name;
@@ -113,13 +125,12 @@ class HomeController extends GetxController with StateMixin {
         'kode': values.value.text,
         'jenis': selectedStockType.value,
         'start': startdate.value,
-        'url': urlUpdate
+        'url': urlUpdate,
+        'lastupdate': ""
       };
       await saveData('${filename.value.text}|wl', jsonEncode(jsonData));
       await getWlList();
-      filename.value.clear();
-      startdate.value = "choose date";
-      values.value.clear();
+      clearWl();
       Get.snackbar("Success", "success add watchlist ${filename.value.text}",
           backgroundColor: sucswithopacity);
     } catch (e) {
@@ -192,6 +203,7 @@ class HomeController extends GetxController with StateMixin {
       await saveData("saldoData", postdata.body);
     } catch (e) {
       var ldata = await getData("saldoData");
+      await closeBox();
       if (ldata != null && ldata != "") {
         try {
           Get.snackbar(
@@ -281,22 +293,44 @@ class HomeController extends GetxController with StateMixin {
   }
 
   Future saveData(var key, var values) async {
-    var box = await Hive.openBox('RecordInvestBox');
+    late Box box;
+    try {
+      box = await Hive.openBox('RecordInvestBox');
+    } catch (e) {}
     box.put(key, values);
+    await box.close();
   }
 
   Future getData(var key) async {
-    var box = await Hive.openBox('RecordInvestBox');
+    late Box box;
+    try {
+      box = await Hive.openBox('RecordInvestBox');
+    } catch (e) {}
     return await box.get(key);
   }
 
   Future getBoxOnly() async {
-    var box = await Hive.openBox('RecordInvestBox');
+    late Box box;
+    try {
+      box = await Hive.openBox('RecordInvestBox');
+    } catch (e) {}
     return box;
   }
 
-  deleteNotif() {
+  Future closeBox() async {
+    late Box box;
+    try {
+      box = await Hive.openBox('RecordInvestBox');
+    } catch (e) {}
+    await box.close();
+  }
+
+  deleteNotif(NotifModel notifdata) async {
     listNotif.clear();
+    Box box = await getBoxOnly();
+    await box.delete(notifdata.keys);
+    await closeBox();
+    fillNotif();
     listNotif.refresh();
   }
 }

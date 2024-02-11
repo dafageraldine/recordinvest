@@ -14,7 +14,7 @@ import 'package:recordinvest/screens/menu/portofoliomanagement.dart';
 import 'package:recordinvest/screens/submenu/notificationpage.dart';
 
 class Homepage extends StatelessWidget {
-  final HomeController _homeController = Get.put(HomeController());
+  final HomeController _homeController = Get.find();
 
   Homepage({super.key});
   @override
@@ -29,7 +29,7 @@ class Homepage extends StatelessWidget {
               showNNotif: true,
               notifcount: _homeController.listNotif.length.toString(),
               onTap: () async {
-                _homeController.saveData("testing", "data tes");
+                _homeController.fillNotif();
                 Get.to(NotificationPage());
               })),
           SizedBox(

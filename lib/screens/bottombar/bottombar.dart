@@ -8,7 +8,10 @@ import 'package:recordinvest/models/data.dart';
 import 'package:recordinvest/screens/home/home.dart';
 import 'package:recordinvest/screens/settings/settings.dart';
 
+import '../../controller/homecontroller.dart';
+
 class BottomBar extends StatelessWidget {
+  final HomeController _homeController = Get.find();
   BottomBar({super.key});
 
   showAlertDialog() {
@@ -80,6 +83,11 @@ class BottomBar extends StatelessWidget {
         context,
         navBarHeight: 0.08.sh,
         controller: _controller,
+        onItemSelected: (value) {
+          if (value == 0) {
+            _homeController.fillNotif();
+          }
+        },
         screens: _buildScreens(),
         items: _navBarsItems(),
         confineInSafeArea: true,

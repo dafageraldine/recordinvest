@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:recordinvest/models/data.dart';
+import 'package:recordinvest/models/notifmodel.dart';
 
 import '../../components/app_bar_with_back_button.dart';
 import '../../controller/homecontroller.dart';
@@ -48,11 +49,7 @@ class NotificationPage extends StatelessWidget {
                   height: 0.88.sh,
                   child: ListView.builder(
                     itemBuilder: (c, i) {
-                      return notificationsItem(
-                        _homeController.listNotif[i].title,
-                        _homeController.listNotif[i].msg,
-                        _homeController.listNotif[i].date,
-                      );
+                      return notificationsItem(_homeController.listNotif[i]);
                     },
                     itemCount: _homeController.listNotif.length,
                     physics: const BouncingScrollPhysics(),
@@ -63,8 +60,7 @@ class NotificationPage extends StatelessWidget {
     );
   }
 
-  Widget notificationsItem(
-      String titleNotif, String msgNotif, String tglNotif) {
+  Widget notificationsItem(NotifModel ndata) {
     return SizedBox(
       width: 1.sw,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -87,7 +83,7 @@ class NotificationPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15.0, top: 5),
-              child: Text(titleNotif,
+              child: Text(ndata.title,
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 14.sp,
@@ -98,7 +94,7 @@ class NotificationPage extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(left: 0.15.sw, top: 5, right: 20),
-          child: Text(msgNotif,
+          child: Text(ndata.msg,
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.normal,
                 fontSize: 12.sp,
@@ -110,7 +106,7 @@ class NotificationPage extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(tglNotif,
+              Text(ndata.date,
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w600,
                     fontSize: 12.sp,
@@ -119,7 +115,7 @@ class NotificationPage extends StatelessWidget {
               InkWell(
                 onTap: () {
                   _homeController.showAlertDialog(() {
-                    _homeController.deleteNotif();
+                    _homeController.deleteNotif(ndata);
                     Get.back();
                   }, "Konfirmasi Hapus",
                       "Apakah anda ingin hapus notifikasi ?");

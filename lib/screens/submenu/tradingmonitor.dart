@@ -194,7 +194,7 @@ class TradingMonitor extends StatelessWidget {
             color: Colors.grey.shade600,
             borderColor: Colors.grey.shade500,
             borderRadius: BorderRadius.circular(10),
-            isSelected: _homeController.selectedTradingMonitor,
+            isSelected: _homeController.selectedTradingMonitor.value,
             onPressed: (index) {
               for (var i = 0;
                   i < _homeController.selectedTradingMonitor.length;

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:recordinvest/components/appversion.dart';
 import 'package:recordinvest/controller/splashcontroller.dart';
 
+import '../../controller/homecontroller.dart';
+
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 
@@ -13,6 +15,7 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   final SplashController _splashController = Get.put(SplashController());
+  final HomeController _homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
