@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/appversion.dart';
-import 'package:recordinvest/controller/splashcontroller.dart';
-
 import '../../controller/homecontroller.dart';
 
 class Splash extends StatefulWidget {
@@ -14,7 +12,6 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  final SplashController _splashController = Get.put(SplashController());
   final HomeController _homeController = Get.put(HomeController());
 
   @override

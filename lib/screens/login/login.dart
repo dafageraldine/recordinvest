@@ -1,12 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/appversion.dart';
-import 'package:recordinvest/controller/logincontroller.dart';
 import 'package:recordinvest/models/data.dart';
 
+import '../../controller/homecontroller.dart';
+
 class Login extends StatelessWidget {
-  final LoginController _loginController = Get.put(LoginController());
+  final HomeController _homeController = Get.find();
 
   Login({super.key});
 
@@ -16,7 +19,9 @@ class Login extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         // viewModel.showAlertDialog(context);
-        _loginController.showAlertDialog();
+        _homeController.showAlertDialog(() {
+          exit(0);
+        }, "Keluar Aplikasi", "Apakah anda ingin keluar aplikasi ?");
         return true;
       },
       child: Scaffold(
@@ -55,7 +60,7 @@ class Login extends StatelessWidget {
                             width: 0.85.sw,
                             height: 0.07.sh,
                             child: TextFormField(
-                                controller: _loginController.uname.value,
+                                controller: _homeController.uname.value,
                                 decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintText: "Username")),
@@ -75,7 +80,7 @@ class Login extends StatelessWidget {
                             width: 0.85.sw,
                             height: 0.07.sh,
                             child: TextFormField(
-                                controller: _loginController.pass.value,
+                                controller: _homeController.pass.value,
                                 obscureText: true,
                                 decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
@@ -88,10 +93,10 @@ class Login extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () async {
-                          _loginController.login(
+                          _homeController.login(
                               context,
-                              _loginController.uname.value,
-                              _loginController.pass.value);
+                              _homeController.uname.value,
+                              _homeController.pass.value);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(right: 8.0),

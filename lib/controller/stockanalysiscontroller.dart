@@ -122,9 +122,6 @@ class StockAnalysisController extends GetxController {
     try {
       http.Response getdata = await http.get(Uri.parse(
           "${baseurl}detail_analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&maselected=${ma.replaceAll("&", "_")}"));
-      // print(baseurl +
-      //     "detail_analyze?jenis=${selectedStockType.value}&code=${selectedStockName.split("| ")[0].trim()}&maselected=${ma.replaceAll("&", "_")}");
-      // print(getdata.body);
       Map<String, dynamic> json = jsonDecode(getdata.body);
       ResultAnalyzeDetailModel dataModel =
           ResultAnalyzeDetailModel.fromJson(json);

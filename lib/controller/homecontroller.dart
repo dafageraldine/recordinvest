@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +15,8 @@ import 'package:recordinvest/screens/submenu/record.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/data.dart';
+import '../screens/bottombar/bottombar.dart';
+import '../screens/login/login.dart';
 
 class HomeController extends GetxController with StateMixin {
   var date = "".obs;
@@ -22,6 +25,7 @@ class HomeController extends GetxController with StateMixin {
   RxList<NotifModel> listNotif = <NotifModel>[].obs;
   var selectedTradingMonitor = [true, false].obs;
   RxInt selectedIndex = 0.obs;
+  int timerRun = 0;
 
   //watchlist
   List<String> combStockType = ['indo', 'us'];
@@ -32,6 +36,10 @@ class HomeController extends GetxController with StateMixin {
   RxString enddate = "choose date".obs;
   RxList<WatchlistData> wlData = <WatchlistData>[].obs;
 
+  //login
+  Rx<TextEditingController> uname = TextEditingController().obs;
+  Rx<TextEditingController> pass = TextEditingController().obs;
+
   final oCcy = NumberFormat.currency(
       locale: 'eu',
       customPattern: '#,### \u00a4',
@@ -40,9 +48,22 @@ class HomeController extends GetxController with StateMixin {
 
   @override
   void onInit() {
-    getSaldo();
-    fillNotif();
+    sessionLogin();
     super.onInit();
+  }
+
+  realTimeNotif() {
+    if (timerRun == 0) {
+      timerRun++;
+      Timer.periodic(const Duration(minutes: 3), (timer) async {
+        print("doing it");
+        fillNotif();
+        if (timerRun > 1) {
+          timer.cancel();
+          timerRun = 0;
+        }
+      });
+    }
   }
 
   fillNotif() async {
@@ -50,6 +71,7 @@ class HomeController extends GetxController with StateMixin {
     var keyNotif = boxNotif.keys
         .where((k) => k.toString().toLowerCase().contains("|notif"))
         .toList();
+    print(keyNotif);
     listNotif.clear();
     for (var i = 0; i < keyNotif.length; i++) {
       var dataNotif = await getData(keyNotif[i]);
@@ -332,5 +354,71 @@ class HomeController extends GetxController with StateMixin {
     await closeBox();
     fillNotif();
     listNotif.refresh();
+  }
+
+  Future login(BuildContext context, TextEditingController uname,
+      TextEditingController pass) async {
+    try {
+      var body = {"user": uname.text, "pwd": pass.text};
+      http.Response postdata =
+          await http.post(Uri.parse("${baseurl}login"), body: body);
+      var data = json.decode(postdata.body);
+      if (data["data"].length > 0) {
+        for (var i = 0; i < data["data"].length; i++) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('uname', data["data"][i]["user"]);
+          await prefs.setString('pass', pass.text);
+          await prefs.setString('id', data["data"][i]["id"]);
+          break;
+        }
+        //use getx
+        getSaldo();
+        fillNotif();
+        realTimeNotif();
+        Get.to(BottomBar());
+      } else {
+        Get.snackbar("error", "Username atau password salah !",
+            backgroundColor: errwithopacity);
+      }
+    } catch (e) {
+      Get.snackbar("error", e.toString(), backgroundColor: errwithopacity);
+    }
+  }
+
+  Future sessionLogin() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String? uname = prefs.getString('uname');
+      final String? pass = prefs.getString('pass');
+      try {
+        var body = {"user": uname, "pwd": pass};
+        http.Response postdata =
+            await http.post(Uri.parse("${baseurl}login"), body: body);
+        var data = json.decode(postdata.body);
+        if (data["data"].length > 0) {
+          //use getx
+          getSaldo();
+          fillNotif();
+          realTimeNotif();
+          Get.to(BottomBar());
+        } else {
+          Timer(const Duration(seconds: 3), () {
+            Get.to(Login());
+          });
+        }
+      } catch (e) {
+        if (uname != null && uname != "") {
+          Get.to(BottomBar());
+        } else {
+          Timer(const Duration(seconds: 3), () {
+            Get.to(Login());
+          });
+        }
+      }
+    } catch (e) {
+      Timer(const Duration(seconds: 3), () {
+        Get.to(Login());
+      });
+    }
   }
 }
