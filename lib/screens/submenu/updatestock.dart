@@ -4,15 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/components/datebutton.dart';
-import 'package:recordinvest/controller/updatestockcontroller.dart';
+import 'package:recordinvest/controller/homecontroller.dart';
 
 import '../../components/processbutton.dart';
 
 class UpdateStock extends StatelessWidget {
   UpdateStock({super.key});
 
-  final UpdateStockController _updateStockController =
-      Get.put(UpdateStockController());
+  final HomeController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +54,13 @@ class UpdateStock extends StatelessWidget {
                                 ListTile(title: Text(item)),
                             showSearchBox: true,
                           ),
-                          items: _updateStockController.combStockType,
+                          items: _homeController.combStockTypeNew,
                           dropdownBuilder: (context, item) => Text(item!),
                           onChanged: (value) {
-                            _updateStockController.selectedStockType.value =
-                                value!;
+                            _homeController.selectedStockTypeNew.value = value!;
                           },
                           selectedItem:
-                              _updateStockController.selectedStockType.value,
+                              _homeController.selectedStockTypeNew.value,
                         )))),
                 Padding(
                   padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
@@ -81,7 +79,7 @@ class UpdateStock extends StatelessWidget {
                     width: 0.85.sw,
                     height: 0.07.sh,
                     child: TextFormField(
-                        controller: _updateStockController.values.value,
+                        controller: _homeController.valuesNew.value,
                         // obscureText: true,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -110,7 +108,7 @@ class UpdateStock extends StatelessWidget {
                     width: 0.85.sw,
                     height: 0.07.sh,
                     child: TextFormField(
-                        controller: _updateStockController.filename.value,
+                        controller: _homeController.filenameNew.value,
                         // obscureText: true,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -134,9 +132,9 @@ class UpdateStock extends StatelessWidget {
                   ),
                 ),
                 DateButton(
-                  date: _updateStockController.startdate.value,
+                  date: _homeController.startdateNew.value,
                   onTap: () {
-                    _updateStockController.datepick('start');
+                    _homeController.datepickNew('start');
                   },
                 ),
                 Padding(
@@ -151,9 +149,9 @@ class UpdateStock extends StatelessWidget {
                   ),
                 ),
                 DateButton(
-                  date: _updateStockController.enddate.value,
+                  date: _homeController.enddateNew.value,
                   onTap: () {
-                    _updateStockController.datepick('end');
+                    _homeController.datepickNew('end');
                   },
                 ),
                 Padding(
@@ -161,7 +159,7 @@ class UpdateStock extends StatelessWidget {
                   child: ProcessButton(
                     title: 'Update',
                     onTap: () {
-                      _updateStockController.updateStockData();
+                      _homeController.updateStockData();
                     },
                   ),
                 )

@@ -7,13 +7,10 @@ import 'package:recordinvest/screens/submenu/tradingmonitor.dart';
 import '../../components/app_bar_with_back_button.dart';
 import '../../components/card_menu.dart';
 import '../../controller/homecontroller.dart';
-import '../../controller/stockanalysiscontroller.dart';
 import '../submenu/analyzestock.dart';
 
 class TradingAssistance extends StatelessWidget {
   TradingAssistance({super.key});
-  final StockAnalysisController _stockAnalysisController =
-      Get.put(StockAnalysisController());
   final HomeController _homeController = Get.find();
 
   @override
@@ -33,7 +30,7 @@ class TradingAssistance extends StatelessWidget {
             height: 0.025.sh,
           ),
           Obx(
-            () => _stockAnalysisController.isLoading.value
+            () => _homeController.isLoading.value
                 ? Padding(
                     padding: EdgeInsets.only(top: 0.1.sh),
                     child: Lottie.asset('assets/loading.json'),
@@ -60,8 +57,7 @@ class TradingAssistance extends StatelessWidget {
                         children: [
                           CardMenu(
                               onTap: () async {
-                                await _stockAnalysisController
-                                    .cbStockTypeAction();
+                                await _homeController.cbStockTypeAction();
                                 Get.to(AnalyzeStock());
                               },
                               image: "assets/robot.png",

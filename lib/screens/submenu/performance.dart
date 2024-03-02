@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:recordinvest/controller/performancecontroller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../components/app_bar_with_back_button_and_icon.dart';
 import '../../../models/data.dart';
+import '../../controller/homecontroller.dart';
+import '../../models/allmodel.dart';
 
 class Performance extends StatelessWidget {
   Performance({super.key});
 
-  final PerformanceController _performanceController =
-      Get.put(PerformanceController());
+  final HomeController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +26,10 @@ class Performance extends StatelessWidget {
               Get.back();
             },
             onTapIcon: () {
-              _performanceController.showDialogfilter("filter", "filter");
+              _homeController.showDialogfilter("filter", "filter");
             },
           ),
-          _performanceController.performance_chart_data.isEmpty
+          _homeController.performance_chart_data.isEmpty
               ? Container()
               : Padding(
                   padding: EdgeInsets.only(top: 0.02.sh, bottom: 0.02.sh),
@@ -61,8 +61,8 @@ class Performance extends StatelessWidget {
                               tooltipBehavior: TooltipBehavior(enable: true),
                               series: <ChartSeries>[
                                 LineSeries<PerformanceChartData, String>(
-                                  dataSource: _performanceController
-                                      .performance_chart_data,
+                                  dataSource:
+                                      _homeController.performance_chart_data,
                                   color: theme,
                                   width: 3,
                                   xValueMapper: (PerformanceChartData pcd, _) =>
@@ -72,14 +72,11 @@ class Performance extends StatelessWidget {
                                   name: 'money',
                                   enableTooltip: true,
                                   onPointTap: (pointInteractionDetails) {
-                                    _performanceController.df.value =
-                                        _performanceController
-                                            .performance_chart_data[
-                                                pointInteractionDetails
-                                                    .pointIndex!]
-                                            .day;
-                                    _performanceController.getrecord();
-                                    print("here");
+                                    _homeController.df.value = _homeController
+                                        .performance_chart_data[
+                                            pointInteractionDetails.pointIndex!]
+                                        .day;
+                                    _homeController.getrecord();
                                   },
                                   // Enable data label
                                   // dataLabelSettings: DataLabelSettings(isVisible: true)
@@ -90,7 +87,7 @@ class Performance extends StatelessWidget {
                     ],
                   ),
                 ),
-          _performanceController.chartData.isNotEmpty
+          _homeController.chartData.isNotEmpty
               ? Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Container(
@@ -129,7 +126,7 @@ class Performance extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 0.1.sw),
                               child: Text(
-                                "Rp ${_performanceController.oCcy.format(_performanceController.total.value)}",
+                                "Rp ${_homeController.oCcy.format(_homeController.total.value)}",
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   // color: Color.fromRGBO(157, 157, 157, 1),
@@ -143,7 +140,7 @@ class Performance extends StatelessWidget {
                               padding:
                                   EdgeInsets.only(top: 0.01.sh, left: 0.1.sw),
                               child: Text(
-                                _performanceController.df.value,
+                                _homeController.df.value,
                                 style: const TextStyle(
                                   // color: Color.fromRGBO(157, 157, 157, 1),
                                   // color: Color.fromRGBO(144, 200, 172, 1),
@@ -160,7 +157,7 @@ class Performance extends StatelessWidget {
                   ),
                 )
               : Container(),
-          _performanceController.chartData.isNotEmpty
+          _homeController.chartData.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.only(left: 0.1.sw, top: 0.02.sh),
                   child: Align(
@@ -181,14 +178,14 @@ class Performance extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          _performanceController.chartData.isNotEmpty
+          _homeController.chartData.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.only(left: 0.1.sw),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
                       onTap: () {
-                        _performanceController.fill_chart();
+                        _homeController.fill_chart();
 
                         // print(chartData[i].x + " " + chartData[i].y.toString() + " ");
                       },
@@ -216,7 +213,7 @@ class Performance extends StatelessWidget {
                   ),
                 )
               : Container(),
-          _performanceController.chartData.isNotEmpty
+          _homeController.chartData.isNotEmpty
               ? Container(
                   child: SfCircularChart(
                       legend: Legend(
@@ -226,7 +223,7 @@ class Performance extends StatelessWidget {
                       series: <CircularSeries>[
                       // Render pie chart
                       PieSeries<ChartData, String>(
-                          dataSource: _performanceController.chartData,
+                          dataSource: _homeController.chartData,
                           pointColorMapper: (ChartData data, _) => data.color,
                           xValueMapper: (ChartData data, _) => data.x,
                           yValueMapper: (ChartData data, _) => data.y)
@@ -242,7 +239,7 @@ class Performance extends StatelessWidget {
                       width: 0.85.sw,
                       height: 0.1.sh,
                       decoration: BoxDecoration(
-                          color: _performanceController.chartData[index].color,
+                          color: _homeController.chartData[index].color,
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: EdgeInsets.only(left: 0.1.sw, top: 20),
@@ -250,7 +247,7 @@ class Performance extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _performanceController.chartData[index].x,
+                              _homeController.chartData[index].x,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,
@@ -261,7 +258,7 @@ class Performance extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "Rp ${_performanceController.oCcy.format(_performanceController.chartData[index].y)}",
+                              "Rp ${_homeController.oCcy.format(_homeController.chartData[index].y)}",
                               style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
@@ -278,13 +275,13 @@ class Performance extends StatelessWidget {
                 ],
               );
             },
-            itemCount: _performanceController.chartData.isEmpty
+            itemCount: _homeController.chartData.isEmpty
                 ? 0
-                : _performanceController.chartData.length,
+                : _homeController.chartData.length,
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
           ),
-          _performanceController.chartData.isNotEmpty
+          _homeController.chartData.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.only(left: 0.1.sw, top: 0.02.sh),
                   child: const Align(
@@ -320,7 +317,7 @@ class Performance extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _performanceController.listrecord[index].product,
+                              _homeController.listrecord[index].product,
                               style: TextStyle(
                                 fontWeight: FontWeight.w800,
                                 color: Colors.grey[800],
@@ -331,7 +328,7 @@ class Performance extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              _performanceController.listrecord[index].type,
+                              _homeController.listrecord[index].type,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
@@ -341,7 +338,7 @@ class Performance extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "Rp ${_performanceController.oCcy.format(double.parse(_performanceController.listrecord[index].value))}",
+                              "Rp ${_homeController.oCcy.format(double.parse(_homeController.listrecord[index].value))}",
                               style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
@@ -351,7 +348,7 @@ class Performance extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              _performanceController.listrecord[index].date,
+                              _homeController.listrecord[index].date,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 // color: Color.fromRGBO(157, 157, 157, 1),
@@ -368,9 +365,9 @@ class Performance extends StatelessWidget {
                 ],
               );
             },
-            itemCount: _performanceController.listrecord.isEmpty
+            itemCount: _homeController.listrecord.isEmpty
                 ? 0
-                : _performanceController.listrecord.length,
+                : _homeController.listrecord.length,
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
           ),

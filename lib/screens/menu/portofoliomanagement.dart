@@ -7,9 +7,11 @@ import 'package:recordinvest/screens/submenu/calculatetarget.dart';
 import 'package:recordinvest/screens/submenu/manageunperformportofolio.dart';
 import 'package:recordinvest/screens/submenu/performance.dart';
 import '../../../components/app_bar_with_back_button.dart';
+import '../../controller/homecontroller.dart';
 
 class PortofolioManagement extends StatelessWidget {
   PortofolioManagement({super.key});
+  final HomeController _homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: const Size(360, 690));
@@ -46,6 +48,8 @@ class PortofolioManagement extends StatelessWidget {
               children: [
                 CardMenu(
                     onTap: () {
+                      _homeController.listrecord.clear();
+                      _homeController.filldf_ds();
                       Get.to(Performance());
                     },
                     image: "assets/financial-profit.png",

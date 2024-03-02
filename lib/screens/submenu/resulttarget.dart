@@ -3,13 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
-
-import '../../controller/calculatetargetcontroller.dart';
+import 'package:recordinvest/controller/homecontroller.dart';
 
 class ResultTarget extends StatelessWidget {
   var result;
   ResultTarget({super.key, required this.result});
-  final CalculateTargetController _calculateTargetController = Get.find();
+  final HomeController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +50,7 @@ class ResultTarget extends StatelessWidget {
                 ]),
             child: Center(
               child: Text(
-                  'Rp ${_calculateTargetController.formatter
-                          .format(double.parse(
-                              _calculateTargetController.values.value.text))
-                          .substring(2)}',
+                  'Rp ${_homeController.formatterRp.format(double.parse(_homeController.valuescal.value.text.replaceAll(",", ""))).substring(2)}',
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w600,
                     fontSize: 16.sp,
@@ -68,7 +64,7 @@ class ResultTarget extends StatelessWidget {
           child: SizedBox(
             width: 0.8.sw,
             child: Text(
-              "Berdasarkan rata-rata menabungmu dari tanggal ${_calculateTargetController.tglawal.value} hingga ${_calculateTargetController.tglakhir.value} adalah , ${_calculateTargetController.avgPerDay.value} perhari dan ${_calculateTargetController.avgsavingpermonth.value} perbulan serta saldo saat ini sebesar Rp ${_calculateTargetController.formatter.format(double.parse(_calculateTargetController.stfrom.value.text)).substring(2)}. Maka target sebesar Rp ${_calculateTargetController.formatter.format(double.parse(_calculateTargetController.values.value.text)).substring(2)} akan tercapai dengan waktu $result",
+              "Berdasarkan rata-rata menabungmu dari tanggal ${_homeController.tglawal.value} hingga ${_homeController.tglakhir.value} adalah , ${_homeController.avgPerDay.value} perhari dan ${_homeController.avgsavingpermonth.value} perbulan serta saldo saat ini sebesar Rp ${_homeController.formatterRp.format(double.parse(_homeController.stfrom.value.text.replaceAll(",", ""))).substring(2)}. Maka target sebesar Rp ${_homeController.formatterRp.format(double.parse(_homeController.valuescal.value.text.replaceAll(",", ""))).substring(2)} akan tercapai dengan waktu $result",
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Color.fromRGBO(157, 157, 157, 1),

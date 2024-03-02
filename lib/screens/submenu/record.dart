@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
-import 'package:recordinvest/controller/recordcontroller.dart';
+import 'package:recordinvest/components/numformatter.dart';
 import '../../../../models/data.dart';
+import '../../controller/homecontroller.dart';
 
 class Recordpage extends StatelessWidget {
-  final RecordController _recordController = Get.put(RecordController());
+  final HomeController _homeController = Get.find();
 
   Recordpage({super.key});
   @override
@@ -52,12 +53,12 @@ class Recordpage extends StatelessWidget {
                     items: comboboxtype,
                     dropdownBuilder: (context, item) => Text(item!),
                     onChanged: (value) =>
-                        _recordController.selectedtype.value = value!
+                        _homeController.selectedtype.value = value!
                     // setState(() {
                     //   selectedtype = value!;
                     // })
                     ,
-                    selectedItem: _recordController.selectedtype.value,
+                    selectedItem: _homeController.selectedtype.value,
                   )),
             ),
             Padding(
@@ -89,12 +90,12 @@ class Recordpage extends StatelessWidget {
                     items: comboboxproduct,
                     dropdownBuilder: (context, item) => Text(item!),
                     onChanged: (value) =>
-                        _recordController.selectedproduct.value = value!
+                        _homeController.selectedproduct.value = value!
                     // setState(() {
                     //   selectedproduct = value!;
                     // })
                     ,
-                    selectedItem: _recordController.selectedproduct.value,
+                    selectedItem: _homeController.selectedproduct.value,
                   ),
                 )),
             Padding(
@@ -114,8 +115,9 @@ class Recordpage extends StatelessWidget {
                   width: 0.85.sw,
                   height: 0.07.sh,
                   child: TextFormField(
-                      controller: _recordController.values.value,
+                      controller: _homeController.values.value,
                       // obscureText: true,
+                      inputFormatters: [NumberInputFormatter()],
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintStyle: TextStyle(
@@ -123,13 +125,13 @@ class Recordpage extends StatelessWidget {
                             color: Color.fromRGBO(157, 157, 157, 0.5),
                             fontSize: 16,
                           ),
-                          hintText: "15000000.00")),
+                          hintText: "15,000,000")),
                 )),
             Padding(
               padding: EdgeInsets.only(top: 0.04.sh, left: 0.1.sw),
               child: InkWell(
                 onTap: () {
-                  _recordController.insertrecord();
+                  _homeController.insertrecord();
                 },
                 child: Container(
                   width: 0.85.sw,

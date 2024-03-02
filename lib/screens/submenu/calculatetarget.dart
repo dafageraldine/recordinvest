@@ -3,16 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
+import 'package:recordinvest/components/numformatter.dart';
 import 'package:recordinvest/components/processbutton.dart';
-import 'package:recordinvest/controller/calculatetargetcontroller.dart';
-
 import '../../controller/homecontroller.dart';
 
 class CalculateTarget extends StatelessWidget {
   CalculateTarget({super.key});
-
-  final CalculateTargetController _calculateTargetController =
-      Get.put(CalculateTargetController());
   final HomeController _homeController = Get.find();
 
   @override
@@ -29,7 +25,7 @@ class CalculateTarget extends StatelessWidget {
                       Get.back();
                     },
                   ),
-                  _calculateTargetController.isLoading.value
+                  _homeController.isLoadingCal.value
                       ? Padding(
                           padding: EdgeInsets.only(top: 0.1.sh),
                           child: Lottie.asset('assets/archer.json'),
@@ -56,9 +52,9 @@ class CalculateTarget extends StatelessWidget {
                                 width: 0.8.sw,
                                 height: 0.07.sh,
                                 child: TextFormField(
-                                    controller:
-                                        _calculateTargetController.values.value,
+                                    controller: _homeController.valuescal.value,
                                     // obscureText: true,
+                                    inputFormatters: [NumberInputFormatter()],
                                     decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         hintStyle: TextStyle(
@@ -93,9 +89,12 @@ class CalculateTarget extends StatelessWidget {
                                       width: 0.5.sw,
                                       height: 0.07.sh,
                                       child: TextFormField(
-                                          controller: _calculateTargetController
-                                              .stfrom.value,
+                                          controller:
+                                              _homeController.stfrom.value,
                                           // obscureText: true,
+                                          inputFormatters: [
+                                            NumberInputFormatter()
+                                          ],
                                           decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
                                               hintStyle: TextStyle(
@@ -108,8 +107,7 @@ class CalculateTarget extends StatelessWidget {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        _calculateTargetController
-                                                .stfrom.value.text =
+                                        _homeController.stfrom.value.text =
                                             _homeController.saldo.value
                                                 .toString();
                                       },
@@ -153,7 +151,7 @@ class CalculateTarget extends StatelessWidget {
                               child: ProcessButton(
                                   title: "calculate",
                                   onTap: () {
-                                    _calculateTargetController.getresult();
+                                    _homeController.getresult();
                                   }),
                             )
                           ],

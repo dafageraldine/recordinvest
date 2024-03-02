@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:recordinvest/components/numformatter.dart';
 import 'package:recordinvest/controller/homecontroller.dart';
-
 import '../../../components/app_bar_with_back_button.dart';
-import '../../controller/carcreditsimulationcontroller.dart';
 
 class CarCreditSimulation extends StatelessWidget {
-  final CarCreditSimulationController _carCreditSimulationController =
-      Get.put(CarCreditSimulationController());
   final HomeController _homeController = Get.find();
 
   CarCreditSimulation({super.key});
@@ -47,7 +44,8 @@ class CarCreditSimulation extends StatelessWidget {
                 width: 0.85.sw,
                 height: 0.07.sh,
                 child: TextFormField(
-                    controller: _carCreditSimulationController.otr.value,
+                    controller: _homeController.otr.value,
+                    inputFormatters: [NumberInputFormatter()],
                     // obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -77,8 +75,9 @@ class CarCreditSimulation extends StatelessWidget {
                     width: 0.5.sw,
                     height: 0.07.sh,
                     child: TextFormField(
-                        controller: _carCreditSimulationController.dp.value,
+                        controller: _homeController.dp.value,
                         // obscureText: true,
+                        inputFormatters: [NumberInputFormatter()],
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintStyle: TextStyle(
@@ -93,7 +92,7 @@ class CarCreditSimulation extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      _carCreditSimulationController.dp.value.text =
+                      _homeController.dp.value.text =
                           _homeController.saldo.value.toString();
                       // inserttypenproduct();
                     },
@@ -145,7 +144,7 @@ class CarCreditSimulation extends StatelessWidget {
                 width: 0.85.sw,
                 height: 0.07.sh,
                 child: TextFormField(
-                    controller: _carCreditSimulationController.bunga.value,
+                    controller: _homeController.bunga.value,
                     // obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -173,7 +172,7 @@ class CarCreditSimulation extends StatelessWidget {
                 width: 0.85.sw,
                 height: 0.07.sh,
                 child: TextFormField(
-                    controller: _carCreditSimulationController.tenor.value,
+                    controller: _homeController.tenor.value,
                     // obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -188,7 +187,7 @@ class CarCreditSimulation extends StatelessWidget {
             padding: EdgeInsets.only(top: 0.04.sh, left: 0.1.sw),
             child: InkWell(
               onTap: () {
-                _carCreditSimulationController.calculate();
+                _homeController.calculateCicilan();
                 // inserttypenproduct();
               },
               child: Container(

@@ -13,12 +13,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/components/processbutton.dart';
+import 'package:recordinvest/controller/homecontroller.dart';
 import 'package:recordinvest/models/data.dart';
 import 'package:recordinvest/screens/camera/video.dart';
 import 'package:recordinvest/screens/camera/viewvideo.dart';
 import 'package:video_player/video_player.dart';
-
-import '../../controller/settingcontroller.dart';
 
 /// Camera example home widget.
 class CameraExampleHome extends StatefulWidget {
@@ -54,9 +53,7 @@ void _logError(String code, String? message) {
 
 class _CameraExampleHomeState extends State<CameraExampleHome>
     with WidgetsBindingObserver, TickerProviderStateMixin {
-
-      
-  final SettingController _settingController = Get.find();
+  final HomeController _homeController = Get.find();
   String selectedpath = "";
   CameraController? controller;
   XFile? imageFile;
@@ -413,26 +410,28 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                                 ),
                                 InkWell(
                                     onTap: () {
-                                      _settingController.showAlertDialog((){
-                                          deleteFile(fileslist[i].path);
-                                          Get.back();
-                                      },"Warning","Apakah ingin hapus file ${fileslist[i].path} ?");
-                                      
+                                      _homeController.showAlertDialogModern(() {
+                                        deleteFile(fileslist[i].path);
+                                        Get.back();
+                                      }, "Warning",
+                                          "Apakah ingin hapus file ${fileslist[i].path} ?");
                                     },
                                     child: const Icon(Icons.delete)),
                                 InkWell(
                                   onTap: () {
-                                      _settingController.showAlertDialog(() async{
-                                          updVideo(fileslist[i].path);
-                                          Get.back();
-                                      },"Warning","Apakah ingin upload file ${fileslist[i].path} ?");
-                                    
+                                    _homeController.showAlertDialogModern(
+                                        () async {
+                                      updVideo(fileslist[i].path);
+                                      Get.back();
+                                    }, "Warning",
+                                        "Apakah ingin upload file ${fileslist[i].path} ?");
                                   },
                                   child: const Icon(Icons.upload),
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    await requestStoragePermission(fileslist[i].path);
+                                    await requestStoragePermission(
+                                        fileslist[i].path);
                                   },
                                   child: const Icon(Icons.download),
                                 )

@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
-
-import '../../controller/stockanalysiscontroller.dart';
+import 'package:recordinvest/controller/homecontroller.dart';
 import '../../models/data.dart';
 
 class AnalyzeDetail extends StatelessWidget {
-  final StockAnalysisController _stockAnalysisController = Get.find();
+  final HomeController _homeController = Get.find();
   String maSelected;
   AnalyzeDetail({super.key, required this.maSelected});
   @override
@@ -50,12 +49,12 @@ class AnalyzeDetail extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "action : ${_stockAnalysisController.analyzedatadetail[i].action}",
+                                    "action : ${_homeController.analyzedatadetail[i].action}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
                                       // color: Color.fromRGBO(157, 157, 157, 1),
                                       // color: Color.fromRGBO(144, 200, 172, 1),
-                                      color: _stockAnalysisController
+                                      color: _homeController
                                                   .analyzedatadetail[i].action
                                                   .toString() ==
                                               "Sell"
@@ -66,8 +65,7 @@ class AnalyzeDetail extends StatelessWidget {
                                   ),
                                   2.verticalSpace,
                                   Text(
-                                    _stockAnalysisController
-                                        .analyzedatadetail[i].date
+                                    _homeController.analyzedatadetail[i].date
                                         .toString(),
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w800,
@@ -79,7 +77,7 @@ class AnalyzeDetail extends StatelessWidget {
                                   ),
                                   5.verticalSpace,
                                   Text(
-                                    "price : ${_stockAnalysisController.oCcy.format(_stockAnalysisController.analyzedatadetail[i].close)}",
+                                    "price : ${_homeController.oCcy.format(_homeController.analyzedatadetail[i].close)}",
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w800,
                                       // color: Color.fromRGBO(157, 157, 157, 1),
@@ -99,7 +97,7 @@ class AnalyzeDetail extends StatelessWidget {
                 },
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                itemCount: _stockAnalysisController.analyzedatadetail.length,
+                itemCount: _homeController.analyzedatadetail.length,
               ),
               20.verticalSpace
             ],

@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
@@ -13,9 +14,8 @@ import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../models/analyzedatamodel.dart';
+import '../models/allmodel.dart';
 import '../models/data.dart';
-import '../models/resultanalyzedatadetailmodel.dart';
 
 @pragma('vm:entry-point')
 void onStart(ServiceInstance service) async {
@@ -37,7 +37,7 @@ void onStart(ServiceInstance service) async {
   //on ready (EXECUTED ONLY ONCE WHEN BACKROUND SERVICE STARTED)
   onReady(service);
 
-  Timer.periodic(const Duration(minutes: 15), (timer) async {
+  Timer.periodic(const Duration(minutes: 1), (timer) async {
     await BackgroundServiceController().getWldata();
     await BackgroundServiceController().analyzeWl();
 
@@ -123,8 +123,9 @@ class BackgroundServiceController {
 
   Future showNotif(
       {String title = "record invest", required String contents}) async {
+    var rng = Random();
     await Notiticationlocal.showNotif(
-        title: title, body: contents, n: flocalnp);
+        id: rng.nextInt(100), title: title, body: contents, n: flocalnp);
   }
 
   Future saveData(var key, var values) async {
@@ -501,6 +502,7 @@ class BackgroundServiceController {
             !dateAfternoon.isAfter(datenows)) {
           // Calculate time difference
           Duration timeDifference = dateAfternoon.difference(dateLast);
+          print(timeDifference.inHours);
           if (timeDifference.inHours >= 8) {
             await updateStockData(
                 decodedata['url'], decodedata['name'], decodedata);
@@ -617,8 +619,10 @@ class Notiticationlocal {
       required FlutterLocalNotificationsPlugin n}) async {
     AndroidNotificationDetails chn = const AndroidNotificationDetails(
         'ch id', 'ch name',
-        playSound: true, importance: Importance.max, priority: Priority.high);
+        playSound: true,
+        importance: Importance.defaultImportance,
+        priority: Priority.defaultPriority);
     var not = NotificationDetails(android: chn);
-    await n.show(0, title, body, not);
+    await n.show(id, title, body, not);
   }
 }

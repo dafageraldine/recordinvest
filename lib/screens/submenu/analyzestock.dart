@@ -5,12 +5,10 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
 import 'package:recordinvest/controller/homecontroller.dart';
-import 'package:recordinvest/controller/stockanalysiscontroller.dart';
-
+import '../../components/numformatter.dart';
 import '../../components/processbutton.dart';
 
 class AnalyzeStock extends StatelessWidget {
-  final StockAnalysisController _stockAnalysisController = Get.find();
   final HomeController _homeController = Get.find();
 
   AnalyzeStock({super.key});
@@ -26,7 +24,7 @@ class AnalyzeStock extends StatelessWidget {
             onTap: () {
               Get.back();
             }),
-        Obx(() => _stockAnalysisController.isLoading.value
+        Obx(() => _homeController.isLoading.value
             ? Padding(
                 padding: EdgeInsets.only(top: 0.1.sh),
                 child: Lottie.asset('assets/loading.json'),
@@ -60,15 +58,15 @@ class AnalyzeStock extends StatelessWidget {
                                   ListTile(title: Text(item)),
                               showSearchBox: true,
                             ),
-                            items: _stockAnalysisController.combStockType,
+                            items: _homeController.combStockType,
                             dropdownBuilder: (context, item) => Text(item!),
                             onChanged: (value) {
-                              _stockAnalysisController.selectedStockType.value =
+                              _homeController.selectedStockTypeval.value =
                                   value!;
-                              _stockAnalysisController.cbStockTypeAction();
+                              _homeController.cbStockTypeAction();
                             },
-                            selectedItem: _stockAnalysisController
-                                .selectedStockType.value,
+                            selectedItem:
+                                _homeController.selectedStockTypeval.value,
                           )))),
                   Padding(
                     padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
@@ -96,15 +94,14 @@ class AnalyzeStock extends StatelessWidget {
                                   ListTile(title: Text(item)),
                               showSearchBox: true,
                             ),
-                            items: _stockAnalysisController.combStockName,
+                            items: _homeController.combStockName,
                             dropdownBuilder: (context, item) => Text(item!),
                             onChanged: (value) {
-                              _stockAnalysisController.selectedStockName.value =
-                                  value!;
+                              _homeController.selectedStockName.value = value!;
                               // _stockAnalysisController.cbStockTypeAction();
                             },
-                            selectedItem: _stockAnalysisController
-                                .selectedStockName.value,
+                            selectedItem:
+                                _homeController.selectedStockName.value,
                           )))),
                   Padding(
                     padding: EdgeInsets.only(top: 0.02.sh, left: 0.1.sw),
@@ -126,9 +123,9 @@ class AnalyzeStock extends StatelessWidget {
                             width: 0.5.sw,
                             height: 0.07.sh,
                             child: TextFormField(
-                                controller:
-                                    _stockAnalysisController.values.value,
+                                controller: _homeController.valuesStock.value,
                                 // obscureText: true,
+                                inputFormatters: [NumberInputFormatter()],
                                 decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintStyle: TextStyle(
@@ -140,7 +137,7 @@ class AnalyzeStock extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              _stockAnalysisController.values.value.text =
+                              _homeController.valuesStock.value.text =
                                   _homeController.saldo.value.toString();
                             },
                             child: Container(
@@ -179,7 +176,7 @@ class AnalyzeStock extends StatelessWidget {
                     child: ProcessButton(
                       title: 'Analyze',
                       onTap: () {
-                        _stockAnalysisController.analyzeStock();
+                        _homeController.analyzeStock();
                       },
                     ),
                   )

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:recordinvest/controller/manageunperformportofoliocontroller.dart';
-import 'package:recordinvest/models/comboboxdata.dart';
+import 'package:recordinvest/components/showresultunperform.dart';
 import '../../../components/app_bar_with_back_button.dart';
+import '../../controller/homecontroller.dart';
 
 class ManageUnperformPortofolio extends StatelessWidget {
-  final ManageUnperformPortofolioController
-      _manageUnperformPortofolioController =
-      Get.put(ManageUnperformPortofolioController());
+  final HomeController _homeController = Get.find();
 
   ManageUnperformPortofolio({super.key});
 
@@ -46,8 +44,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
                 width: 0.85.sw,
                 height: 0.07.sh,
                 child: TextFormField(
-                    controller:
-                        _manageUnperformPortofolioController.floss.value,
+                    controller: _homeController.floss.value,
                     // obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -77,8 +74,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
                     width: 0.85.sw,
                     height: 0.07.sh,
                     child: TextFormField(
-                        controller:
-                            _manageUnperformPortofolioController.kurs.value,
+                        controller: _homeController.kurs.value,
                         // obscureText: true,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -108,7 +104,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
                 width: 0.85.sw,
                 height: 0.07.sh,
                 child: TextFormField(
-                    controller: _manageUnperformPortofolioController.mi.value,
+                    controller: _homeController.mi.value,
                     // obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -136,7 +132,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
                 width: 0.85.sw,
                 height: 0.07.sh,
                 child: TextFormField(
-                    controller: _manageUnperformPortofolioController.dl.value,
+                    controller: _homeController.dl.value,
                     // obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -164,7 +160,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
                 width: 0.85.sw,
                 height: 0.07.sh,
                 child: TextFormField(
-                    controller: _manageUnperformPortofolioController.prn.value,
+                    controller: _homeController.prn.value,
                     // obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -192,7 +188,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
                 width: 0.85.sw,
                 height: 0.07.sh,
                 child: TextFormField(
-                    controller: _manageUnperformPortofolioController.aih.value,
+                    controller: _homeController.aih.value,
                     // obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -222,8 +218,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
                     width: 0.5.sw,
                     height: 0.07.sh,
                     child: TextFormField(
-                        controller:
-                            _manageUnperformPortofolioController.tais.value,
+                        controller: _homeController.tais.value,
                         // obscureText: true,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -239,11 +234,10 @@ class ManageUnperformPortofolio extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      print("here");
-                      if (list_cb_data.isEmpty) {
-                        _manageUnperformPortofolioController.get_cb_data();
+                      if (_homeController.list_cb_data.isEmpty) {
+                        _homeController.getCbData();
                       } else {
-                        _manageUnperformPortofolioController.showcb();
+                        ShowResultUnperform().showcb();
                       }
                     },
                     child: Container(
@@ -294,7 +288,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
                 width: 0.85.sw,
                 height: 0.07.sh,
                 child: TextFormField(
-                    controller: _manageUnperformPortofolioController.rsia.value,
+                    controller: _homeController.rsia.value,
                     // obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -310,7 +304,7 @@ class ManageUnperformPortofolio extends StatelessWidget {
                 EdgeInsets.only(top: 0.04.sh, left: 0.1.sw, bottom: 0.025.sh),
             child: InkWell(
               onTap: () {
-                _manageUnperformPortofolioController.calculate();
+                _homeController.calculate();
                 // inserttypenproduct();
               },
               child: Container(

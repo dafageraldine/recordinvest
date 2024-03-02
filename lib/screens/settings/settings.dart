@@ -6,8 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:recordinvest/components/app_bar_only.dart';
 import 'package:recordinvest/components/appversion.dart';
 import 'package:recordinvest/components/listsetting.dart';
-import 'package:recordinvest/controller/settingcontroller.dart';
-import 'package:recordinvest/models/data.dart';
+import 'package:recordinvest/controller/homecontroller.dart';
 import 'package:recordinvest/screens/camera/camera.dart';
 import 'package:recordinvest/screens/web_view/initialpage.dart';
 
@@ -16,7 +15,7 @@ import '../submenu/updatestock.dart';
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
   int counter = 0;
-  final SettingController _settingController = Get.put(SettingController());
+  final HomeController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +32,8 @@ class SettingsPage extends StatelessWidget {
         ),
         ListSetting(
             ontap: () {
-              _settingController.showAlertDialog(() async {
-                _settingController.logout();
+              _homeController.showAlertDialogModern(() async {
+                _homeController.logout();
               }, "Warning", "Do you want to log out ?");
             },
             title: "Log Out",

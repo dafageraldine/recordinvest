@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:recordinvest/controller/addtypecontroller.dart';
+import 'package:recordinvest/controller/homecontroller.dart';
 import '../../../../components/app_bar_with_back_button.dart';
 
 class AddType extends StatefulWidget {
@@ -12,7 +12,7 @@ class AddType extends StatefulWidget {
 }
 
 class _AddTypeState extends State<AddType> {
-  final AddTypeController _addTypeController = Get.put(AddTypeController());
+  final HomeController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _AddTypeState extends State<AddType> {
                   width: 0.85.sw,
                   height: 0.07.sh,
                   child: TextFormField(
-                      controller: _addTypeController.type.value,
+                      controller: _homeController.type.value,
                       // obscureText: true,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -71,7 +71,7 @@ class _AddTypeState extends State<AddType> {
                   width: 0.85.sw,
                   height: 0.07.sh,
                   child: TextFormField(
-                      controller: _addTypeController.product.value,
+                      controller: _homeController.product.value,
                       // obscureText: true,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -86,7 +86,7 @@ class _AddTypeState extends State<AddType> {
               padding: EdgeInsets.only(top: 0.04.sh, left: 0.1.sw),
               child: InkWell(
                 onTap: () {
-                  _addTypeController.inserttypenproduct();
+                  _homeController.inserttypenproduct();
                 },
                 child: Container(
                   width: 0.85.sw,

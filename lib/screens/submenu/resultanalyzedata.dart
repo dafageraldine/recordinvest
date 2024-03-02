@@ -3,11 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:recordinvest/components/app_bar_with_back_button.dart';
-
-import '../../controller/stockanalysiscontroller.dart';
+import 'package:recordinvest/controller/homecontroller.dart';
 
 class ResultAnalyzeData extends StatelessWidget {
-  final StockAnalysisController _stockAnalysisController = Get.find();
+  final HomeController _homeController = Get.find();
 
   ResultAnalyzeData({super.key});
 
@@ -24,7 +23,7 @@ class ResultAnalyzeData extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 }),
-            Obx(() => _stockAnalysisController.isLoading.value
+            Obx(() => _homeController.isLoading.value
                 ? Padding(
                     padding: EdgeInsets.only(top: 0.1.sh),
                     child: Lottie.asset('assets/loading.json'),
@@ -35,7 +34,7 @@ class ResultAnalyzeData extends StatelessWidget {
                       SizedBox(
                         width: 0.8.sw,
                         child: Text(
-                          "estimated money invested : \nRp ${_stockAnalysisController.oCcy.format(double.parse(_stockAnalysisController.values.value.text))}",
+                          "estimated money invested : \nRp ${_homeController.oCcy.format(double.parse(_homeController.valuesStock.value.text.replaceAll(",", "")))}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
@@ -48,7 +47,7 @@ class ResultAnalyzeData extends StatelessWidget {
                       SizedBox(
                         width: 0.8.sw,
                         child: Text(
-                          "stock selected : \n${_stockAnalysisController.selectedStockName.value}",
+                          "stock selected : \n${_homeController.selectedStockName.value}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
@@ -67,8 +66,8 @@ class ResultAnalyzeData extends StatelessWidget {
                                     padding: const EdgeInsets.only(top: 8),
                                     child: InkWell(
                                       onTap: () {
-                                        _stockAnalysisController.analyzeDetail(
-                                            _stockAnalysisController
+                                        _homeController.analyzeDetail(
+                                            _homeController
                                                 .analyzedata[i].maCompared);
                                       },
                                       child: Container(
@@ -87,7 +86,7 @@ class ResultAnalyzeData extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                _stockAnalysisController
+                                                _homeController
                                                     .analyzedata[i].maCompared,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w800,
@@ -97,7 +96,7 @@ class ResultAnalyzeData extends StatelessWidget {
                                               ),
                                               2.verticalSpace,
                                               Text(
-                                                "probability : ${_stockAnalysisController.analyzedata[i].probability.toStringAsFixed(2)} %",
+                                                "probability : ${_homeController.analyzedata[i].probability.toStringAsFixed(2)} %",
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   color: Colors.white,
@@ -108,7 +107,7 @@ class ResultAnalyzeData extends StatelessWidget {
                                               Row(
                                                 children: [
                                                   Text(
-                                                    "lost : ${_stockAnalysisController.analyzedata[i].lost}",
+                                                    "lost : ${_homeController.analyzedata[i].lost}",
                                                     style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.w800,
@@ -118,7 +117,7 @@ class ResultAnalyzeData extends StatelessWidget {
                                                   ),
                                                   10.horizontalSpace,
                                                   Text(
-                                                    "profit : ${_stockAnalysisController.analyzedata[i].profit}",
+                                                    "profit : ${_homeController.analyzedata[i].profit}",
                                                     style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.w800,
@@ -130,7 +129,7 @@ class ResultAnalyzeData extends StatelessWidget {
                                               ),
                                               2.verticalSpace,
                                               Text(
-                                                "Biggest lost : ${_stockAnalysisController.analyzedata[i].biggestLost.toStringAsFixed(2)} %",
+                                                "Biggest lost : ${_homeController.analyzedata[i].biggestLost.toStringAsFixed(2)} %",
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   color: Colors.red,
@@ -139,7 +138,7 @@ class ResultAnalyzeData extends StatelessWidget {
                                               ),
                                               10.horizontalSpace,
                                               Text(
-                                                "Biggest profit : ${_stockAnalysisController.analyzedata[i].biggestProfit.toStringAsFixed(2)} %",
+                                                "Biggest profit : ${_homeController.analyzedata[i].biggestProfit.toStringAsFixed(2)} %",
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   color: Colors.lightBlue,
@@ -148,7 +147,7 @@ class ResultAnalyzeData extends StatelessWidget {
                                               ),
                                               2.verticalSpace,
                                               Text(
-                                                "estimated return : ${_stockAnalysisController.analyzedata[i].estimatedReturn.toStringAsFixed(2)} %",
+                                                "estimated return : ${_homeController.analyzedata[i].estimatedReturn.toStringAsFixed(2)} %",
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   color: Colors.black,
@@ -157,7 +156,7 @@ class ResultAnalyzeData extends StatelessWidget {
                                               ),
                                               5.verticalSpace,
                                               Text(
-                                                "Rp ${_stockAnalysisController.analyzedata[i].estimatedReturnInMoney}",
+                                                "Rp ${_homeController.analyzedata[i].estimatedReturnInMoney}",
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   color: Colors.black,
@@ -175,8 +174,7 @@ class ResultAnalyzeData extends StatelessWidget {
                             },
                             shrinkWrap: true,
                             physics: const BouncingScrollPhysics(),
-                            itemCount:
-                                _stockAnalysisController.analyzedata.length,
+                            itemCount: _homeController.analyzedata.length,
                           ),
                           20.verticalSpace
                         ],

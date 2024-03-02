@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:recordinvest/models/data.dart';
-import 'package:recordinvest/models/notifmodel.dart';
 
 import '../../components/app_bar_with_back_button.dart';
 import '../../controller/homecontroller.dart';
+import '../../models/allmodel.dart';
 
 class NotificationPage extends StatelessWidget {
   NotificationPage({super.key});
