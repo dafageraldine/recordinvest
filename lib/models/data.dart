@@ -8,7 +8,7 @@ List<CameraDescription> camerasg = <CameraDescription>[];
 
 const String Build = "1";
 const String Major = "5";
-const String Minor = "0";
+const String Minor = "2";
 
 const String devurl = "http://127.0.0.1:5000/";
 const String produrl = "http://dafageraldine.pythonanywhere.com/";

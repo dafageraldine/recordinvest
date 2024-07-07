@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:recordinvest/components/card_menu.dart';
 import 'package:recordinvest/screens/submenu/calculatetarget.dart';
 import 'package:recordinvest/screens/submenu/manageunperformportofolio.dart';

@@ -1,14 +1,10 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:recordinvest/controller/backgroundservicecontroller.dart';
 import 'package:recordinvest/models/data.dart';
 import 'package:recordinvest/screens/splash/splash.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
 
 Future<void> main() async {
   try {

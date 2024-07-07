@@ -115,7 +115,8 @@ class RecordData {
   String value;
   String type;
   String product;
-  RecordData(this.date, this.value, this.type, this.product);
+  String docids;
+  RecordData(this.date, this.value, this.type, this.product, this.docids);
 }
 
 class ResultAnalyzeDetailModel {

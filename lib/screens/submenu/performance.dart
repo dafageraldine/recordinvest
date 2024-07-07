@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:recordinvest/components/processbutton.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../components/app_bar_with_back_button_and_icon.dart';
 import '../../../models/data.dart';
@@ -313,50 +315,96 @@ class Performance extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: EdgeInsets.only(left: 0.1.sw, top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Stack(
                           children: [
-                            Text(
-                              _homeController.listrecord[index].product,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                color: Colors.grey[800],
-                                // color: Color.fromRGBO(157, 157, 157, 1),
-                                // color: Color.fromRGBO(144, 200, 172, 1),
-                                // color: Color.fromRGBO(157, 157, 157, 1),
-                                fontSize: 16,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _homeController.listrecord[index].product,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.grey[800],
+                                    // color: Color.fromRGBO(157, 157, 157, 1),
+                                    // color: Color.fromRGBO(144, 200, 172, 1),
+                                    // color: Color.fromRGBO(157, 157, 157, 1),
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  _homeController.listrecord[index].type,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    // color: Color.fromRGBO(157, 157, 157, 1),
+                                    // color: Color.fromRGBO(144, 200, 172, 1),
+                                    color: Color.fromRGBO(249, 249, 249, 1),
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  "Rp ${_homeController.oCcy.format(double.parse(_homeController.listrecord[index].value))}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    // color: Color.fromRGBO(157, 157, 157, 1),
+                                    // color: Color.fromRGBO(144, 200, 172, 1),
+                                    color: Colors.blueGrey,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  _homeController.listrecord[index].date,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    // color: Color.fromRGBO(157, 157, 157, 1),
+                                    // color: Color.fromRGBO(144, 200, 172, 1),
+                                    color: Color.fromRGBO(249, 249, 249, 1),
+                                    fontSize: 16,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 5.0, right: 5),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: InkWell(
+                                  onTap: () async {
+                                    _homeController.showAlertDialogModern(
+                                        () async {
+                                      await _homeController.deleteRecord(
+                                          _homeController.listrecord[index]);
+                                    }, "Information",
+                                        "Do you want to delete data ${_homeController.listrecord[index].product} ?");
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: const Color.fromRGBO(
+                                            249, 249, 249, 1),
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                              blurRadius: 5.0,
+                                              color: Colors.black12,
+                                              spreadRadius: 2.0,
+                                              offset: Offset(0, 2))
+                                        ]),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Delete",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          color:
+                                              Color.fromRGBO(144, 200, 172, 1),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                            Text(
-                              _homeController.listrecord[index].type,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                // color: Color.fromRGBO(157, 157, 157, 1),
-                                // color: Color.fromRGBO(144, 200, 172, 1),
-                                color: Color.fromRGBO(249, 249, 249, 1),
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              "Rp ${_homeController.oCcy.format(double.parse(_homeController.listrecord[index].value))}",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w800,
-                                // color: Color.fromRGBO(157, 157, 157, 1),
-                                // color: Color.fromRGBO(144, 200, 172, 1),
-                                color: Colors.blueGrey,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              _homeController.listrecord[index].date,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                // color: Color.fromRGBO(157, 157, 157, 1),
-                                // color: Color.fromRGBO(144, 200, 172, 1),
-                                color: Color.fromRGBO(249, 249, 249, 1),
-                                fontSize: 16,
-                              ),
-                            )
                           ],
                         ),
                       ),

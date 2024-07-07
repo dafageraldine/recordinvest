@@ -1027,12 +1027,14 @@ class HomeController extends GetxController with StateMixin {
       http.Response postdata =
           await http.post(Uri.parse("${baseurl}getrecord"), body: body);
       var data = json.decode(postdata.body);
+      // print(data);
       for (int i = 0; i < data["data"].length; i++) {
         listrecord.add(RecordData(
             data["data"][i]["date"],
             data["data"][i]["value"].toString(),
             data["data"][i]["type"],
-            data["data"][i]["product"]));
+            data["data"][i]["product"],
+            data["data"][i]["docids"]));
       }
       if (listrecord.isNotEmpty) {
         fill_chart();
@@ -1043,6 +1045,24 @@ class HomeController extends GetxController with StateMixin {
       }
     } catch (e) {
       Get.snackbar("error", e.toString(), backgroundColor: errwithopacity);
+    }
+  }
+
+  Future deleteRecord(RecordData datas) async {
+    Get.back();
+    final prefs = await SharedPreferences.getInstance();
+    final String? id = prefs.getString('id');
+    var body = {"docids": datas.docids, "id": id, "date": datas.date};
+    http.Response postdata =
+        await http.post(Uri.parse("${baseurl}deletedocument"), body: body);
+    var data = json.decode(postdata.body);
+    if (data["code"] == 200) {
+      getSaldo();
+      get_record_range();
+      getrecord();
+      Get.snackbar("success", data["msg"], backgroundColor: sucswithopacity);
+    } else {
+      Get.snackbar("error", data["msg"], backgroundColor: errwithopacity);
     }
   }
 

@@ -37,7 +37,7 @@ void onStart(ServiceInstance service) async {
   //on ready (EXECUTED ONLY ONCE WHEN BACKROUND SERVICE STARTED)
   onReady(service);
 
-  Timer.periodic(const Duration(minutes: 1), (timer) async {
+  Timer.periodic(const Duration(minutes: 15), (timer) async {
     await BackgroundServiceController().getWldata();
     await BackgroundServiceController().analyzeWl();
 

@@ -167,8 +167,8 @@ class TradingMonitor extends StatelessWidget {
                     Get.to(Addwatchlist());
                   },
                   child: Container(
-                    width: 0.15.sw,
-                    height: 0.15.sw,
+                    width: 0.13.sw,
+                    height: 0.13.sw,
                     decoration: BoxDecoration(
                         color: Colors.blueGrey,
                         borderRadius: BorderRadius.circular(8)),
